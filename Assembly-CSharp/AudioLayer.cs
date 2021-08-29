@@ -1,0 +1,17 @@
+﻿using System;
+
+public enum AudioLayer
+{
+	BACKGROUND,
+	MUSIC,
+	SFX,
+	MOMENT,
+	VOICE,
+	CONTROLLED,
+	HACKINGSFX,
+	COMPUTERSFX,
+	SOFTWARESFX,
+	MENU,
+	OUTSIDE,
+	PHONE
+}

@@ -1,0 +1,335 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A04F95F9-7BE7-4CED-A839-F71C6CAE0305}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Assembly-CSharp</RootNamespace>
+    <AssemblyName>Assembly-CSharp</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp-firstpass" />
+    <Reference Include="DOTween" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="UnityEngine.AnimationModule" />
+    <Reference Include="UnityEngine.AudioModule" />
+    <Reference Include="UnityEngine.ClothModule" />
+    <Reference Include="UnityEngine.CoreModule" />
+    <Reference Include="UnityEngine.ImageConversionModule" />
+    <Reference Include="UnityEngine.IMGUIModule" />
+    <Reference Include="UnityEngine.JSONSerializeModule" />
+    <Reference Include="UnityEngine.PhysicsModule" />
+    <Reference Include="UnityEngine.TextRenderingModule" />
+    <Reference Include="UnityEngine.UI" />
+    <Reference Include="UnityEngine.UIModule" />
+    <Reference Include="UnityEngine.UnityWebRequestModule" />
+    <Reference Include="UnityEngine.UnityWebRequestWWWModule" />
+  </ItemGroup>
+  <ItemGroup>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="actionController.cs" />
+    <Compile Include="aniProto.cs" />
+    <Compile Include="annBehavior.cs" />
+    <Compile Include="annIconBehavior.cs" />
+    <Compile Include="AudioBeatDefinition.cs" />
+    <Compile Include="AudioBox.cs" />
+    <Compile Include="AudioHubObject.cs" />
+    <Compile Include="AudioHubs.cs" />
+    <Compile Include="AudioLayer.cs" />
+    <Compile Include="AudioSite.cs" />
+    <Compile Include="audioSlinger.cs" />
+    <Compile Include="AutomaticLOD.cs" />
+    <Compile Include="backBehavior.cs" />
+    <Compile Include="Basics.cs" />
+    <Compile Include="BlackHatPost.cs" />
+    <Compile Include="BreatherManager.cs" />
+    <Compile Include="bringMeToFrontBehavior.cs" />
+    <Compile Include="btnBehavior.cs" />
+    <Compile Include="cameraUIScrub.cs" />
+    <Compile Include="charScrub.cs" />
+    <Compile Include="CheckDoorAction.cs" />
+    <Compile Include="ChosenAwake.cs" />
+    <Compile Include="ChosenAwakeLink.cs" />
+    <Compile Include="Claffis.cs" />
+    <Compile Include="clickSoundScrub.cs" />
+    <Compile Include="closeAnnBehavior.cs" />
+    <Compile Include="closeBehavior.cs" />
+    <Compile Include="closeTxtBehavior.cs" />
+    <Compile Include="Colorful\AnalogTV.cs" />
+    <Compile Include="Colorful\BaseEffect.cs" />
+    <Compile Include="Colorful\BilateralGaussianBlur.cs" />
+    <Compile Include="Colorful\BleachBypass.cs" />
+    <Compile Include="Colorful\Blend.cs" />
+    <Compile Include="Colorful\BrightnessContrastGamma.cs" />
+    <Compile Include="Colorful\ChannelClamper.cs" />
+    <Compile Include="Colorful\ChannelMixer.cs" />
+    <Compile Include="Colorful\ChannelSwapper.cs" />
+    <Compile Include="Colorful\ChromaticAberration.cs" />
+    <Compile Include="Colorful\CLib.cs" />
+    <Compile Include="Colorful\ComicBook.cs" />
+    <Compile Include="Colorful\ContrastGain.cs" />
+    <Compile Include="Colorful\ContrastVignette.cs" />
+    <Compile Include="Colorful\Convolution3x3.cs" />
+    <Compile Include="Colorful\CrossStitch.cs" />
+    <Compile Include="Colorful\DirectionalBlur.cs" />
+    <Compile Include="Colorful\Dithering.cs" />
+    <Compile Include="Colorful\DoubleVision.cs" />
+    <Compile Include="Colorful\DynamicLookup.cs" />
+    <Compile Include="Colorful\FastVignette.cs" />
+    <Compile Include="Colorful\Frost.cs" />
+    <Compile Include="Colorful\GaussianBlur.cs" />
+    <Compile Include="Colorful\Glitch.cs" />
+    <Compile Include="Colorful\GradientRamp.cs" />
+    <Compile Include="Colorful\GradientRampDynamic.cs" />
+    <Compile Include="Colorful\GrainyBlur.cs" />
+    <Compile Include="Colorful\Grayscale.cs" />
+    <Compile Include="Colorful\Halftone.cs" />
+    <Compile Include="Colorful\Histogram.cs" />
+    <Compile Include="Colorful\HueFocus.cs" />
+    <Compile Include="Colorful\HueSaturationValue.cs" />
+    <Compile Include="Colorful\Kuwahara.cs" />
+    <Compile Include="Colorful\Led.cs" />
+    <Compile Include="Colorful\LensDistortionBlur.cs" />
+    <Compile Include="Colorful\Letterbox.cs" />
+    <Compile Include="Colorful\Levels.cs" />
+    <Compile Include="Colorful\LoFiPalette.cs" />
+    <Compile Include="Colorful\LookupFilter.cs" />
+    <Compile Include="Colorful\LookupFilter3D.cs" />
+    <Compile Include="Colorful\MinAttribute.cs" />
+    <Compile Include="Colorful\Negative.cs" />
+    <Compile Include="Colorful\Noise.cs" />
+    <Compile Include="Colorful\PhotoFilter.cs" />
+    <Compile Include="Colorful\Pixelate.cs" />
+    <Compile Include="Colorful\PixelMatrix.cs" />
+    <Compile Include="Colorful\Posterize.cs" />
+    <Compile Include="Colorful\RadialBlur.cs" />
+    <Compile Include="Colorful\RGBSplit.cs" />
+    <Compile Include="Colorful\SCurveContrast.cs" />
+    <Compile Include="Colorful\ShadowsMidtonesHighlights.cs" />
+    <Compile Include="Colorful\Sharpen.cs" />
+    <Compile Include="Colorful\SmartSaturation.cs" />
+    <Compile Include="Colorful\Strokes.cs" />
+    <Compile Include="Colorful\Technicolor.cs" />
+    <Compile Include="Colorful\Threshold.cs" />
+    <Compile Include="Colorful\TVVignette.cs" />
+    <Compile Include="Colorful\Vibrance.cs" />
+    <Compile Include="Colorful\Vintage.cs" />
+    <Compile Include="Colorful\VintageFast.cs" />
+    <Compile Include="Colorful\WaveDistortion.cs" />
+    <Compile Include="Colorful\WhiteBalance.cs" />
+    <Compile Include="Colorful\Wiggle.cs" />
+    <Compile Include="comeFindMeSite.cs" />
+    <Compile Include="ComputerAction.cs" />
+    <Compile Include="computerController.cs" />
+    <Compile Include="ConfessionDefinition.cs" />
+    <Compile Include="contentFilterBehavior.cs" />
+    <Compile Include="CottonRoad.cs" />
+    <Compile Include="cursorManager.cs" />
+    <Compile Include="cursorTest.cs" />
+    <Compile Include="curtianScrub.cs" />
+    <Compile Include="Definition.cs" />
+    <Compile Include="DevCMDS.cs" />
+    <Compile Include="dirtyAlphaScrub.cs" />
+    <Compile Include="DOSAttack.cs" />
+    <Compile Include="DOSBaker.cs" />
+    <Compile Include="DOSChainDefinition.cs" />
+    <Compile Include="DOSClock.cs" />
+    <Compile Include="DOSLevelDefinition.cs" />
+    <Compile Include="DOSTwitch.cs" />
+    <Compile Include="dragBehavior.cs" />
+    <Compile Include="extCarBehavior.cs" />
+    <Compile Include="FakeDefinition.cs" />
+    <Compile Include="FamilyDrugShop.cs" />
+    <Compile Include="FatherDonald.cs" />
+    <Compile Include="fileSlinger.cs" />
+    <Compile Include="ForgiveMe.cs" />
+    <Compile Include="ForgiveMeConfess.cs" />
+    <Compile Include="forwardBehavior.cs" />
+    <Compile Include="GameData.cs" />
+    <Compile Include="GameManager.cs" />
+    <Compile Include="GameManagerHook.cs" />
+    <Compile Include="GameModeManager.cs" />
+    <Compile Include="GKAnswerObject.cs" />
+    <Compile Include="GlobalAudioController.cs" />
+    <Compile Include="gmCasualHoverScrub.cs" />
+    <Compile Include="HackerManager.cs" />
+    <Compile Include="hackerModeGameType.cs" />
+    <Compile Include="HackerModeManager.cs" />
+    <Compile Include="HackerModeMenuDefinition.cs" />
+    <Compile Include="HackPoll.cs" />
+    <Compile Include="HailSatan.cs" />
+    <Compile Include="HMBTNLink.cs" />
+    <Compile Include="HMBTNObject.cs" />
+    <Compile Include="HMCurrencyManager.cs" />
+    <Compile Include="HMGameData.cs" />
+    <Compile Include="HMMenuItemObject.cs" />
+    <Compile Include="HMMenuObject.cs" />
+    <Compile Include="HMUpgradesManager.cs" />
+    <Compile Include="homeBehavior.cs" />
+    <Compile Include="HotBurners.cs" />
+    <Compile Include="HTTPPusher.cs" />
+    <Compile Include="iconBehavior.cs" />
+    <Compile Include="Illuminati.cs" />
+    <Compile Include="JBrothers\PreIntegratedSkinShader2\Demo\ConfigurableMouseOrbit.cs" />
+    <Compile Include="JBrothers\PreIntegratedSkinShader2\Demo\DemoController.cs" />
+    <Compile Include="JBrothers\PreIntegratedSkinShader2\PreIntegratedSkinProfile.cs" />
+    <Compile Include="jumpScrub.cs" />
+    <Compile Include="KAttack.cs" />
+    <Compile Include="KChainDefinition.cs" />
+    <Compile Include="KCodeLineDefinition.cs" />
+    <Compile Include="KCodeLineObject.cs" />
+    <Compile Include="KeyboardSFXScrub.cs" />
+    <Compile Include="KeyPoll.cs" />
+    <Compile Include="KeyQue.cs" />
+    <Compile Include="KidnapperBehavior.cs" />
+    <Compile Include="KLevelDefinition.cs" />
+    <Compile Include="KnobAction.cs" />
+    <Compile Include="legion.cs" />
+    <Compile Include="LightSwitchAction.cs" />
+    <Compile Include="LinkObject.cs" />
+    <Compile Include="LoadingScreen.cs" />
+    <Compile Include="LODPreview.cs" />
+    <Compile Include="LODSampleLODScene.cs" />
+    <Compile Include="LODSceneSelection.cs" />
+    <Compile Include="magicSlinger.cs" />
+    <Compile Include="mainController.cs" />
+    <Compile Include="MenuLink.cs" />
+    <Compile Include="MenuManager.cs" />
+    <Compile Include="MeshSimplify.cs" />
+    <Compile Include="MicManager.cs" />
+    <Compile Include="ModemAction.cs" />
+    <Compile Include="ModemTimePoll.cs" />
+    <Compile Include="mouseCapture.cs" />
+    <Compile Include="muteBehavior.cs" />
+    <Compile Include="nBehavior.cs" />
+    <Compile Include="NodeObject.cs" />
+    <Compile Include="nodeType.cs" />
+    <Compile Include="NoteObject.cs" />
+    <Compile Include="notesBehavior.cs" />
+    <Compile Include="notesIconBehavior.cs" />
+    <Compile Include="OptionData.cs" />
+    <Compile Include="OptionMenu.cs" />
+    <Compile Include="OptLink.cs" />
+    <Compile Include="PauseManager.cs" />
+    <Compile Include="PhoneAction.cs" />
+    <Compile Include="PhoneManager.cs" />
+    <Compile Include="PreGame.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QuestionDefinition.cs" />
+    <Compile Include="quitScrub.cs" />
+    <Compile Include="rbScrub.cs" />
+    <Compile Include="RedRoomManager.cs" />
+    <Compile Include="reposScrub.cs" />
+    <Compile Include="resizeRTScrub.cs" />
+    <Compile Include="resizeScreenScrub.cs" />
+    <Compile Include="resizeScrub.cs" />
+    <Compile Include="ResLink.cs" />
+    <Compile Include="rrLampScrub.cs" />
+    <Compile Include="SceneManagerWTTG.cs" />
+    <Compile Include="SENaturalBloomAndDirtyLens.cs" />
+    <Compile Include="Sequences.cs" />
+    <Compile Include="ShadowWeb.cs" />
+    <Compile Include="ShutDownBehavior.cs" />
+    <Compile Include="ShutDownIconBehavior.cs" />
+    <Compile Include="SimplifyMeshPreview.cs" />
+    <Compile Include="SiteBTN.cs" />
+    <Compile Include="SiteDefinition.cs" />
+    <Compile Include="SiteHolder.cs" />
+    <Compile Include="SiteKeyStatic.cs" />
+    <Compile Include="SiteSpeedPoll.cs" />
+    <Compile Include="SiteTapFile.cs" />
+    <Compile Include="SiteTapLink.cs" />
+    <Compile Include="SiteTapper.cs" />
+    <Compile Include="SPKeyStatic.cs" />
+    <Compile Include="SpookPoll.cs" />
+    <Compile Include="SPTapFile.cs" />
+    <Compile Include="SPTapLink.cs" />
+    <Compile Include="StartMenu.cs" />
+    <Compile Include="SteamManager.cs" />
+    <Compile Include="SteamSlinger.cs" />
+    <Compile Include="SubPageDefinition.cs" />
+    <Compile Include="SubPageHolder.cs" />
+    <Compile Include="TakeDownMan.cs" />
+    <Compile Include="TangoDown.cs" />
+    <Compile Include="tapType.cs" />
+    <Compile Include="TextRoller.cs" />
+    <Compile Include="TheBunker.cs" />
+    <Compile Include="TheButcher.cs" />
+    <Compile Include="TheCloud.cs" />
+    <Compile Include="TheDollMaker.cs" />
+    <Compile Include="TheGateKeeper.cs" />
+    <Compile Include="TheLoogaroo.cs" />
+    <Compile Include="ThePedoHandbook.cs" />
+    <Compile Include="TheRedRoom.cs" />
+    <Compile Include="TheWaitingRoomLink.cs" />
+    <Compile Include="TimeManager.cs" />
+    <Compile Include="Timer.cs" />
+    <Compile Include="timeSlinger.cs" />
+    <Compile Include="TrackerManager.cs" />
+    <Compile Include="TutorialManager.cs" />
+    <Compile Include="TutorialStepDefinition.cs" />
+    <Compile Include="TwitchData.cs" />
+    <Compile Include="TwitchIRC.cs" />
+    <Compile Include="TwitchLink.cs" />
+    <Compile Include="TwitchMenu.cs" />
+    <Compile Include="txtBehavior.cs" />
+    <Compile Include="txtIconBehavior.cs" />
+    <Compile Include="UIManager.cs" />
+    <Compile Include="UltimateGameTools\MeshSimplifier\MeshUniqueVertices.cs" />
+    <Compile Include="UltimateGameTools\MeshSimplifier\RelevanceSphere.cs" />
+    <Compile Include="UltimateGameTools\MeshSimplifier\Simplifier.cs" />
+    <Compile Include="UnityStandardAssets\Water\Displace.cs" />
+    <Compile Include="UnityStandardAssets\Water\GerstnerDisplace.cs" />
+    <Compile Include="UnityStandardAssets\Water\MeshContainer.cs" />
+    <Compile Include="UnityStandardAssets\Water\PlanarReflection.cs" />
+    <Compile Include="UnityStandardAssets\Water\SpecularLighting.cs" />
+    <Compile Include="UnityStandardAssets\Water\Water.cs" />
+    <Compile Include="UnityStandardAssets\Water\WaterBase.cs" />
+    <Compile Include="UnityStandardAssets\Water\WaterQuality.cs" />
+    <Compile Include="UnityStandardAssets\Water\WaterTile.cs" />
+    <Compile Include="vapeAttack.cs" />
+    <Compile Include="VapeChainDefinition.cs" />
+    <Compile Include="VapeNodeObject.cs" />
+    <Compile Include="vapeNodeType.cs" />
+    <Compile Include="VLevelDefinition.cs" />
+    <Compile Include="WareHouse33.cs" />
+    <Compile Include="WeedPost.cs" />
+    <Compile Include="WhereAmIManager.cs" />
+    <Compile Include="whereAmISite.cs" />
+    <Compile Include="wikiBehavior.cs" />
+    <Compile Include="WikiLink.cs" />
+    <Compile Include="windowBehavior.cs" />
+    <Compile Include="windowWarmScrub.cs" />
+    <Compile Include="WTTGJSONData.cs" />
+    <Compile Include="zeroDay.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
