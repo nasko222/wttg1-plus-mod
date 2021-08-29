@@ -10,46 +10,46 @@ public class StartMenu : MonoBehaviour
 	private void aniTop()
 	{
 		this.topSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.topSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<Color, Color, ColorOptions>>(DOTween.To(() => this.topImage.color, delegate(Color x)
+		this.topSeq.Insert(0f, DOTween.To(() => this.topImage.color, delegate(Color x)
 		{
 			this.topImage.color = x;
-		}, new Color(1f, 1f, 1f, 0.3f), 2f), 3));
-		TweenSettingsExtensions.Insert(this.topSeq, 2f, TweenSettingsExtensions.SetEase<TweenerCore<Color, Color, ColorOptions>>(DOTween.To(() => this.topImage.color, delegate(Color x)
+		}, new Color(1f, 1f, 1f, 0.3f), 2f).SetEase(Ease.OutSine));
+		this.topSeq.Insert(2f, DOTween.To(() => this.topImage.color, delegate(Color x)
 		{
 			this.topImage.color = x;
-		}, new Color(1f, 1f, 1f, 1f), 2f), 2));
-		TweenSettingsExtensions.SetLoops<Sequence>(this.topSeq, -1);
-		TweenExtensions.Play<Sequence>(this.topSeq);
+		}, new Color(1f, 1f, 1f, 1f), 2f).SetEase(Ease.InSine));
+		this.topSeq.SetLoops(-1);
+		this.topSeq.Play<Sequence>();
 	}
 
 	private void aniTitle()
 	{
 		this.titleSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.titleSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<Color, Color, ColorOptions>>(DOTween.To(() => this.titleFadeImage.color, delegate(Color x)
+		this.titleSeq.Insert(0f, DOTween.To(() => this.titleFadeImage.color, delegate(Color x)
 		{
 			this.titleFadeImage.color = x;
-		}, new Color(1f, 1f, 1f, 1f), 1.5f), 1));
-		TweenSettingsExtensions.Insert(this.titleSeq, 1.5f, TweenSettingsExtensions.SetEase<TweenerCore<Color, Color, ColorOptions>>(DOTween.To(() => this.titleFadeImage.color, delegate(Color x)
+		}, new Color(1f, 1f, 1f, 1f), 1.5f).SetEase(Ease.Linear));
+		this.titleSeq.Insert(1.5f, DOTween.To(() => this.titleFadeImage.color, delegate(Color x)
 		{
 			this.titleFadeImage.color = x;
-		}, new Color(1f, 1f, 1f, 0f), 1.5f), 1));
-		TweenSettingsExtensions.SetLoops<Sequence>(this.titleSeq, -1);
-		TweenExtensions.Play<Sequence>(this.titleSeq);
+		}, new Color(1f, 1f, 1f, 0f), 1.5f).SetEase(Ease.Linear));
+		this.titleSeq.SetLoops(-1);
+		this.titleSeq.Play<Sequence>();
 	}
 
 	private void aniRec()
 	{
 		this.recSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.recSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<Color, Color, ColorOptions>>(DOTween.To(() => this.recLiveImage.color, delegate(Color x)
+		this.recSeq.Insert(0f, DOTween.To(() => this.recLiveImage.color, delegate(Color x)
 		{
 			this.recLiveImage.color = x;
-		}, new Color(1f, 1f, 1f, 0.2f), 1f), 1));
-		TweenSettingsExtensions.Insert(this.recSeq, 1f, TweenSettingsExtensions.SetEase<TweenerCore<Color, Color, ColorOptions>>(DOTween.To(() => this.recLiveImage.color, delegate(Color x)
+		}, new Color(1f, 1f, 1f, 0.2f), 1f).SetEase(Ease.Linear));
+		this.recSeq.Insert(1f, DOTween.To(() => this.recLiveImage.color, delegate(Color x)
 		{
 			this.recLiveImage.color = x;
-		}, new Color(1f, 1f, 1f, 1f), 1f), 1));
-		TweenSettingsExtensions.SetLoops<Sequence>(this.recSeq, -1);
-		TweenExtensions.Play<Sequence>(this.recSeq);
+		}, new Color(1f, 1f, 1f, 1f), 1f).SetEase(Ease.Linear));
+		this.recSeq.SetLoops(-1);
+		this.recSeq.Play<Sequence>();
 	}
 
 	private void addViewerCount()
@@ -61,10 +61,10 @@ public class StartMenu : MonoBehaviour
 		else
 		{
 			this.viewerCountText.text = this.viewerCount.ToString("N0");
-			this.viewerCountWindow = Random.Range(1f, 5f);
+			this.viewerCountWindow = UnityEngine.Random.Range(1f, 5f);
 			this.viewerCountTimeStamp = Time.time;
 			this.viewerCountActive = true;
-			this.viewerCount += Random.Range(4, 25);
+			this.viewerCount += UnityEngine.Random.Range(4, 25);
 		}
 	}
 
@@ -99,15 +99,15 @@ public class StartMenu : MonoBehaviour
 		GameManager.TimeSlinger.FireTimer(0.3f, new Action(this.enableAreYouSure));
 		GameManager.TimeSlinger.FireTimer(0.3f, new Action(this.disableGameMode));
 		this.menuSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.menuSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.gameMode.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		this.menuSeq.Insert(0f, DOTween.To(() => this.gameMode.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.gameMode.GetComponent<CanvasGroup>().alpha = x;
-		}, 0f, 0.3f), 1));
-		TweenSettingsExtensions.Insert(this.menuSeq, 0.3f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.areYouSure.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		}, 0f, 0.3f).SetEase(Ease.Linear));
+		this.menuSeq.Insert(0.3f, DOTween.To(() => this.areYouSure.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.areYouSure.GetComponent<CanvasGroup>().alpha = x;
-		}, 1f, 0.3f), 1));
-		TweenExtensions.Play<Sequence>(this.menuSeq);
+		}, 1f, 0.3f).SetEase(Ease.Linear));
+		this.menuSeq.Play<Sequence>();
 	}
 
 	private void showGameMode()
@@ -115,15 +115,15 @@ public class StartMenu : MonoBehaviour
 		GameManager.TimeSlinger.FireTimer(0.3f, new Action(this.enableGameMode));
 		GameManager.TimeSlinger.FireTimer(0.3f, new Action(this.disableMenuHolder));
 		this.menuSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.menuSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.menuHolder.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		this.menuSeq.Insert(0f, DOTween.To(() => this.menuHolder.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.menuHolder.GetComponent<CanvasGroup>().alpha = x;
-		}, 0f, 0.3f), 1));
-		TweenSettingsExtensions.Insert(this.menuSeq, 0.3f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.gameMode.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		}, 0f, 0.3f).SetEase(Ease.Linear));
+		this.menuSeq.Insert(0.3f, DOTween.To(() => this.gameMode.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.gameMode.GetComponent<CanvasGroup>().alpha = x;
-		}, 1f, 0.3f), 1));
-		TweenExtensions.Play<Sequence>(this.menuSeq);
+		}, 1f, 0.3f).SetEase(Ease.Linear));
+		this.menuSeq.Play<Sequence>();
 	}
 
 	private void goBackToMenuHolder()
@@ -131,15 +131,15 @@ public class StartMenu : MonoBehaviour
 		GameManager.TimeSlinger.FireTimer(0.3f, new Action(this.disableAreYouSure));
 		GameManager.TimeSlinger.FireTimer(0.3f, new Action(this.enableMenuHolder));
 		this.menuSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.menuSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.areYouSure.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		this.menuSeq.Insert(0f, DOTween.To(() => this.areYouSure.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.areYouSure.GetComponent<CanvasGroup>().alpha = x;
-		}, 0f, 0.3f), 1));
-		TweenSettingsExtensions.Insert(this.menuSeq, 0.3f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.menuHolder.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		}, 0f, 0.3f).SetEase(Ease.Linear));
+		this.menuSeq.Insert(0.3f, DOTween.To(() => this.menuHolder.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.menuHolder.GetComponent<CanvasGroup>().alpha = x;
-		}, 1f, 0.3f), 1));
-		TweenExtensions.Play<Sequence>(this.menuSeq);
+		}, 1f, 0.3f).SetEase(Ease.Linear));
+		this.menuSeq.Play<Sequence>();
 	}
 
 	private void goBackToMenuFromGameMode()
@@ -147,15 +147,15 @@ public class StartMenu : MonoBehaviour
 		GameManager.TimeSlinger.FireTimer(0.3f, new Action(this.disableGameMode));
 		GameManager.TimeSlinger.FireTimer(0.3f, new Action(this.enableMenuHolder));
 		this.menuSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.menuSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.gameMode.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		this.menuSeq.Insert(0f, DOTween.To(() => this.gameMode.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.gameMode.GetComponent<CanvasGroup>().alpha = x;
-		}, 0f, 0.3f), 1));
-		TweenSettingsExtensions.Insert(this.menuSeq, 0.3f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.menuHolder.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		}, 0f, 0.3f).SetEase(Ease.Linear));
+		this.menuSeq.Insert(0.3f, DOTween.To(() => this.menuHolder.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.menuHolder.GetComponent<CanvasGroup>().alpha = x;
-		}, 1f, 0.3f), 1));
-		TweenExtensions.Play<Sequence>(this.menuSeq);
+		}, 1f, 0.3f).SetEase(Ease.Linear));
+		this.menuSeq.Play<Sequence>();
 	}
 
 	private void enableAreYouSure()

@@ -26,13 +26,13 @@ public class HMMenuItemObject : MonoBehaviour, IPointerEnterHandler, IPointerExi
 	public void lockMe()
 	{
 		this.iAmLocked = true;
-		this.menuLineText.fontStyle = 2;
+		this.menuLineText.fontStyle = FontStyle.Italic;
 	}
 
 	public void unLockMe()
 	{
 		this.iAmLocked = false;
-		this.menuLineText.fontStyle = 0;
+		this.menuLineText.fontStyle = FontStyle.Normal;
 	}
 
 	private void showMe()
@@ -41,11 +41,11 @@ public class HMMenuItemObject : MonoBehaviour, IPointerEnterHandler, IPointerExi
 		this.boxHighlight.color = this.boxHighlightColor;
 		this.menuLineText.text = this.menuText;
 		this.showMeSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.showMeSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<Color, Color, ColorOptions>>(DOTween.To(() => this.boxHighlight.color, delegate(Color x)
+		this.showMeSeq.Insert(0f, DOTween.To(() => this.boxHighlight.color, delegate(Color x)
 		{
 			this.boxHighlight.color = x;
-		}, new Color(this.boxHighlightColor.r, this.boxHighlightColor.g, this.boxHighlightColor.b, 0f), 0.3f), 1));
-		TweenExtensions.Play<Sequence>(this.showMeSeq);
+		}, new Color(this.boxHighlightColor.r, this.boxHighlightColor.g, this.boxHighlightColor.b, 0f), 0.3f).SetEase(Ease.Linear));
+		this.showMeSeq.Play<Sequence>();
 	}
 
 	public void OnPointerEnter(PointerEventData eventData)
@@ -53,10 +53,10 @@ public class HMMenuItemObject : MonoBehaviour, IPointerEnterHandler, IPointerExi
 		if (!this.iAmLocked)
 		{
 			GameManager.AudioSlinger.DealSound(AudioHubs.MENU, AudioLayer.HACKINGSFX, this.showSFX, 0.6f, false);
-			TweenSettingsExtensions.SetEase<TweenerCore<Color, Color, ColorOptions>>(DOTween.To(() => this.menuHighlight.color, delegate(Color x)
+			DOTween.To(() => this.menuHighlight.color, delegate(Color x)
 			{
 				this.menuHighlight.color = x;
-			}, new Color(this.menuHighlight.color.r, this.menuHighlight.color.g, this.menuHighlight.color.b, 1f), 0.3f), 1);
+			}, new Color(this.menuHighlight.color.r, this.menuHighlight.color.g, this.menuHighlight.color.b, 1f), 0.3f).SetEase(Ease.Linear);
 		}
 	}
 
@@ -64,10 +64,10 @@ public class HMMenuItemObject : MonoBehaviour, IPointerEnterHandler, IPointerExi
 	{
 		if (!this.iAmLocked)
 		{
-			TweenSettingsExtensions.SetEase<TweenerCore<Color, Color, ColorOptions>>(DOTween.To(() => this.menuHighlight.color, delegate(Color x)
+			DOTween.To(() => this.menuHighlight.color, delegate(Color x)
 			{
 				this.menuHighlight.color = x;
-			}, new Color(this.menuHighlight.color.r, this.menuHighlight.color.g, this.menuHighlight.color.b, 0f), 0.3f), 1);
+			}, new Color(this.menuHighlight.color.r, this.menuHighlight.color.g, this.menuHighlight.color.b, 0f), 0.3f).SetEase(Ease.Linear);
 		}
 	}
 
@@ -75,10 +75,10 @@ public class HMMenuItemObject : MonoBehaviour, IPointerEnterHandler, IPointerExi
 	{
 		if (!this.iAmLocked && !this.iWasFired)
 		{
-			TweenSettingsExtensions.SetEase<TweenerCore<Color, Color, ColorOptions>>(DOTween.To(() => this.menuHighlight.color, delegate(Color x)
+			DOTween.To(() => this.menuHighlight.color, delegate(Color x)
 			{
 				this.menuHighlight.color = x;
-			}, new Color(this.menuHighlight.color.r, this.menuHighlight.color.g, this.menuHighlight.color.b, 0f), 0.3f), 1);
+			}, new Color(this.menuHighlight.color.r, this.menuHighlight.color.g, this.menuHighlight.color.b, 0f), 0.3f).SetEase(Ease.Linear);
 			this.myHMM.performMenuAction(this.myAction);
 			this.iWasFired = true;
 		}

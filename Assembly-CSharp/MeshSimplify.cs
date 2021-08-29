@@ -109,15 +109,15 @@ public class MeshSimplify : MonoBehaviour
 					{
 						if (Application.isEditor && !Application.isPlaying)
 						{
-							Object.DestroyImmediate(components[i]);
+							UnityEngine.Object.DestroyImmediate(components[i]);
 						}
 						else
 						{
-							Object.Destroy(components[i]);
+							UnityEngine.Object.Destroy(components[i]);
 						}
 					}
 					meshSimplify.m_meshSimplifier = meshSimplify.gameObject.AddComponent<Simplifier>();
-					meshSimplify.m_meshSimplifier.hideFlags = 2;
+					meshSimplify.m_meshSimplifier.hideFlags = HideFlags.HideInInspector;
 					meshSimplify.ConfigureSimplifier();
 					IEnumerator enumerator = meshSimplify.m_meshSimplifier.ProgressiveMesh(gameObject, meshSimplify.m_originalMesh, root.m_aRelevanceSpheres, meshSimplify.name, progress);
 					while (enumerator.MoveNext())
@@ -147,15 +147,15 @@ public class MeshSimplify : MonoBehaviour
 					{
 						if (Application.isEditor && !Application.isPlaying)
 						{
-							Object.DestroyImmediate(components2[j]);
+							UnityEngine.Object.DestroyImmediate(components2[j]);
 						}
 						else
 						{
-							Object.Destroy(components2[j]);
+							UnityEngine.Object.Destroy(components2[j]);
 						}
 					}
 					meshSimplify.m_meshSimplifier = meshSimplify.gameObject.AddComponent<Simplifier>();
-					meshSimplify.m_meshSimplifier.hideFlags = 2;
+					meshSimplify.m_meshSimplifier.hideFlags = HideFlags.HideInInspector;
 					meshSimplify.ConfigureSimplifier();
 					IEnumerator enumerator2 = meshSimplify.m_meshSimplifier.ProgressiveMesh(gameObject, meshSimplify.m_originalMesh, root.m_aRelevanceSpheres, meshSimplify.name, progress);
 					while (enumerator2.MoveNext())
@@ -458,11 +458,11 @@ public class MeshSimplify : MonoBehaviour
 			{
 				if (Application.isEditor && !Application.isPlaying)
 				{
-					Object.DestroyImmediate(components[i]);
+					UnityEngine.Object.DestroyImmediate(components[i]);
 				}
 				else
 				{
-					Object.Destroy(components[i]);
+					UnityEngine.Object.Destroy(components[i]);
 				}
 			}
 			component.m_bDataDirty = true;
@@ -482,7 +482,7 @@ public class MeshSimplify : MonoBehaviour
 		{
 			return new Mesh();
 		}
-		Mesh mesh = Object.Instantiate<Mesh>(meshSimplify.m_originalMesh);
+		Mesh mesh = UnityEngine.Object.Instantiate<Mesh>(meshSimplify.m_originalMesh);
 		mesh.Clear();
 		return mesh;
 	}

@@ -13,7 +13,7 @@ public class SENaturalBloomAndDirtyLens : MonoBehaviour
 		{
 			this.material = new Material(this.shader);
 		}
-		if (!SystemInfo.supportsImageEffects || !SystemInfo.supportsRenderTextures || !SystemInfo.SupportsRenderTextureFormat(2))
+		if (!SystemInfo.supportsImageEffects || !SystemInfo.supportsRenderTextures || !SystemInfo.SupportsRenderTextureFormat(RenderTextureFormat.ARGBHalf))
 		{
 			this.isSupported = false;
 		}
@@ -23,7 +23,7 @@ public class SENaturalBloomAndDirtyLens : MonoBehaviour
 	{
 		if (this.material)
 		{
-			Object.DestroyImmediate(this.material);
+			UnityEngine.Object.DestroyImmediate(this.material);
 		}
 	}
 
@@ -38,22 +38,22 @@ public class SENaturalBloomAndDirtyLens : MonoBehaviour
 		{
 			this.material = new Material(this.shader);
 		}
-		this.material.hideFlags = 61;
+		this.material.hideFlags = HideFlags.HideAndDontSave;
 		this.material.SetFloat("_BloomIntensity", Mathf.Exp(this.bloomIntensity) - 1f);
 		this.material.SetFloat("_LensDirtIntensity", Mathf.Exp(this.lensDirtIntensity) - 1f);
-		source.filterMode = 1;
+		source.filterMode = FilterMode.Bilinear;
 		RenderTexture temporary = RenderTexture.GetTemporary(source.width, source.height, 0, source.format);
 		Graphics.Blit(source, temporary, this.material, 4);
 		int num = source.width / 2;
 		int num2 = source.height / 2;
-		RenderTexture renderTexture = temporary;
+		RenderTexture source2 = temporary;
 		int num3 = 2;
 		for (int i = 0; i < 6; i++)
 		{
-			RenderTexture renderTexture2 = RenderTexture.GetTemporary(num, num2, 0, source.format);
-			renderTexture2.filterMode = 1;
-			Graphics.Blit(renderTexture, renderTexture2, this.material, 1);
-			renderTexture = renderTexture2;
+			RenderTexture renderTexture = RenderTexture.GetTemporary(num, num2, 0, source.format);
+			renderTexture.filterMode = FilterMode.Bilinear;
+			Graphics.Blit(source2, renderTexture, this.material, 1);
+			source2 = renderTexture;
 			float num4;
 			if (i > 1)
 			{
@@ -71,38 +71,38 @@ public class SENaturalBloomAndDirtyLens : MonoBehaviour
 			{
 				this.material.SetFloat("_BlurSize", (this.blurSize * 0.5f + (float)j) * num4);
 				RenderTexture temporary2 = RenderTexture.GetTemporary(num, num2, 0, source.format);
-				temporary2.filterMode = 1;
-				Graphics.Blit(renderTexture2, temporary2, this.material, 2);
-				RenderTexture.ReleaseTemporary(renderTexture2);
-				renderTexture2 = temporary2;
+				temporary2.filterMode = FilterMode.Bilinear;
+				Graphics.Blit(renderTexture, temporary2, this.material, 2);
+				RenderTexture.ReleaseTemporary(renderTexture);
+				renderTexture = temporary2;
 				temporary2 = RenderTexture.GetTemporary(num, num2, 0, source.format);
-				temporary2.filterMode = 1;
-				Graphics.Blit(renderTexture2, temporary2, this.material, 3);
-				RenderTexture.ReleaseTemporary(renderTexture2);
-				renderTexture2 = temporary2;
+				temporary2.filterMode = FilterMode.Bilinear;
+				Graphics.Blit(renderTexture, temporary2, this.material, 3);
+				RenderTexture.ReleaseTemporary(renderTexture);
+				renderTexture = temporary2;
 			}
 			switch (i)
 			{
 			case 0:
-				this.material.SetTexture("_Bloom0", renderTexture2);
+				this.material.SetTexture("_Bloom0", renderTexture);
 				break;
 			case 1:
-				this.material.SetTexture("_Bloom1", renderTexture2);
+				this.material.SetTexture("_Bloom1", renderTexture);
 				break;
 			case 2:
-				this.material.SetTexture("_Bloom2", renderTexture2);
+				this.material.SetTexture("_Bloom2", renderTexture);
 				break;
 			case 3:
-				this.material.SetTexture("_Bloom3", renderTexture2);
+				this.material.SetTexture("_Bloom3", renderTexture);
 				break;
 			case 4:
-				this.material.SetTexture("_Bloom4", renderTexture2);
+				this.material.SetTexture("_Bloom4", renderTexture);
 				break;
 			case 5:
-				this.material.SetTexture("_Bloom5", renderTexture2);
+				this.material.SetTexture("_Bloom5", renderTexture);
 				break;
 			}
-			RenderTexture.ReleaseTemporary(renderTexture2);
+			RenderTexture.ReleaseTemporary(renderTexture);
 			num /= 2;
 			num2 /= 2;
 		}

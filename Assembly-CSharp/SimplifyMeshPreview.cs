@@ -32,11 +32,11 @@ public class SimplifyMeshPreview : MonoBehaviour
 
 	private void Update()
 	{
-		if (Input.GetKeyDown(282))
+		if (Input.GetKeyDown(KeyCode.F1))
 		{
 			this.m_bGUIEnabled = !this.m_bGUIEnabled;
 		}
-		if (Input.GetKeyDown(119))
+		if (Input.GetKeyDown(KeyCode.W))
 		{
 			this.m_bWireframe = !this.m_bWireframe;
 			this.SetWireframe(this.m_bWireframe);
@@ -45,8 +45,8 @@ public class SimplifyMeshPreview : MonoBehaviour
 		{
 			if (Input.GetMouseButton(0) && Input.mousePosition.y > 100f)
 			{
-				Vector3 vector = this.ShowcaseObjects[this.m_nSelectedIndex].m_rotationAxis * -((Input.mousePosition.x - this.m_fLastMouseX) * this.MouseSensitvity);
-				this.m_selectedMeshSimplify.transform.Rotate(vector, 1);
+				Vector3 eulerAngles = this.ShowcaseObjects[this.m_nSelectedIndex].m_rotationAxis * -((Input.mousePosition.x - this.m_fLastMouseX) * this.MouseSensitvity);
+				this.m_selectedMeshSimplify.transform.Rotate(eulerAngles, Space.Self);
 			}
 			else if (Input.GetMouseButtonUp(0) && Input.mousePosition.y > 100f)
 			{
@@ -54,8 +54,8 @@ public class SimplifyMeshPreview : MonoBehaviour
 			}
 			else
 			{
-				Vector3 vector2 = this.ShowcaseObjects[this.m_nSelectedIndex].m_rotationAxis * (this.m_fRotationSpeed * Time.deltaTime);
-				this.m_selectedMeshSimplify.transform.Rotate(vector2, 1);
+				Vector3 eulerAngles2 = this.ShowcaseObjects[this.m_nSelectedIndex].m_rotationAxis * (this.m_fRotationSpeed * Time.deltaTime);
+				this.m_selectedMeshSimplify.transform.Rotate(eulerAngles2, Space.Self);
 			}
 		}
 		this.m_fLastMouseX = Input.mousePosition.x;
@@ -67,11 +67,9 @@ public class SimplifyMeshPreview : MonoBehaviour
 		int num2 = 50;
 		int num3 = 20;
 		int num4 = 10;
-		Rect rect;
-		rect..ctor((float)(Screen.width / 2 - num / 2), 0f, (float)num, (float)num2);
-		Rect rect2;
-		rect2..ctor(rect.x + (float)num3, rect.y + (float)num4, (float)(num - num3 * 2), (float)(num2 - num4 * 2));
-		GUILayout.BeginArea(rect2);
+		Rect rect = new Rect((float)(Screen.width / 2 - num / 2), 0f, (float)num, (float)num2);
+		Rect screenRect = new Rect(rect.x + (float)num3, rect.y + (float)num4, (float)(num - num3 * 2), (float)(num2 - num4 * 2));
+		GUILayout.BeginArea(screenRect);
 		if (GUILayout.Button("Exit", new GUILayoutOption[0]))
 		{
 			Application.Quit();
@@ -103,7 +101,7 @@ public class SimplifyMeshPreview : MonoBehaviour
 			{
 				if (this.m_selectedMeshSimplify != null)
 				{
-					Object.DestroyImmediate(this.m_selectedMeshSimplify.gameObject);
+					UnityEngine.Object.DestroyImmediate(this.m_selectedMeshSimplify.gameObject);
 				}
 				this.SetActiveObject(i);
 			}
@@ -170,7 +168,7 @@ public class SimplifyMeshPreview : MonoBehaviour
 	private void SetActiveObject(int index)
 	{
 		this.m_nSelectedIndex = index;
-		MeshSimplify meshSimplify = Object.Instantiate<MeshSimplify>(this.ShowcaseObjects[index].m_meshSimplify);
+		MeshSimplify meshSimplify = UnityEngine.Object.Instantiate<MeshSimplify>(this.ShowcaseObjects[index].m_meshSimplify);
 		meshSimplify.transform.position = this.ShowcaseObjects[index].m_position;
 		meshSimplify.transform.rotation = Quaternion.Euler(this.ShowcaseObjects[index].m_angles);
 		this.m_selectedMeshSimplify = meshSimplify;
@@ -227,11 +225,11 @@ public class SimplifyMeshPreview : MonoBehaviour
 				Mesh newMesh = null;
 				if (meshFilter != null)
 				{
-					newMesh = Object.Instantiate<Mesh>(meshFilter.sharedMesh);
+					newMesh = UnityEngine.Object.Instantiate<Mesh>(meshFilter.sharedMesh);
 				}
 				else if (skin != null)
 				{
-					newMesh = Object.Instantiate<Mesh>(skin.sharedMesh);
+					newMesh = UnityEngine.Object.Instantiate<Mesh>(skin.sharedMesh);
 				}
 				if (meshSimplify.GetMeshSimplifier() != null)
 				{

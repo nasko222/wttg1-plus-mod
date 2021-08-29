@@ -7,12 +7,12 @@ public class cursorManager : MonoBehaviour
 	{
 		if (setMove)
 		{
-			Cursor.lockState = 0;
+			Cursor.lockState = CursorLockMode.None;
 			Cursor.visible = false;
 		}
 		else
 		{
-			Cursor.lockState = 1;
+			Cursor.lockState = CursorLockMode.Locked;
 			Cursor.visible = false;
 		}
 	}
@@ -20,14 +20,14 @@ public class cursorManager : MonoBehaviour
 	public void enableCursor()
 	{
 		Cursor.visible = true;
-		Cursor.lockState = 0;
+		Cursor.lockState = CursorLockMode.None;
 		this.cursorIsDisabled = false;
 	}
 
 	public void disableCursor()
 	{
 		Cursor.visible = false;
-		Cursor.lockState = 1;
+		Cursor.lockState = CursorLockMode.Locked;
 		this.cursorIsDisabled = true;
 	}
 
@@ -36,7 +36,7 @@ public class cursorManager : MonoBehaviour
 		if (this.hideCursorOnStart)
 		{
 			Cursor.visible = false;
-			Cursor.lockState = 1;
+			Cursor.lockState = CursorLockMode.Locked;
 			this.cursorIsDisabled = true;
 		}
 	}

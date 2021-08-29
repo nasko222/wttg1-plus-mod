@@ -10,20 +10,20 @@ public class PhoneManager : MonoBehaviour
 	{
 		this.offStateCG.alpha = 1f;
 		this.PhoneScreen.gameObject.SetActive(true);
-		TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.offStateCG.alpha, delegate(float x)
+		DOTween.To(() => this.offStateCG.alpha, delegate(float x)
 		{
 			this.offStateCG.alpha = x;
-		}, 0f, 0.4f), 1);
+		}, 0f, 0.4f).SetEase(Ease.Linear);
 		this.phoneLockOnTimeStamp = Time.time;
 		this.phoneLockOn = true;
 	}
 
 	public void turnPhoneOff()
 	{
-		TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.offStateCG.alpha, delegate(float x)
+		DOTween.To(() => this.offStateCG.alpha, delegate(float x)
 		{
 			this.offStateCG.alpha = x;
-		}, 1f, 0.4f), 1);
+		}, 1f, 0.4f).SetEase(Ease.Linear);
 		GameManager.TimeSlinger.FireTimer(0.4f, new Action(this.setPhoneScreenOff));
 	}
 
@@ -42,17 +42,17 @@ public class PhoneManager : MonoBehaviour
 	{
 		this.incomingCall = false;
 		this.onCall = true;
-		TweenExtensions.Kill(this.phoneAniSeq, true);
+		this.phoneAniSeq.Kill(true);
 		GameManager.TimeSlinger.KillTimerWithID("cellPhoneVib");
 		GameManager.TimeSlinger.KillTimerWithID("cellPhoneRing");
 		GameManager.TimeSlinger.KillTimerWithID("missedCall");
 		GameManager.AudioSlinger.RemoveSound(AudioHubs.PHONE, this.phoneVibrateSFX.name);
 		GameManager.AudioSlinger.RemoveSound(AudioHubs.PHONE, this.phoneRingSFX.name + ":1.2");
 		GameManager.AudioSlinger.DealSound(AudioHubs.PHONE, AudioLayer.PHONE, this.phonePickUpSFX, 0.2f, false);
-		TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.incomingCallCG.alpha, delegate(float x)
+		DOTween.To(() => this.incomingCallCG.alpha, delegate(float x)
 		{
 			this.incomingCallCG.alpha = x;
-		}, 0f, 0.5f), 1);
+		}, 0f, 0.5f).SetEase(Ease.Linear);
 		this.phoneClockCG.alpha = 0f;
 		GameManager.TimeSlinger.FireTimer(0.5f, new Action(this.playCallAudio));
 		GameManager.TimeSlinger.FireTimer(0.5f, new Action(this.myPhoneAction.phoneDoneAction));
@@ -69,14 +69,14 @@ public class PhoneManager : MonoBehaviour
 		GameManager.TimeSlinger.FireTimer(6.5f, new Action(this.resetPhoneCGs));
 		GameManager.AudioSlinger.DealSound(AudioHubs.PHONE, AudioLayer.PHONE, this.phoneHangUpSFX, 0.2f, false);
 		GameManager.AudioSlinger.RemoveSound(AudioHubs.PHONE, this.currentCallClip.name);
-		TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.onCallCG.alpha, delegate(float x)
+		DOTween.To(() => this.onCallCG.alpha, delegate(float x)
 		{
 			this.onCallCG.alpha = x;
-		}, 0f, 0.5f), 1);
-		TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.phoneClockCG.alpha, delegate(float x)
+		}, 0f, 0.5f).SetEase(Ease.Linear);
+		DOTween.To(() => this.phoneClockCG.alpha, delegate(float x)
 		{
 			this.phoneClockCG.alpha = x;
-		}, 1f, 0.5f), 1);
+		}, 1f, 0.5f).SetEase(Ease.Linear);
 	}
 
 	public void hangUpPhone(bool forcedHangUp)
@@ -94,14 +94,14 @@ public class PhoneManager : MonoBehaviour
 		GameManager.TimeSlinger.FireTimer(6.5f, new Action(this.resetPhoneCGs));
 		GameManager.AudioSlinger.DealSound(AudioHubs.PHONE, AudioLayer.PHONE, this.phoneHangUpSFX, 0.2f, false);
 		GameManager.AudioSlinger.RemoveSound(AudioHubs.PHONE, this.currentCallClip.name);
-		TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.onCallCG.alpha, delegate(float x)
+		DOTween.To(() => this.onCallCG.alpha, delegate(float x)
 		{
 			this.onCallCG.alpha = x;
-		}, 0f, 0.5f), 1);
-		TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.phoneClockCG.alpha, delegate(float x)
+		}, 0f, 0.5f).SetEase(Ease.Linear);
+		DOTween.To(() => this.phoneClockCG.alpha, delegate(float x)
 		{
 			this.phoneClockCG.alpha = x;
-		}, 1f, 0.5f), 1);
+		}, 1f, 0.5f).SetEase(Ease.Linear);
 	}
 
 	public void killPhone()
@@ -165,23 +165,23 @@ public class PhoneManager : MonoBehaviour
 		{
 			GameManager.AudioSlinger.DealSound(AudioHubs.PHONE, AudioLayer.PHONE, this.phoneVibrateSFX, 0.25f, false);
 			this.phoneAniSeq = DOTween.Sequence();
-			TweenSettingsExtensions.Insert(this.phoneAniSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<Quaternion, Vector3, QuaternionOptions>>(DOTween.To(() => this.PhoneObject.transform.localRotation, delegate(Quaternion x)
+			this.phoneAniSeq.Insert(0f, DOTween.To(() => this.PhoneObject.transform.localRotation, delegate(Quaternion x)
 			{
 				this.PhoneObject.transform.localRotation = x;
-			}, new Vector3(this.defaultPhoneROT.x, this.defaultPhoneROT.y * 1.02f, this.defaultPhoneROT.z), 0.5385f), 1));
-			TweenSettingsExtensions.Insert(this.phoneAniSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.PhoneObject.transform.localPosition, delegate(Vector3 x)
+			}, new Vector3(this.defaultPhoneROT.x, this.defaultPhoneROT.y * 1.02f, this.defaultPhoneROT.z), 0.5385f).SetEase(Ease.Linear));
+			this.phoneAniSeq.Insert(0f, DOTween.To(() => this.PhoneObject.transform.localPosition, delegate(Vector3 x)
 			{
 				this.PhoneObject.transform.localPosition = x;
-			}, new Vector3(this.defaultPhonePOS.x + this.defaultPhonePOS.x * 0.001f, this.defaultPhonePOS.y, this.defaultPhonePOS.z - this.defaultPhonePOS.z * 0.001f), 0.5385f), 1));
-			TweenSettingsExtensions.Insert(this.phoneAniSeq, 0.5385f, TweenSettingsExtensions.SetEase<TweenerCore<Quaternion, Vector3, QuaternionOptions>>(DOTween.To(() => this.PhoneObject.transform.localRotation, delegate(Quaternion x)
+			}, new Vector3(this.defaultPhonePOS.x + this.defaultPhonePOS.x * 0.001f, this.defaultPhonePOS.y, this.defaultPhonePOS.z - this.defaultPhonePOS.z * 0.001f), 0.5385f).SetEase(Ease.Linear));
+			this.phoneAniSeq.Insert(0.5385f, DOTween.To(() => this.PhoneObject.transform.localRotation, delegate(Quaternion x)
 			{
 				this.PhoneObject.transform.localRotation = x;
-			}, new Vector3(this.defaultPhoneROT.x, this.defaultPhoneROT.y, this.defaultPhoneROT.z), 0.5385f), 1));
-			TweenSettingsExtensions.Insert(this.phoneAniSeq, 0.5385f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.PhoneObject.transform.localPosition, delegate(Vector3 x)
+			}, new Vector3(this.defaultPhoneROT.x, this.defaultPhoneROT.y, this.defaultPhoneROT.z), 0.5385f).SetEase(Ease.Linear));
+			this.phoneAniSeq.Insert(0.5385f, DOTween.To(() => this.PhoneObject.transform.localPosition, delegate(Vector3 x)
 			{
 				this.PhoneObject.transform.localPosition = x;
-			}, new Vector3(this.defaultPhonePOS.x, this.defaultPhonePOS.y, this.defaultPhonePOS.z), 0.5385f), 1));
-			TweenExtensions.Play<Sequence>(this.phoneAniSeq);
+			}, new Vector3(this.defaultPhonePOS.x, this.defaultPhonePOS.y, this.defaultPhonePOS.z), 0.5385f).SetEase(Ease.Linear));
+			this.phoneAniSeq.Play<Sequence>();
 		}
 	}
 
@@ -198,25 +198,25 @@ public class PhoneManager : MonoBehaviour
 	{
 		this.offStateCG.alpha = 1f;
 		this.PhoneScreen.gameObject.SetActive(true);
-		TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.offStateCG.alpha, delegate(float x)
+		DOTween.To(() => this.offStateCG.alpha, delegate(float x)
 		{
 			this.offStateCG.alpha = x;
-		}, 0f, 0.4f), 1);
+		}, 0f, 0.4f).SetEase(Ease.Linear);
 	}
 
 	private void triggerPhoneScreenOff()
 	{
-		TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.offStateCG.alpha, delegate(float x)
+		DOTween.To(() => this.offStateCG.alpha, delegate(float x)
 		{
 			this.offStateCG.alpha = x;
-		}, 1f, 0.4f), 1);
+		}, 1f, 0.4f).SetEase(Ease.Linear);
 		GameManager.TimeSlinger.FireTimer(0.4f, new Action(this.setPhoneScreenOff));
 	}
 
 	private void stopIncomingCall()
 	{
 		this.incomingCall = false;
-		TweenExtensions.Kill(this.phoneAniSeq, true);
+		this.phoneAniSeq.Kill(true);
 		GameManager.TimeSlinger.KillTimerWithID("cellPhoneVib");
 		GameManager.TimeSlinger.KillTimerWithID("cellPhoneRing");
 		GameManager.TimeSlinger.KillTimerWithID("missedCall");

@@ -69,10 +69,10 @@ public class HMUpgradesManager : MonoBehaviour
 							GameManager.AudioSlinger.DealSound(AudioHubs.HACKERMODE, AudioLayer.HACKINGSFX, this.cloudFREEZESFX, 1f, false);
 							this.coolOffActive = true;
 							this.cloudFREEZE.GetComponent<CanvasGroup>().alpha = 0.1f;
-							TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.cloudFREEZE.GetComponent<CanvasGroup>().alpha, delegate(float x)
+							DOTween.To(() => this.cloudFREEZE.GetComponent<CanvasGroup>().alpha, delegate(float x)
 							{
 								this.cloudFREEZE.GetComponent<CanvasGroup>().alpha = x;
-							}, 1f, this.coolOffTime * 60f), 1);
+							}, 1f, this.coolOffTime * 60f).SetEase(Ease.Linear);
 							GameManager.TimeSlinger.FireTimer(this.coolOffTime * 60f, new Action(this.resetCoolOff), "HMCoolOffTimer");
 							this.myHMM.myVapeAttack.freezeTime();
 						}
@@ -83,10 +83,10 @@ public class HMUpgradesManager : MonoBehaviour
 					GameManager.AudioSlinger.DealSound(AudioHubs.HACKERMODE, AudioLayer.HACKINGSFX, this.KSkipSFX, 0.75f, false);
 					this.coolOffActive = true;
 					this.KSkip.GetComponent<CanvasGroup>().alpha = 0.1f;
-					TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.KSkip.GetComponent<CanvasGroup>().alpha, delegate(float x)
+					DOTween.To(() => this.KSkip.GetComponent<CanvasGroup>().alpha, delegate(float x)
 					{
 						this.KSkip.GetComponent<CanvasGroup>().alpha = x;
-					}, 1f, this.coolOffTime * 60f), 1);
+					}, 1f, this.coolOffTime * 60f).SetEase(Ease.Linear);
 					GameManager.TimeSlinger.FireTimer(this.coolOffTime * 60f, new Action(this.resetCoolOff), "HMCoolOffTimer");
 					this.myHMM.myKAttack.skipCurrentLine();
 				}
@@ -95,20 +95,20 @@ public class HMUpgradesManager : MonoBehaviour
 			{
 				if (this.DOSTurboActive)
 				{
-					TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.DOSTurbo.GetComponent<CanvasGroup>().alpha, delegate(float x)
+					DOTween.To(() => this.DOSTurbo.GetComponent<CanvasGroup>().alpha, delegate(float x)
 					{
 						this.DOSTurbo.GetComponent<CanvasGroup>().alpha = x;
-					}, 0.1f, 0.7f), 1);
+					}, 0.1f, 0.7f).SetEase(Ease.Linear);
 					this.DOSTurboActive = false;
 					this.myHMM.DOSTurboIsHot = false;
 				}
 				else
 				{
 					GameManager.AudioSlinger.DealSound(AudioHubs.HACKERMODE, AudioLayer.HACKINGSFX, this.DOSTurboSFX, 0.5f, false);
-					TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.DOSTurbo.GetComponent<CanvasGroup>().alpha, delegate(float x)
+					DOTween.To(() => this.DOSTurbo.GetComponent<CanvasGroup>().alpha, delegate(float x)
 					{
 						this.DOSTurbo.GetComponent<CanvasGroup>().alpha = x;
-					}, 1f, 0.7f), 1);
+					}, 1f, 0.7f).SetEase(Ease.Linear);
 					this.DOSTurboActive = true;
 					this.myHMM.DOSTurboIsHot = true;
 				}
@@ -123,39 +123,39 @@ public class HMUpgradesManager : MonoBehaviour
 			if (CrossPlatformInputManager.GetAxis("RightClick") > this.tmpLastRCAxis)
 			{
 				GameManager.AudioSlinger.RemoveSound(AudioHubs.HACKERMODE, this.NOPPowerDownSFX.name);
-				TweenExtensions.Kill(this.nopPowerDown, false);
-				if (!TweenExtensions.IsPlaying(this.nopPowerUp))
+				this.nopPowerDown.Kill(false);
+				if (!this.nopPowerUp.IsPlaying())
 				{
 					GameManager.AudioSlinger.DealSound(AudioHubs.HACKERMODE, AudioLayer.HACKINGSFX, this.NOPPowerUpSFX, 0.15f, false);
-					this.nopPowerUp = TweenSettingsExtensions.OnComplete<Sequence>(DOTween.Sequence(), new TweenCallback(this.FireNOP));
-					TweenSettingsExtensions.Insert(this.nopPowerUp, 0f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.NOPSledPowerUp.transform.localScale, delegate(Vector3 x)
+					this.nopPowerUp = DOTween.Sequence().OnComplete(new TweenCallback(this.FireNOP));
+					this.nopPowerUp.Insert(0f, DOTween.To(() => this.NOPSledPowerUp.transform.localScale, delegate(Vector3 x)
 					{
 						this.NOPSledPowerUp.transform.localScale = x;
-					}, new Vector3(1f, 1f, 1f), 1.5f), 18));
-					TweenSettingsExtensions.Insert(this.nopPowerUp, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.NOPSledPowerUp.gameObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
+					}, new Vector3(1f, 1f, 1f), 1.5f).SetEase(Ease.OutExpo));
+					this.nopPowerUp.Insert(0f, DOTween.To(() => this.NOPSledPowerUp.gameObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
 					{
 						this.NOPSledPowerUp.gameObject.GetComponent<CanvasGroup>().alpha = x;
-					}, 1f, 1.5f), 18));
-					TweenExtensions.Play<Sequence>(this.nopPowerUp);
+					}, 1f, 1.5f).SetEase(Ease.OutExpo));
+					this.nopPowerUp.Play<Sequence>();
 				}
 			}
 			else if (CrossPlatformInputManager.GetAxis("RightClick") < 1f && CrossPlatformInputManager.GetAxis("RightClick") != 0f)
 			{
 				GameManager.AudioSlinger.RemoveSound(AudioHubs.HACKERMODE, this.NOPPowerUpSFX.name);
-				TweenExtensions.Kill(this.nopPowerUp, false);
-				if (!TweenExtensions.IsPlaying(this.nopPowerDown))
+				this.nopPowerUp.Kill(false);
+				if (!this.nopPowerDown.IsPlaying())
 				{
 					GameManager.AudioSlinger.DealSound(AudioHubs.HACKERMODE, AudioLayer.HACKINGSFX, this.NOPPowerDownSFX, 0.15f, false);
 					this.nopPowerDown = DOTween.Sequence();
-					TweenSettingsExtensions.Insert(this.nopPowerDown, 0f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.NOPSledPowerUp.transform.localScale, delegate(Vector3 x)
+					this.nopPowerDown.Insert(0f, DOTween.To(() => this.NOPSledPowerUp.transform.localScale, delegate(Vector3 x)
 					{
 						this.NOPSledPowerUp.transform.localScale = x;
-					}, new Vector3(0.1f, 0.1f, 0.1f), 0.4f), 21));
-					TweenSettingsExtensions.Insert(this.nopPowerDown, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.NOPSledPowerUp.gameObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
+					}, new Vector3(0.1f, 0.1f, 0.1f), 0.4f).SetEase(Ease.OutCirc));
+					this.nopPowerDown.Insert(0f, DOTween.To(() => this.NOPSledPowerUp.gameObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
 					{
 						this.NOPSledPowerUp.gameObject.GetComponent<CanvasGroup>().alpha = x;
-					}, 0f, 0.4f), 21));
-					TweenExtensions.Play<Sequence>(this.nopPowerDown);
+					}, 0f, 0.4f).SetEase(Ease.OutCirc));
+					this.nopPowerDown.Play<Sequence>();
 				}
 			}
 			this.tmpLastRCAxis = CrossPlatformInputManager.GetAxis("RightClick");
@@ -168,18 +168,18 @@ public class HMUpgradesManager : MonoBehaviour
 		this.NOPFired = true;
 		this.myGameData.currentNOPSleds = this.myGameData.currentNOPSleds - 1;
 		GameManager.FileSlinger.wildSaveFile<HMGameData>("wttghm.gd", this.myGameData);
-		TweenSettingsExtensions.SetRelative<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.NOPSledSled.transform.localPosition, delegate(Vector3 x)
+		DOTween.To(() => this.NOPSledSled.transform.localPosition, delegate(Vector3 x)
 		{
 			this.NOPSledSled.transform.localPosition = x;
-		}, new Vector3((float)Screen.width + this.NOPSledSled.gameObject.GetComponent<RectTransform>().sizeDelta.x, 0f, 0f), 1f), 1), true);
-		TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.NOPSledPowerUp.transform.localScale, delegate(Vector3 x)
+		}, new Vector3((float)Screen.width + this.NOPSledSled.gameObject.GetComponent<RectTransform>().sizeDelta.x, 0f, 0f), 1f).SetEase(Ease.Linear).SetRelative(true);
+		DOTween.To(() => this.NOPSledPowerUp.transform.localScale, delegate(Vector3 x)
 		{
 			this.NOPSledPowerUp.transform.localScale = x;
-		}, new Vector3(2f, 2f, 2f), 0.6f), 21);
-		TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.NOPSledPowerUp.gameObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		}, new Vector3(2f, 2f, 2f), 0.6f).SetEase(Ease.OutCirc);
+		DOTween.To(() => this.NOPSledPowerUp.gameObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.NOPSledPowerUp.gameObject.GetComponent<CanvasGroup>().alpha = x;
-		}, 0f, 0.6f), 21);
+		}, 0f, 0.6f).SetEase(Ease.OutCirc);
 		this.myHMM.FireANopSled();
 		GameManager.TimeSlinger.FireTimer(1.1f, new Action(this.resetNOPSled));
 	}
@@ -188,10 +188,10 @@ public class HMUpgradesManager : MonoBehaviour
 	{
 		this.NOPSledPowerUp.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
 		this.NOPFired = false;
-		TweenSettingsExtensions.SetRelative<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.NOPSledSled.transform.localPosition, delegate(Vector3 x)
+		DOTween.To(() => this.NOPSledSled.transform.localPosition, delegate(Vector3 x)
 		{
 			this.NOPSledSled.transform.localPosition = x;
-		}, new Vector3(-((float)Screen.width + this.NOPSledSled.gameObject.GetComponent<RectTransform>().sizeDelta.x), 0f, 0f), 0f), 1), true);
+		}, new Vector3(-((float)Screen.width + this.NOPSledSled.gameObject.GetComponent<RectTransform>().sizeDelta.x), 0f, 0f), 0f).SetEase(Ease.Linear).SetRelative(true);
 	}
 
 	private void Start()

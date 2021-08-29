@@ -25,7 +25,7 @@ public class dragBehavior : MonoBehaviour, IBeginDragHandler, IDragHandler, IEve
 			flag = true;
 		}
 		Vector3 vector;
-		if (!flag && RectTransformUtility.ScreenPointToWorldPointInRectangle(this.dragPlane, data.position, data.pressEventCamera, ref vector))
+		if (!flag && RectTransformUtility.ScreenPointToWorldPointInRectangle(this.dragPlane, data.position, data.pressEventCamera, out vector))
 		{
 			vector -= this.bufferPos;
 			this.parentWindow.rectTransform.position = vector;
@@ -42,10 +42,10 @@ public class dragBehavior : MonoBehaviour, IBeginDragHandler, IDragHandler, IEve
 
 	public void OnBeginDrag(PointerEventData eventData)
 	{
-		Vector3 vector;
-		if (RectTransformUtility.ScreenPointToWorldPointInRectangle(this.dragPlane, eventData.position, eventData.pressEventCamera, ref vector))
+		Vector3 a;
+		if (RectTransformUtility.ScreenPointToWorldPointInRectangle(this.dragPlane, eventData.position, eventData.pressEventCamera, out a))
 		{
-			this.bufferPos = vector - this.parentWindow.rectTransform.position;
+			this.bufferPos = a - this.parentWindow.rectTransform.position;
 		}
 		this.SetDragPos(eventData);
 	}

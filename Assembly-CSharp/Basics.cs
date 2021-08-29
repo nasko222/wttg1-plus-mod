@@ -8,12 +8,12 @@ public class Basics : MonoBehaviour
 {
 	private void Start()
 	{
-		DOTween.Init(new bool?(false), new bool?(true), new LogBehaviour?(2));
-		TweenSettingsExtensions.SetLoops<Tweener>(TweenSettingsExtensions.SetRelative<Tweener>(ShortcutExtensions.DOMove(this.cubeA, new Vector3(-2f, 2f, 0f), 1f, false)), -1, 1);
-		TweenSettingsExtensions.SetLoops<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetRelative<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.cubeB.position, delegate(Vector3 x)
+		DOTween.Init(new bool?(false), new bool?(true), new LogBehaviour?(LogBehaviour.ErrorsOnly));
+		this.cubeA.DOMove(new Vector3(-2f, 2f, 0f), 1f, false).SetRelative<Tweener>().SetLoops(-1, LoopType.Yoyo);
+		DOTween.To(() => this.cubeB.position, delegate(Vector3 x)
 		{
 			this.cubeB.position = x;
-		}, new Vector3(-2f, 2f, 0f), 1f)), -1, 1);
+		}, new Vector3(-2f, 2f, 0f), 1f).SetRelative<TweenerCore<Vector3, Vector3, VectorOptions>>().SetLoops(-1, LoopType.Yoyo);
 	}
 
 	public Transform cubeA;

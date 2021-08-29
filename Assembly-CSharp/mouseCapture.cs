@@ -29,8 +29,8 @@ public class mouseCapture
 	public void LookRotation(Transform character, Transform camera)
 	{
 		float num = Input.GetAxis("Mouse Y") * this.XSensitivity;
-		float num2 = Input.GetAxis("Mouse X") * this.YSensitivity;
-		this.myCharacterTargetRot *= Quaternion.Euler(0f, num2, 0f);
+		float y = Input.GetAxis("Mouse X") * this.YSensitivity;
+		this.myCharacterTargetRot *= Quaternion.Euler(0f, y, 0f);
 		this.myCameraTargetRot *= Quaternion.Euler(-num, 0f, 0f);
 		if (this.clampVerticalRotation)
 		{
@@ -73,8 +73,8 @@ public class mouseCapture
 	public void LookCameraRotation(Transform camera)
 	{
 		float num = Input.GetAxis("Mouse Y") * this.XSensitivity;
-		float num2 = Input.GetAxis("Mouse X") * this.YSensitivity;
-		this.myCameraTargetRot *= Quaternion.Euler(-num, num2, 0f);
+		float y = Input.GetAxis("Mouse X") * this.YSensitivity;
+		this.myCameraTargetRot *= Quaternion.Euler(-num, y, 0f);
 		this.myCameraTargetRot = Quaternion.Euler(this.myCameraTargetRot.eulerAngles.x, this.myCameraTargetRot.eulerAngles.y, 0f);
 		if (this.clampVerticalRotation)
 		{
@@ -97,8 +97,8 @@ public class mouseCapture
 	public void ForceRotation(Transform character, Transform camera, float forceRate)
 	{
 		float num = 1f * forceRate;
-		float num2 = 1f * forceRate;
-		this.myCharacterTargetRot *= Quaternion.Euler(0f, num2, 0f);
+		float y = 1f * forceRate;
+		this.myCharacterTargetRot *= Quaternion.Euler(0f, y, 0f);
 		this.myCameraTargetRot *= Quaternion.Euler(-num, 0f, 0f);
 		character.localRotation = this.myCharacterTargetRot;
 		camera.localRotation = this.myCameraTargetRot;
@@ -106,8 +106,8 @@ public class mouseCapture
 
 	public void ForceCameraRotationY(Transform camera, float forceRate)
 	{
-		float num = 1f * forceRate;
-		this.myCameraTargetRot *= Quaternion.Euler(0f, num, 0f);
+		float y = 1f * forceRate;
+		this.myCameraTargetRot *= Quaternion.Euler(0f, y, 0f);
 		camera.localRotation = this.myCameraTargetRot;
 	}
 

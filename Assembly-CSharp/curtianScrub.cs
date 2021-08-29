@@ -16,7 +16,7 @@ public class curtianScrub : MonoBehaviour
 
 	private void setWindTime()
 	{
-		this.windTime = Random.Range(this.windMinTime, this.windMaxTime);
+		this.windTime = UnityEngine.Random.Range(this.windMinTime, this.windMaxTime);
 		this.windTimeStamp = Time.time;
 		this.windTimeActive = true;
 		this.coolTimeActive = false;
@@ -43,7 +43,7 @@ public class curtianScrub : MonoBehaviour
 		{
 			if (Time.time - this.windTimeStamp >= this.windTime)
 			{
-				float num = Random.Range(this.minWindForce, this.maxWindForce);
+				float num = UnityEngine.Random.Range(this.minWindForce, this.maxWindForce);
 				float num2 = num * 0.85f;
 				if (num > 3f)
 				{

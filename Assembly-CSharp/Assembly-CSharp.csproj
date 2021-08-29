@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A04F95F9-7BE7-4CED-A839-F71C6CAE0305}</ProjectGuid>
+    <ProjectGuid>{634CB88C-902F-42AF-8B68-7EE97B4C5831}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Assembly-CSharp</RootNamespace>
@@ -33,23 +33,57 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Assembly-CSharp-firstpass" />
-    <Reference Include="DOTween" />
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="UnityEngine.AnimationModule" />
-    <Reference Include="UnityEngine.AudioModule" />
-    <Reference Include="UnityEngine.ClothModule" />
-    <Reference Include="UnityEngine.CoreModule" />
-    <Reference Include="UnityEngine.ImageConversionModule" />
-    <Reference Include="UnityEngine.IMGUIModule" />
-    <Reference Include="UnityEngine.JSONSerializeModule" />
-    <Reference Include="UnityEngine.PhysicsModule" />
-    <Reference Include="UnityEngine.TextRenderingModule" />
-    <Reference Include="UnityEngine.UI" />
-    <Reference Include="UnityEngine.UIModule" />
-    <Reference Include="UnityEngine.UnityWebRequestModule" />
-    <Reference Include="UnityEngine.UnityWebRequestWWWModule" />
+    <Reference Include="Assembly-CSharp-firstpass">
+      <HintPath>..\..\..\..\SteamLibrary\steamapps\common\Welcome to the Game\WTTGO\WTTG_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween">
+      <HintPath>..\..\..\..\SteamLibrary\steamapps\common\Welcome to the Game\WTTGO\WTTG_Data\Managed\DOTween.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <HintPath>..\..\..\..\SteamLibrary\steamapps\common\Welcome to the Game\WTTGO\WTTG_Data\Managed\System.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core">
+      <HintPath>..\..\..\..\SteamLibrary\steamapps\common\Welcome to the Game\WTTGO\WTTG_Data\Managed\System.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AnimationModule">
+      <HintPath>..\..\..\..\SteamLibrary\steamapps\common\Welcome to the Game\WTTGO\WTTG_Data\Managed\UnityEngine.AnimationModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AudioModule">
+      <HintPath>..\..\..\..\SteamLibrary\steamapps\common\Welcome to the Game\WTTGO\WTTG_Data\Managed\UnityEngine.AudioModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ClothModule">
+      <HintPath>..\..\..\..\SteamLibrary\steamapps\common\Welcome to the Game\WTTGO\WTTG_Data\Managed\UnityEngine.ClothModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>..\..\..\..\SteamLibrary\steamapps\common\Welcome to the Game\WTTGO\WTTG_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ImageConversionModule">
+      <HintPath>..\..\..\..\SteamLibrary\steamapps\common\Welcome to the Game\WTTGO\WTTG_Data\Managed\UnityEngine.ImageConversionModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>..\..\..\..\SteamLibrary\steamapps\common\Welcome to the Game\WTTGO\WTTG_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.JSONSerializeModule">
+      <HintPath>..\..\..\..\SteamLibrary\steamapps\common\Welcome to the Game\WTTGO\WTTG_Data\Managed\UnityEngine.JSONSerializeModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.PhysicsModule">
+      <HintPath>..\..\..\..\SteamLibrary\steamapps\common\Welcome to the Game\WTTGO\WTTG_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule">
+      <HintPath>..\..\..\..\SteamLibrary\steamapps\common\Welcome to the Game\WTTGO\WTTG_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>..\..\..\..\SteamLibrary\steamapps\common\Welcome to the Game\WTTGO\WTTG_Data\Managed\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UIModule">
+      <HintPath>..\..\..\..\SteamLibrary\steamapps\common\Welcome to the Game\WTTGO\WTTG_Data\Managed\UnityEngine.UIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestModule">
+      <HintPath>..\..\..\..\SteamLibrary\steamapps\common\Welcome to the Game\WTTGO\WTTG_Data\Managed\UnityEngine.UnityWebRequestModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestWWWModule">
+      <HintPath>..\..\..\..\SteamLibrary\steamapps\common\Welcome to the Game\WTTGO\WTTG_Data\Managed\UnityEngine.UnityWebRequestWWWModule.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <AppDesigner Include="Properties\" />

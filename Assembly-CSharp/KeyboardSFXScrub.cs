@@ -7,7 +7,7 @@ public class KeyboardSFXScrub : MonoBehaviour
 {
 	private void processKeyboardSFX()
 	{
-		int num = Random.Range(1, this.KeySFXs.Length);
+		int num = UnityEngine.Random.Range(1, this.KeySFXs.Length);
 		AudioClip audioClip = this.KeySFXs[num];
 		GameManager.AudioSlinger.DealSound(this.aHub, this.aLayer, this.KeySFXs[num], 1f, false);
 		this.KeySFXs[num] = this.KeySFXs[0];
@@ -28,11 +28,11 @@ public class KeyboardSFXScrub : MonoBehaviour
 	{
 		if (this.myTextInput.isFocused)
 		{
-			if (Input.GetKeyDown(32))
+			if (Input.GetKeyDown(KeyCode.Space))
 			{
 				this.processSpaceReturnSFX();
 			}
-			else if (Input.GetKeyDown(13))
+			else if (Input.GetKeyDown(KeyCode.Return))
 			{
 				this.processSpaceReturnSFX();
 			}

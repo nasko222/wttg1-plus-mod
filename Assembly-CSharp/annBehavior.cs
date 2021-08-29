@@ -85,7 +85,7 @@ public class annBehavior : MonoBehaviour
 
 	private void generateWebsiteLoadTime()
 	{
-		this.websiteLoadTime = Random.Range(this.websiteLoadTimeMin, this.websiteLoadTimeMax);
+		this.websiteLoadTime = UnityEngine.Random.Range(this.websiteLoadTimeMin, this.websiteLoadTimeMax);
 		if (this.pageLoadHandicapActive)
 		{
 			if (this.pagesLoadFaster)
@@ -185,29 +185,29 @@ public class annBehavior : MonoBehaviour
 	private void aniLoadingPage()
 	{
 		this.aniLoadingGlobeSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.aniLoadingGlobeSeq, 0f, DOTween.To(() => this.loadingGlobeBox.alpha, delegate(float x)
+		this.aniLoadingGlobeSeq.Insert(0f, DOTween.To(() => this.loadingGlobeBox.alpha, delegate(float x)
 		{
 			this.loadingGlobeBox.alpha = x;
 		}, 0.3f, 0.5f));
-		TweenSettingsExtensions.Insert(this.aniLoadingGlobeSeq, 0.5f, DOTween.To(() => this.loadingGlobeBox.alpha, delegate(float x)
+		this.aniLoadingGlobeSeq.Insert(0.5f, DOTween.To(() => this.loadingGlobeBox.alpha, delegate(float x)
 		{
 			this.loadingGlobeBox.alpha = x;
 		}, 1f, 0.5f));
-		TweenSettingsExtensions.SetLoops<Sequence>(this.aniLoadingGlobeSeq, -1);
-		TweenExtensions.Play<Sequence>(this.aniLoadingGlobeSeq);
+		this.aniLoadingGlobeSeq.SetLoops(-1);
+		this.aniLoadingGlobeSeq.Play<Sequence>();
 		this.aniLoadingBarSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.aniLoadingBarSeq, 0f, DOTween.To(() => this.loadingBar.fillAmount, delegate(float x)
+		this.aniLoadingBarSeq.Insert(0f, DOTween.To(() => this.loadingBar.fillAmount, delegate(float x)
 		{
 			this.loadingBar.fillAmount = x;
 		}, 1f, this.websiteLoadTime));
-		TweenExtensions.Play<Sequence>(this.aniLoadingBarSeq);
+		this.aniLoadingBarSeq.Play<Sequence>();
 		this.loadingText.gameObject.SetActive(true);
 	}
 
 	public void aniLoadingPageStop()
 	{
-		TweenExtensions.Kill(this.aniLoadingGlobeSeq, true);
-		TweenExtensions.Kill(this.aniLoadingBarSeq, false);
+		this.aniLoadingGlobeSeq.Kill(true);
+		this.aniLoadingBarSeq.Kill(false);
 		this.loadingText.gameObject.SetActive(false);
 		this.loadingBar.fillAmount = 0f;
 		this.loadingGlobeBox.alpha = 1f;

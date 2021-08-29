@@ -32,7 +32,7 @@ public class LODPreview : MonoBehaviour
 
 	private void Update()
 	{
-		if (Input.GetKeyDown(119))
+		if (Input.GetKeyDown(KeyCode.W))
 		{
 			this.m_bWireframe = !this.m_bWireframe;
 			this.SetWireframe(this.m_bWireframe);
@@ -41,8 +41,8 @@ public class LODPreview : MonoBehaviour
 		{
 			if (Input.GetMouseButton(0) && Input.mousePosition.y > 100f)
 			{
-				Vector3 vector = this.ShowcaseObjects[this.m_nSelectedIndex].m_rotationAxis * -((Input.mousePosition.x - this.m_fLastMouseX) * this.MouseSensitvity);
-				this.m_selectedAutomaticLOD.transform.Rotate(vector, 1);
+				Vector3 eulerAngles = this.ShowcaseObjects[this.m_nSelectedIndex].m_rotationAxis * -((Input.mousePosition.x - this.m_fLastMouseX) * this.MouseSensitvity);
+				this.m_selectedAutomaticLOD.transform.Rotate(eulerAngles, Space.Self);
 			}
 			else if (Input.GetMouseButtonUp(0) && Input.mousePosition.y > 100f)
 			{
@@ -50,8 +50,8 @@ public class LODPreview : MonoBehaviour
 			}
 			else
 			{
-				Vector3 vector2 = this.ShowcaseObjects[this.m_nSelectedIndex].m_rotationAxis * (this.m_fRotationSpeed * Time.deltaTime);
-				this.m_selectedAutomaticLOD.transform.Rotate(vector2, 1);
+				Vector3 eulerAngles2 = this.ShowcaseObjects[this.m_nSelectedIndex].m_rotationAxis * (this.m_fRotationSpeed * Time.deltaTime);
+				this.m_selectedAutomaticLOD.transform.Rotate(eulerAngles2, Space.Self);
 			}
 		}
 		this.m_fLastMouseX = Input.mousePosition.x;
@@ -81,7 +81,7 @@ public class LODPreview : MonoBehaviour
 			{
 				if (this.m_selectedAutomaticLOD != null)
 				{
-					Object.DestroyImmediate(this.m_selectedAutomaticLOD.gameObject);
+					UnityEngine.Object.DestroyImmediate(this.m_selectedAutomaticLOD.gameObject);
 				}
 				this.SetActiveObject(i);
 			}
@@ -154,7 +154,7 @@ public class LODPreview : MonoBehaviour
 	private void SetActiveObject(int index)
 	{
 		this.m_nSelectedIndex = index;
-		AutomaticLOD automaticLOD = Object.Instantiate<AutomaticLOD>(this.ShowcaseObjects[index].m_automaticLOD);
+		AutomaticLOD automaticLOD = UnityEngine.Object.Instantiate<AutomaticLOD>(this.ShowcaseObjects[index].m_automaticLOD);
 		automaticLOD.transform.position = this.ShowcaseObjects[index].m_position;
 		automaticLOD.transform.rotation = Quaternion.Euler(this.ShowcaseObjects[index].m_angles);
 		this.m_selectedAutomaticLOD = automaticLOD;
@@ -212,11 +212,11 @@ public class LODPreview : MonoBehaviour
 				Mesh newMesh = null;
 				if (meshFilter != null)
 				{
-					newMesh = Object.Instantiate<Mesh>(meshFilter.sharedMesh);
+					newMesh = UnityEngine.Object.Instantiate<Mesh>(meshFilter.sharedMesh);
 				}
 				else if (skin != null)
 				{
-					newMesh = Object.Instantiate<Mesh>(skin.sharedMesh);
+					newMesh = UnityEngine.Object.Instantiate<Mesh>(skin.sharedMesh);
 				}
 				automaticLOD.GetMeshSimplifier().CoroutineEnded = false;
 				base.StartCoroutine(automaticLOD.GetMeshSimplifier().ComputeMeshWithVertexCount(pair.Key, newMesh, Mathf.RoundToInt(fAmount * (float)automaticLOD.GetMeshSimplifier().GetOriginalMeshUniqueVertexCount()), automaticLOD.name, new Simplifier.ProgressDelegate(this.Progress)));

@@ -11,7 +11,7 @@ namespace Colorful
 		protected override void Start()
 		{
 			base.Start();
-			base.GetComponent<Camera>().depthTextureMode |= 1;
+			base.GetComponent<Camera>().depthTextureMode |= DepthTextureMode.Depth;
 		}
 
 		protected override void OnRenderImage(RenderTexture source, RenderTexture destination)
@@ -59,23 +59,21 @@ namespace Colorful
 
 		protected virtual void MultiPassBlur(RenderTexture source, RenderTexture destination)
 		{
-			Vector2 vector;
-			vector..ctor(1f / (float)source.width, 0f);
-			Vector2 vector2;
-			vector2..ctor(0f, 1f / (float)source.height);
+			Vector2 v = new Vector2(1f / (float)source.width, 0f);
+			Vector2 v2 = new Vector2(0f, 1f / (float)source.height);
 			RenderTexture temporary = RenderTexture.GetTemporary(source.width, source.height, 0, source.format);
 			RenderTexture temporary2 = RenderTexture.GetTemporary(source.width, source.height, 0, source.format);
-			base.Material.SetVector("_Direction", vector);
+			base.Material.SetVector("_Direction", v);
 			Graphics.Blit(source, temporary, base.Material, 0);
-			base.Material.SetVector("_Direction", vector2);
+			base.Material.SetVector("_Direction", v2);
 			Graphics.Blit(temporary, temporary2, base.Material, 0);
 			temporary.DiscardContents();
 			for (int i = 1; i < this.Passes; i++)
 			{
-				base.Material.SetVector("_Direction", vector);
+				base.Material.SetVector("_Direction", v);
 				Graphics.Blit(temporary2, temporary, base.Material, 0);
 				temporary2.DiscardContents();
-				base.Material.SetVector("_Direction", vector2);
+				base.Material.SetVector("_Direction", v2);
 				Graphics.Blit(temporary, temporary2, base.Material, 0);
 				temporary.DiscardContents();
 			}

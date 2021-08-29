@@ -15,11 +15,11 @@ namespace UnityStandardAssets.Water
 
 		private Camera CreateReflectionCameraFor(Camera cam)
 		{
-			string text = base.gameObject.name + "Reflection" + cam.name;
-			GameObject gameObject = GameObject.Find(text);
+			string name = base.gameObject.name + "Reflection" + cam.name;
+			GameObject gameObject = GameObject.Find(name);
 			if (!gameObject)
 			{
-				gameObject = new GameObject(text, new Type[]
+				gameObject = new GameObject(name, new Type[]
 				{
 					typeof(Camera)
 				});
@@ -30,7 +30,7 @@ namespace UnityStandardAssets.Water
 			}
 			Camera component = gameObject.GetComponent<Camera>();
 			component.backgroundColor = this.clearColor;
-			component.clearFlags = ((!this.reflectSkybox) ? 2 : 1);
+			component.clearFlags = ((!this.reflectSkybox) ? CameraClearFlags.Color : CameraClearFlags.Skybox);
 			this.SetStandardCameraParameter(component, this.reflectionMask);
 			if (!component.targetTexture)
 			{
@@ -50,7 +50,7 @@ namespace UnityStandardAssets.Water
 		{
 			return new RenderTexture(Mathf.FloorToInt((float)cam.pixelWidth * 0.5f), Mathf.FloorToInt((float)cam.pixelHeight * 0.5f), 24)
 			{
-				hideFlags = 52
+				hideFlags = HideFlags.DontSave
 			};
 		}
 
@@ -118,7 +118,7 @@ namespace UnityStandardAssets.Water
 			reflectCamera.cullingMask = (this.reflectionMask & ~(1 << LayerMask.NameToLayer("Water")));
 			this.SaneCameraSettings(reflectCamera);
 			reflectCamera.backgroundColor = this.clearColor;
-			reflectCamera.clearFlags = ((!this.reflectSkybox) ? 2 : 1);
+			reflectCamera.clearFlags = ((!this.reflectSkybox) ? CameraClearFlags.Color : CameraClearFlags.Skybox);
 			if (this.reflectSkybox && cam.gameObject.GetComponent(typeof(Skybox)))
 			{
 				Skybox skybox = (Skybox)reflectCamera.gameObject.GetComponent(typeof(Skybox));
@@ -136,9 +136,8 @@ namespace UnityStandardAssets.Water
 			Vector3 position = transform.transform.position;
 			position.y = transform.position.y;
 			Vector3 up = transform.transform.up;
-			float num = -Vector3.Dot(up, position) - this.clipPlaneOffset;
-			Vector4 plane;
-			plane..ctor(up.x, up.y, up.z, num);
+			float w = -Vector3.Dot(up, position) - this.clipPlaneOffset;
+			Vector4 plane = new Vector4(up.x, up.y, up.z, w);
 			Matrix4x4 matrix4x = Matrix4x4.zero;
 			matrix4x = PlanarReflection.CalculateReflectionMatrix(matrix4x, plane);
 			this.m_Oldpos = cam.transform.position;
@@ -157,20 +156,20 @@ namespace UnityStandardAssets.Water
 
 		private void SaneCameraSettings(Camera helperCam)
 		{
-			helperCam.depthTextureMode = 0;
+			helperCam.depthTextureMode = DepthTextureMode.None;
 			helperCam.backgroundColor = Color.black;
-			helperCam.clearFlags = 2;
-			helperCam.renderingPath = 1;
+			helperCam.clearFlags = CameraClearFlags.Color;
+			helperCam.renderingPath = RenderingPath.Forward;
 		}
 
 		private static Matrix4x4 CalculateObliqueMatrix(Matrix4x4 projection, Vector4 clipPlane)
 		{
-			Vector4 vector = projection.inverse * new Vector4(PlanarReflection.Sgn(clipPlane.x), PlanarReflection.Sgn(clipPlane.y), 1f, 1f);
-			Vector4 vector2 = clipPlane * (2f / Vector4.Dot(clipPlane, vector));
-			projection[2] = vector2.x - projection[3];
-			projection[6] = vector2.y - projection[7];
-			projection[10] = vector2.z - projection[11];
-			projection[14] = vector2.w - projection[15];
+			Vector4 b = projection.inverse * new Vector4(PlanarReflection.Sgn(clipPlane.x), PlanarReflection.Sgn(clipPlane.y), 1f, 1f);
+			Vector4 vector = clipPlane * (2f / Vector4.Dot(clipPlane, b));
+			projection[2] = vector.x - projection[3];
+			projection[6] = vector.y - projection[7];
+			projection[10] = vector.z - projection[11];
+			projection[14] = vector.w - projection[15];
 			return projection;
 		}
 
@@ -210,11 +209,11 @@ namespace UnityStandardAssets.Water
 
 		private Vector4 CameraSpacePlane(Camera cam, Vector3 pos, Vector3 normal, float sideSign)
 		{
-			Vector3 vector = pos + normal * this.clipPlaneOffset;
+			Vector3 point = pos + normal * this.clipPlaneOffset;
 			Matrix4x4 worldToCameraMatrix = cam.worldToCameraMatrix;
-			Vector3 vector2 = worldToCameraMatrix.MultiplyPoint(vector);
-			Vector3 vector3 = worldToCameraMatrix.MultiplyVector(normal).normalized * sideSign;
-			return new Vector4(vector3.x, vector3.y, vector3.z, -Vector3.Dot(vector2, vector3));
+			Vector3 lhs = worldToCameraMatrix.MultiplyPoint(point);
+			Vector3 rhs = worldToCameraMatrix.MultiplyVector(normal).normalized * sideSign;
+			return new Vector4(rhs.x, rhs.y, rhs.z, -Vector3.Dot(lhs, rhs));
 		}
 
 		public LayerMask reflectionMask;

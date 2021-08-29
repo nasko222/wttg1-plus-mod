@@ -12,12 +12,12 @@ public class txtBehavior : MonoBehaviour
 		this.myCloseBeh.myMainController = this.mainController;
 		this.myRT = base.GetComponent<RectTransform>();
 		float strHeight = this.getStrHeight(setTxt);
-		float num = Mathf.Abs(this.txtField.GetComponent<RectTransform>().transform.localPosition.y) + strHeight + 10f;
+		float y = Mathf.Abs(this.txtField.GetComponent<RectTransform>().transform.localPosition.y) + strHeight + 10f;
 		this.txtFieldText.rectTransform.sizeDelta = new Vector2(this.txtFieldText.rectTransform.sizeDelta.x, strHeight);
 		this.txtField.GetComponent<RectTransform>().sizeDelta = new Vector2(this.txtField.GetComponent<RectTransform>().sizeDelta.x, strHeight);
 		base.transform.localPosition = new Vector3(setX, setY, 0f);
 		base.transform.localScale = new Vector3(1f, 1f, 1f);
-		this.myRT.sizeDelta = new Vector2(this.myRT.sizeDelta.x, num);
+		this.myRT.sizeDelta = new Vector2(this.myRT.sizeDelta.x, y);
 		this.txtTitle.text = setTxtTitle;
 		this.txtField.text = setTxt;
 	}
@@ -34,21 +34,21 @@ public class txtBehavior : MonoBehaviour
 
 	private float getStrHeight(string theString)
 	{
-		TextGenerationSettings textGenerationSettings = default(TextGenerationSettings);
+		TextGenerationSettings settings = default(TextGenerationSettings);
 		TextGenerator textGenerator = new TextGenerator();
-		textGenerationSettings.textAnchor = 0;
-		textGenerationSettings.generateOutOfBounds = true;
-		textGenerationSettings.generationExtents = new Vector2(this.txtField.GetComponent<RectTransform>().sizeDelta.x, this.txtField.GetComponent<RectTransform>().sizeDelta.y);
-		textGenerationSettings.pivot = Vector2.zero;
-		textGenerationSettings.richText = false;
-		textGenerationSettings.font = this.txtFont;
-		textGenerationSettings.fontSize = 16;
-		textGenerationSettings.fontStyle = 0;
-		textGenerationSettings.lineSpacing = 1f;
-		textGenerationSettings.scaleFactor = 1f;
-		textGenerationSettings.verticalOverflow = 1;
-		textGenerationSettings.horizontalOverflow = 0;
-		return textGenerator.GetPreferredHeight(theString, textGenerationSettings);
+		settings.textAnchor = TextAnchor.UpperLeft;
+		settings.generateOutOfBounds = true;
+		settings.generationExtents = new Vector2(this.txtField.GetComponent<RectTransform>().sizeDelta.x, this.txtField.GetComponent<RectTransform>().sizeDelta.y);
+		settings.pivot = Vector2.zero;
+		settings.richText = false;
+		settings.font = this.txtFont;
+		settings.fontSize = 16;
+		settings.fontStyle = FontStyle.Normal;
+		settings.lineSpacing = 1f;
+		settings.scaleFactor = 1f;
+		settings.verticalOverflow = VerticalWrapMode.Overflow;
+		settings.horizontalOverflow = HorizontalWrapMode.Wrap;
+		return textGenerator.GetPreferredHeight(theString, settings);
 	}
 
 	private void Start()

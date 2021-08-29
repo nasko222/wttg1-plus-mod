@@ -200,7 +200,7 @@ public class audioSlinger
 			outAudioSource.reverbZoneMix = 1f;
 			outAudioSource.dopplerLevel = 1f;
 			outAudioSource.spread = 0f;
-			outAudioSource.rolloffMode = 0;
+			outAudioSource.rolloffMode = AudioRolloffMode.Logarithmic;
 			outAudioSource.minDistance = 1f;
 			outAudioSource.maxDistance = 1.5f;
 			break;
@@ -210,7 +210,7 @@ public class audioSlinger
 			outAudioSource.reverbZoneMix = 1f;
 			outAudioSource.dopplerLevel = 1f;
 			outAudioSource.spread = 0f;
-			outAudioSource.rolloffMode = 0;
+			outAudioSource.rolloffMode = AudioRolloffMode.Logarithmic;
 			outAudioSource.minDistance = 0.5f;
 			outAudioSource.maxDistance = 1f;
 			break;
@@ -220,7 +220,7 @@ public class audioSlinger
 			outAudioSource.reverbZoneMix = 1f;
 			outAudioSource.dopplerLevel = 1f;
 			outAudioSource.spread = 0f;
-			outAudioSource.rolloffMode = 0;
+			outAudioSource.rolloffMode = AudioRolloffMode.Logarithmic;
 			outAudioSource.minDistance = 3f;
 			outAudioSource.maxDistance = 25f;
 			break;
@@ -230,7 +230,7 @@ public class audioSlinger
 			outAudioSource.reverbZoneMix = 1f;
 			outAudioSource.dopplerLevel = 1f;
 			outAudioSource.spread = 0f;
-			outAudioSource.rolloffMode = 0;
+			outAudioSource.rolloffMode = AudioRolloffMode.Logarithmic;
 			outAudioSource.minDistance = 0.5f;
 			outAudioSource.maxDistance = 1.5f;
 			break;
@@ -240,7 +240,7 @@ public class audioSlinger
 			outAudioSource.reverbZoneMix = 1f;
 			outAudioSource.dopplerLevel = 1f;
 			outAudioSource.spread = 0f;
-			outAudioSource.rolloffMode = 0;
+			outAudioSource.rolloffMode = AudioRolloffMode.Logarithmic;
 			outAudioSource.minDistance = 1f;
 			outAudioSource.maxDistance = 10f;
 			break;
@@ -250,7 +250,7 @@ public class audioSlinger
 			outAudioSource.reverbZoneMix = 1f;
 			outAudioSource.dopplerLevel = 1f;
 			outAudioSource.spread = 0f;
-			outAudioSource.rolloffMode = 0;
+			outAudioSource.rolloffMode = AudioRolloffMode.Logarithmic;
 			outAudioSource.minDistance = 0.5f;
 			outAudioSource.maxDistance = 8f;
 			break;
@@ -260,7 +260,7 @@ public class audioSlinger
 			outAudioSource.reverbZoneMix = 1f;
 			outAudioSource.dopplerLevel = 1f;
 			outAudioSource.spread = 0f;
-			outAudioSource.rolloffMode = 0;
+			outAudioSource.rolloffMode = AudioRolloffMode.Logarithmic;
 			outAudioSource.minDistance = 1f;
 			outAudioSource.maxDistance = 500f;
 			break;
@@ -270,7 +270,7 @@ public class audioSlinger
 			outAudioSource.reverbZoneMix = 1f;
 			outAudioSource.dopplerLevel = 1f;
 			outAudioSource.spread = 0f;
-			outAudioSource.rolloffMode = 0;
+			outAudioSource.rolloffMode = AudioRolloffMode.Logarithmic;
 			outAudioSource.minDistance = 1f;
 			outAudioSource.maxDistance = 7f;
 			break;
@@ -280,7 +280,7 @@ public class audioSlinger
 			outAudioSource.reverbZoneMix = 1f;
 			outAudioSource.dopplerLevel = 1f;
 			outAudioSource.spread = 0f;
-			outAudioSource.rolloffMode = 0;
+			outAudioSource.rolloffMode = AudioRolloffMode.Logarithmic;
 			outAudioSource.minDistance = 0.6f;
 			outAudioSource.maxDistance = 6.9f;
 			break;
@@ -290,7 +290,7 @@ public class audioSlinger
 			outAudioSource.reverbZoneMix = 1f;
 			outAudioSource.dopplerLevel = 1f;
 			outAudioSource.spread = 0f;
-			outAudioSource.rolloffMode = 0;
+			outAudioSource.rolloffMode = AudioRolloffMode.Logarithmic;
 			outAudioSource.minDistance = 3.5f;
 			outAudioSource.maxDistance = 15f;
 			break;
@@ -300,7 +300,7 @@ public class audioSlinger
 			outAudioSource.reverbZoneMix = 1f;
 			outAudioSource.dopplerLevel = 1f;
 			outAudioSource.spread = 0f;
-			outAudioSource.rolloffMode = 0;
+			outAudioSource.rolloffMode = AudioRolloffMode.Logarithmic;
 			outAudioSource.minDistance = 4.5f;
 			outAudioSource.maxDistance = 15f;
 			break;
@@ -310,7 +310,7 @@ public class audioSlinger
 			outAudioSource.reverbZoneMix = 1f;
 			outAudioSource.dopplerLevel = 1f;
 			outAudioSource.spread = 0f;
-			outAudioSource.rolloffMode = 0;
+			outAudioSource.rolloffMode = AudioRolloffMode.Logarithmic;
 			outAudioSource.minDistance = 0.45f;
 			outAudioSource.maxDistance = 0.9f;
 			break;
@@ -320,7 +320,7 @@ public class audioSlinger
 			outAudioSource.reverbZoneMix = 1f;
 			outAudioSource.dopplerLevel = 1f;
 			outAudioSource.spread = 0f;
-			outAudioSource.rolloffMode = 0;
+			outAudioSource.rolloffMode = AudioRolloffMode.Logarithmic;
 			outAudioSource.minDistance = 1f;
 			outAudioSource.maxDistance = 500f;
 			break;
@@ -330,7 +330,7 @@ public class audioSlinger
 			outAudioSource.reverbZoneMix = 1f;
 			outAudioSource.dopplerLevel = 1f;
 			outAudioSource.spread = 0f;
-			outAudioSource.rolloffMode = 0;
+			outAudioSource.rolloffMode = AudioRolloffMode.Logarithmic;
 			outAudioSource.minDistance = 1.5f;
 			outAudioSource.maxDistance = 20f;
 			break;
@@ -340,7 +340,7 @@ public class audioSlinger
 			outAudioSource.reverbZoneMix = 1f;
 			outAudioSource.dopplerLevel = 1f;
 			outAudioSource.spread = 0f;
-			outAudioSource.rolloffMode = 0;
+			outAudioSource.rolloffMode = AudioRolloffMode.Logarithmic;
 			outAudioSource.minDistance = 3f;
 			outAudioSource.maxDistance = 9f;
 			break;

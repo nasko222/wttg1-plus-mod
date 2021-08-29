@@ -116,16 +116,17 @@ namespace UltimateGameTools.MeshSimplifier
 
 			public BoneWeight ToBoneWeight()
 			{
-				BoneWeight result = default(BoneWeight);
-				result.boneIndex0 = this._boneIndex0;
-				result.boneIndex1 = this._boneIndex1;
-				result.boneIndex2 = this._boneIndex2;
-				result.boneIndex3 = this._boneIndex3;
-				result.weight0 = this._boneWeight0;
-				result.weight1 = this._boneWeight1;
-				result.weight2 = this._boneWeight2;
-				result.weight3 = this._boneWeight3;
-				return result;
+				return new BoneWeight
+				{
+					boneIndex0 = this._boneIndex0,
+					boneIndex1 = this._boneIndex1,
+					boneIndex2 = this._boneIndex2,
+					boneIndex3 = this._boneIndex3,
+					weight0 = this._boneWeight0,
+					weight1 = this._boneWeight1,
+					weight2 = this._boneWeight2,
+					weight3 = this._boneWeight3
+				};
 			}
 
 			public int _boneIndex0;

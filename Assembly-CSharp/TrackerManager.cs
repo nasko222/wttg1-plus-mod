@@ -62,7 +62,7 @@ public class TrackerManager : MonoBehaviour
 	private void generateTrackingWindow()
 	{
 		this.canBeTracked = false;
-		float num = (float)Random.Range(this.trackWindowOpen, this.trackWindowClose) * 60f;
+		float num = (float)UnityEngine.Random.Range(this.trackWindowOpen, this.trackWindowClose) * 60f;
 		float num2 = num * ((float)GameManager.GetTheCloud().getRedRoomKeyVistCount() / 10f / 4f);
 		float num3 = num - num2;
 		this.trackTimeStamp = Time.time;
@@ -90,7 +90,7 @@ public class TrackerManager : MonoBehaviour
 		else
 		{
 			GameManager.TimeSlinger.FireTimer(this.notifyTime, new Action(this.launchReacitonWindow));
-			int num = Random.Range(0, 11);
+			int num = UnityEngine.Random.Range(0, 11);
 			if (num <= 4)
 			{
 				this.NotifiyIconHolder.SetActive(true);
@@ -150,7 +150,7 @@ public class TrackerManager : MonoBehaviour
 
 	private void triggerPeepMode()
 	{
-		this.peepWindowTime = Random.Range(this.peepModeWindowOpen, this.peepModeWindowClose);
+		this.peepWindowTime = UnityEngine.Random.Range(this.peepModeWindowOpen, this.peepModeWindowClose);
 		this.peepTimeStamp = Time.time;
 		this.peepModeActive = true;
 		GameManager.GetTheKidnapper().triggerRoamMode(this.peepWindowTime);
@@ -183,7 +183,7 @@ public class TrackerManager : MonoBehaviour
 	private void setDoomClock()
 	{
 		GameManager.FileSlinger.deleteFile("wttg2.gd");
-		this.doomClockWindowTime = Random.Range(this.doomClockOpen, this.doomClockClosed);
+		this.doomClockWindowTime = UnityEngine.Random.Range(this.doomClockOpen, this.doomClockClosed);
 		this.doomClockTimeStamp = Time.time;
 		this.doomClockActive = true;
 	}

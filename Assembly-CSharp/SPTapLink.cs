@@ -10,7 +10,7 @@ public class SPTapLink : MonoBehaviour
 		int num = 0;
 		string empty = string.Empty;
 		base.GetComponent<SubPageHolder>().getKeyIndex(out num, out empty);
-		int index = Random.Range(0, this.linkObjs.Count);
+		int index = UnityEngine.Random.Range(0, this.linkObjs.Count);
 		this.hashHolder.text = num.ToString() + " - " + empty;
 		this.linkObjs[index].deadUnlessTapped = false;
 		this.linkObjs[index].hasTapAction = true;

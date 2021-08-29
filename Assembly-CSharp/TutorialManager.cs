@@ -18,74 +18,74 @@ public class TutorialManager : MonoBehaviour
 		this.declineCallBTN.setAction = new Action(this.declineCall);
 		this.acceptCallBTN.hasAction = true;
 		this.acceptCallBTN.setAction = new Action(this.acceptCall);
-		this.callSeq = TweenSettingsExtensions.OnComplete<Sequence>(DOTween.Sequence(), new TweenCallback(this.aniIdleCall));
-		TweenSettingsExtensions.Insert(this.callSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.TutorialHolder.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		this.callSeq = DOTween.Sequence().OnComplete(new TweenCallback(this.aniIdleCall));
+		this.callSeq.Insert(0f, DOTween.To(() => this.TutorialHolder.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.TutorialHolder.GetComponent<CanvasGroup>().alpha = x;
-		}, 1f, 0.5f), 1));
-		TweenSettingsExtensions.Insert(this.callSeq, 0.5f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.CallWindow.GetComponent<RectTransform>().localScale, delegate(Vector3 x)
+		}, 1f, 0.5f).SetEase(Ease.Linear));
+		this.callSeq.Insert(0.5f, DOTween.To(() => this.CallWindow.GetComponent<RectTransform>().localScale, delegate(Vector3 x)
 		{
 			this.CallWindow.GetComponent<RectTransform>().localScale = x;
-		}, new Vector3(1f, 1f, 1f), 0.25f), 3));
-		TweenSettingsExtensions.Insert(this.callSeq, 0.5f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.CallWindow.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		}, new Vector3(1f, 1f, 1f), 0.25f).SetEase(Ease.OutSine));
+		this.callSeq.Insert(0.5f, DOTween.To(() => this.CallWindow.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.CallWindow.GetComponent<CanvasGroup>().alpha = x;
-		}, 1f, 0.25f), 3));
-		TweenExtensions.Play<Sequence>(this.callSeq);
+		}, 1f, 0.25f).SetEase(Ease.OutSine));
+		this.callSeq.Play<Sequence>();
 	}
 
 	private void aniIdleCall()
 	{
 		GameManager.AudioSlinger.DealSound(AudioHubs.COMPUTER, AudioLayer.SOFTWARESFX, this.phoneRingClip, 0.7f, true);
 		this.idleSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.idleSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.AdamPic.GetComponent<RectTransform>().localScale, delegate(Vector3 x)
+		this.idleSeq.Insert(0f, DOTween.To(() => this.AdamPic.GetComponent<RectTransform>().localScale, delegate(Vector3 x)
 		{
 			this.AdamPic.GetComponent<RectTransform>().localScale = x;
-		}, new Vector3(0.9f, 0.9f, 0.9f), 0.75f), 2));
-		TweenSettingsExtensions.Insert(this.idleSeq, 0.75f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.AdamPic.GetComponent<RectTransform>().localScale, delegate(Vector3 x)
+		}, new Vector3(0.9f, 0.9f, 0.9f), 0.75f).SetEase(Ease.InSine));
+		this.idleSeq.Insert(0.75f, DOTween.To(() => this.AdamPic.GetComponent<RectTransform>().localScale, delegate(Vector3 x)
 		{
 			this.AdamPic.GetComponent<RectTransform>().localScale = x;
-		}, new Vector3(1f, 1f, 1f), 0.75f), 3));
-		TweenSettingsExtensions.SetLoops<Sequence>(this.idleSeq, -1);
-		TweenExtensions.Play<Sequence>(this.idleSeq);
+		}, new Vector3(1f, 1f, 1f), 0.75f).SetEase(Ease.OutSine));
+		this.idleSeq.SetLoops(-1);
+		this.idleSeq.Play<Sequence>();
 	}
 
 	private void acceptCall()
 	{
 		GameManager.AudioSlinger.RemoveSound(AudioHubs.COMPUTER, this.phoneRingClip.name);
 		GameManager.AudioSlinger.DealSound(AudioHubs.COMPUTER, AudioLayer.SOFTWARESFX, this.acceptCallClip, 0.7f, false);
-		TweenExtensions.Kill(this.idleSeq, false);
-		this.callSeq = TweenSettingsExtensions.OnComplete<Sequence>(DOTween.Sequence(), new TweenCallback(this.processTutorialStep));
-		TweenSettingsExtensions.Insert(this.callSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.CallWindow.GetComponent<RectTransform>().localScale, delegate(Vector3 x)
+		this.idleSeq.Kill(false);
+		this.callSeq = DOTween.Sequence().OnComplete(new TweenCallback(this.processTutorialStep));
+		this.callSeq.Insert(0f, DOTween.To(() => this.CallWindow.GetComponent<RectTransform>().localScale, delegate(Vector3 x)
 		{
 			this.CallWindow.GetComponent<RectTransform>().localScale = x;
-		}, new Vector3(1.25f, 1.25f, 1.25f), 0.25f), 3));
-		TweenSettingsExtensions.Insert(this.callSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.CallWindow.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		}, new Vector3(1.25f, 1.25f, 1.25f), 0.25f).SetEase(Ease.OutSine));
+		this.callSeq.Insert(0f, DOTween.To(() => this.CallWindow.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.CallWindow.GetComponent<CanvasGroup>().alpha = x;
-		}, 0f, 0.25f), 3));
-		TweenExtensions.Play<Sequence>(this.callSeq);
+		}, 0f, 0.25f).SetEase(Ease.OutSine));
+		this.callSeq.Play<Sequence>();
 	}
 
 	private void declineCall()
 	{
 		GameManager.AudioSlinger.RemoveSound(AudioHubs.COMPUTER, this.phoneRingClip.name);
 		GameManager.AudioSlinger.DealSound(AudioHubs.COMPUTER, AudioLayer.SOFTWARESFX, this.declineCallClip, 0.7f, false);
-		TweenExtensions.Kill(this.idleSeq, false);
-		this.callSeq = TweenSettingsExtensions.OnComplete<Sequence>(DOTween.Sequence(), new TweenCallback(this.disableTutorial));
-		TweenSettingsExtensions.Insert(this.callSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.CallWindow.GetComponent<RectTransform>().localScale, delegate(Vector3 x)
+		this.idleSeq.Kill(false);
+		this.callSeq = DOTween.Sequence().OnComplete(new TweenCallback(this.disableTutorial));
+		this.callSeq.Insert(0f, DOTween.To(() => this.CallWindow.GetComponent<RectTransform>().localScale, delegate(Vector3 x)
 		{
 			this.CallWindow.GetComponent<RectTransform>().localScale = x;
-		}, new Vector3(0.1f, 0.1f, 0.1f), 0.25f), 3));
-		TweenSettingsExtensions.Insert(this.callSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.CallWindow.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		}, new Vector3(0.1f, 0.1f, 0.1f), 0.25f).SetEase(Ease.OutSine));
+		this.callSeq.Insert(0f, DOTween.To(() => this.CallWindow.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.CallWindow.GetComponent<CanvasGroup>().alpha = x;
-		}, 0f, 0.25f), 3));
-		TweenSettingsExtensions.Insert(this.callSeq, 0.25f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.TutorialHolder.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		}, 0f, 0.25f).SetEase(Ease.OutSine));
+		this.callSeq.Insert(0.25f, DOTween.To(() => this.TutorialHolder.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.TutorialHolder.GetComponent<CanvasGroup>().alpha = x;
-		}, 0f, 0.5f), 1));
-		TweenExtensions.Play<Sequence>(this.callSeq);
+		}, 0f, 0.5f).SetEase(Ease.Linear));
+		this.callSeq.Play<Sequence>();
 	}
 
 	private void processTutorialStep()
@@ -113,12 +113,12 @@ public class TutorialManager : MonoBehaviour
 				{
 					this.showTutorialImage(this.tutorialSteps[this.currentStepIndex].actionIMG);
 				}
-				this.stepTextSeq = TweenSettingsExtensions.OnComplete<Sequence>(DOTween.Sequence(), new TweenCallback(this.endCurrentTutorialStep));
-				TweenSettingsExtensions.Insert(this.stepTextSeq, 0f, TweenSettingsExtensions.SetEase<Tweener>(DOTween.To(() => this.currentStepTextLen, delegate(int x)
+				this.stepTextSeq = DOTween.Sequence().OnComplete(new TweenCallback(this.endCurrentTutorialStep));
+				this.stepTextSeq.Insert(0f, DOTween.To(() => this.currentStepTextLen, delegate(int x)
 				{
 					this.currentStepTextLen = x;
-				}, this.tutorialSteps[this.currentStepIndex].theStepText.Length, this.tutorialSteps[this.currentStepIndex].theStepAudio.length), 1));
-				TweenExtensions.Play<Sequence>(this.stepTextSeq);
+				}, this.tutorialSteps[this.currentStepIndex].theStepText.Length, this.tutorialSteps[this.currentStepIndex].theStepAudio.length).SetEase(Ease.Linear));
+				this.stepTextSeq.Play<Sequence>();
 				this.stepUpdateTextActive = true;
 				GameManager.AudioSlinger.DealSound(AudioHubs.COMPUTER, AudioLayer.SOFTWARESFX, this.tutorialSteps[this.currentStepIndex].theStepAudio, 1f, false);
 				this.stepIndex++;
@@ -155,12 +155,12 @@ public class TutorialManager : MonoBehaviour
 		this.leftHub.setMeActive();
 		this.myChairScrub.activateMoveChair();
 		this.myPauseManager.lockPause = false;
-		this.callSeq = TweenSettingsExtensions.OnComplete<Sequence>(DOTween.Sequence(), new TweenCallback(this.disableTutorial));
-		TweenSettingsExtensions.Insert(this.callSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.TutorialHolder.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		this.callSeq = DOTween.Sequence().OnComplete(new TweenCallback(this.disableTutorial));
+		this.callSeq.Insert(0f, DOTween.To(() => this.TutorialHolder.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.TutorialHolder.GetComponent<CanvasGroup>().alpha = x;
-		}, 0f, 0.5f), 1));
-		TweenExtensions.Play<Sequence>(this.callSeq);
+		}, 0f, 0.5f).SetEase(Ease.Linear));
+		this.callSeq.Play<Sequence>();
 		GameManager.SteamSlinger.triggerSteamAchievement(GameManager.SteamSlinger.ACHIEVEMENT_GOOD_GUY_ADAM, true);
 	}
 
@@ -172,10 +172,10 @@ public class TutorialManager : MonoBehaviour
 		GameManager.GetTheCloud().myTimeManager.freezeTime = false;
 		this.myPauseManager.lockPause = false;
 		this.TutorialHolder.SetActive(false);
-		Object.Destroy(this.TutorialHolder);
+		UnityEngine.Object.Destroy(this.TutorialHolder);
 		for (int i = 0; i < this.tutorialImages.Count; i++)
 		{
-			Object.Destroy(this.tutorialImages[i].gameObject);
+			UnityEngine.Object.Destroy(this.tutorialImages[i].gameObject);
 		}
 		this.tutorialActive = true;
 		this.tutorialImages.Clear();
@@ -183,22 +183,22 @@ public class TutorialManager : MonoBehaviour
 		this.stepIndex = 0;
 		this.currentStepIndex = 0;
 		this.stepUpdateTextActive = false;
-		Object.Destroy(base.gameObject);
+		UnityEngine.Object.Destroy(base.gameObject);
 	}
 
 	private void showTutorialImage(int imageIndex)
 	{
 		this.actionIMGSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.actionIMGSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<Color, Color, ColorOptions>>(DOTween.To(() => this.tutorialImages[imageIndex].color, delegate(Color x)
+		this.actionIMGSeq.Insert(0f, DOTween.To(() => this.tutorialImages[imageIndex].color, delegate(Color x)
 		{
 			this.tutorialImages[imageIndex].color = x;
-		}, new Color(1f, 1f, 1f, 1f), 0.3f), 1));
-		TweenExtensions.Play<Sequence>(this.actionIMGSeq);
+		}, new Color(1f, 1f, 1f, 1f), 0.3f).SetEase(Ease.Linear));
+		this.actionIMGSeq.Play<Sequence>();
 	}
 
 	private void clearLastImage(int imageIndex)
 	{
-		TweenExtensions.Kill(this.actionIMGSeq, false);
+		this.actionIMGSeq.Kill(false);
 		this.tutorialImages[imageIndex].color = new Color(1f, 1f, 1f, 0f);
 	}
 
@@ -212,14 +212,14 @@ public class TutorialManager : MonoBehaviour
 	{
 		this.showFailedAttackText = true;
 		this.stepUpdateTextActive = true;
-		TweenExtensions.Kill(this.stepTextSeq, false);
+		this.stepTextSeq.Kill(false);
 		this.currentStepTextLen = 0;
-		this.stepTextSeq = TweenSettingsExtensions.OnComplete<Sequence>(DOTween.Sequence(), new TweenCallback(this.endCurrentTutorialStep));
-		TweenSettingsExtensions.Insert(this.stepTextSeq, 0f, TweenSettingsExtensions.SetEase<Tweener>(DOTween.To(() => this.currentStepTextLen, delegate(int x)
+		this.stepTextSeq = DOTween.Sequence().OnComplete(new TweenCallback(this.endCurrentTutorialStep));
+		this.stepTextSeq.Insert(0f, DOTween.To(() => this.currentStepTextLen, delegate(int x)
 		{
 			this.currentStepTextLen = x;
-		}, this.failedAttackText.Length, this.failedAttackAC.length), 1));
-		TweenExtensions.Play<Sequence>(this.stepTextSeq);
+		}, this.failedAttackText.Length, this.failedAttackAC.length).SetEase(Ease.Linear));
+		this.stepTextSeq.Play<Sequence>();
 		GameManager.AudioSlinger.DealSound(AudioHubs.COMPUTER, AudioLayer.SOFTWARESFX, this.failedAttackAC, 1f, false);
 	}
 
@@ -236,8 +236,8 @@ public class TutorialManager : MonoBehaviour
 			this.leftHub.setMeActive();
 			this.myChairScrub.activateMoveChair();
 			this.TutorialHolder.SetActive(false);
-			Object.Destroy(this.TutorialHolder);
-			Object.Destroy(base.gameObject);
+			UnityEngine.Object.Destroy(this.TutorialHolder);
+			UnityEngine.Object.Destroy(base.gameObject);
 		}
 	}
 
@@ -254,8 +254,8 @@ public class TutorialManager : MonoBehaviour
 			this.leftHub.setMeActive();
 			this.myChairScrub.activateMoveChair();
 			this.TutorialHolder.SetActive(false);
-			Object.Destroy(this.TutorialHolder);
-			Object.Destroy(base.gameObject);
+			UnityEngine.Object.Destroy(this.TutorialHolder);
+			UnityEngine.Object.Destroy(base.gameObject);
 		}
 		else
 		{
@@ -272,7 +272,7 @@ public class TutorialManager : MonoBehaviour
 			{
 				if (CrossPlatformInputManager.GetButtonDown("LeftClick"))
 				{
-					TweenExtensions.Kill(this.stepTextSeq, false);
+					this.stepTextSeq.Kill(false);
 					this.tutorialStepText.text = this.tutorialSteps[this.currentStepIndex].theStepText;
 					this.stepUpdateTextActive = false;
 					flag = true;

@@ -72,7 +72,7 @@ public class Claffis : MonoBehaviour
 			}
 			while (i <= this.keyNoteLength)
 			{
-				int item = Random.Range(0, this.noteSFXs.Count);
+				int item = UnityEngine.Random.Range(0, this.noteSFXs.Count);
 				if (!this.curNotes.Contains(item))
 				{
 					this.curNotes.Add(item);
@@ -102,14 +102,14 @@ public class Claffis : MonoBehaviour
 
 	private void highlightNote(int setIndex)
 	{
-		TweenExtensions.Kill(this.noteSeq, true);
+		this.noteSeq.Kill(true);
 		this.noteHighlights[setIndex].alpha = 1f;
 		this.noteSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.noteSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.noteHighlights[setIndex].alpha, delegate(float x)
+		this.noteSeq.Insert(0f, DOTween.To(() => this.noteHighlights[setIndex].alpha, delegate(float x)
 		{
 			this.noteHighlights[setIndex].alpha = x;
-		}, 0f, 1f), 1));
-		TweenExtensions.Play<Sequence>(this.noteSeq);
+		}, 0f, 1f).SetEase(Ease.Linear));
+		this.noteSeq.Play<Sequence>();
 	}
 
 	private void puzzleSolved()
@@ -126,11 +126,11 @@ public class Claffis : MonoBehaviour
 		GameManager.GetTheCloud().addPlayerSkillPoints3(10);
 		GameManager.AudioSlinger.DealSound(AudioHubs.COMPUTER, AudioLayer.SOFTWARESFX, this.puzzlePassSFX, 1f, false, 1f);
 		this.aniSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.aniSeq, 1f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.wikiLinkHolder.alpha, delegate(float x)
+		this.aniSeq.Insert(1f, DOTween.To(() => this.wikiLinkHolder.alpha, delegate(float x)
 		{
 			this.wikiLinkHolder.alpha = x;
-		}, 1f, 1f), 1));
-		TweenExtensions.Play<Sequence>(this.aniSeq);
+		}, 1f, 1f).SetEase(Ease.Linear));
+		this.aniSeq.Play<Sequence>();
 		if (this.firstTry)
 		{
 			GameManager.SteamSlinger.triggerSteamAchievement(GameManager.SteamSlinger.ACHIEVEMENT_IMPROVER, true);

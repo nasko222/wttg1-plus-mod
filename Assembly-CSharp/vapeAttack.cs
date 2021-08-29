@@ -131,11 +131,11 @@ public class vapeAttack : MonoBehaviour
 	public void warmVapeAttack()
 	{
 		this.vapePresentSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.vapePresentSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.vapeNodeHolderCG.alpha, delegate(float x)
+		this.vapePresentSeq.Insert(0f, DOTween.To(() => this.vapeNodeHolderCG.alpha, delegate(float x)
 		{
 			this.vapeNodeHolderCG.alpha = x;
-		}, 1f, 0.5f), 6));
-		TweenExtensions.Play<Sequence>(this.vapePresentSeq);
+		}, 1f, 0.5f).SetEase(Ease.OutQuad));
+		this.vapePresentSeq.Play<Sequence>();
 		int num = 72;
 		float num2;
 		if (this.inHackerMode)
@@ -147,20 +147,20 @@ public class vapeAttack : MonoBehaviour
 			num2 = (float)this.vapeNodeWidth / (float)this.rootVapeNodeWidth;
 		}
 		num = Mathf.RoundToInt((float)num * num2);
-		TextGenerationSettings textGenerationSettings = default(TextGenerationSettings);
+		TextGenerationSettings settings = default(TextGenerationSettings);
 		TextGenerator textGenerator = new TextGenerator();
-		textGenerationSettings.textAnchor = 1;
-		textGenerationSettings.generateOutOfBounds = true;
-		textGenerationSettings.generationExtents = new Vector2(50f, 20f);
-		textGenerationSettings.pivot = Vector2.zero;
-		textGenerationSettings.richText = true;
-		textGenerationSettings.font = this.clockFont;
-		textGenerationSettings.fontSize = num;
-		textGenerationSettings.fontStyle = 0;
-		textGenerationSettings.lineSpacing = 1f;
-		textGenerationSettings.scaleFactor = 1f;
-		textGenerationSettings.verticalOverflow = 1;
-		textGenerationSettings.horizontalOverflow = 0;
+		settings.textAnchor = TextAnchor.UpperCenter;
+		settings.generateOutOfBounds = true;
+		settings.generationExtents = new Vector2(50f, 20f);
+		settings.pivot = Vector2.zero;
+		settings.richText = true;
+		settings.font = this.clockFont;
+		settings.fontSize = num;
+		settings.fontStyle = FontStyle.Normal;
+		settings.lineSpacing = 1f;
+		settings.scaleFactor = 1f;
+		settings.verticalOverflow = VerticalWrapMode.Overflow;
+		settings.horizontalOverflow = HorizontalWrapMode.Wrap;
 		this.clockText = new GameObject("clockText", new Type[]
 		{
 			typeof(Text)
@@ -179,20 +179,20 @@ public class vapeAttack : MonoBehaviour
 		this.clockText.text = this.warmUpTime.ToString();
 		this.clockText.color = this.clockColor;
 		this.clockText.fontSize = num;
-		this.clockText.rectTransform.sizeDelta = new Vector2(textGenerator.GetPreferredWidth(this.clockText.text, textGenerationSettings), textGenerator.GetPreferredHeight(this.clockText.text, textGenerationSettings));
+		this.clockText.rectTransform.sizeDelta = new Vector2(textGenerator.GetPreferredWidth(this.clockText.text, settings), textGenerator.GetPreferredHeight(this.clockText.text, settings));
 		this.clockText.transform.localScale = new Vector3(1f, 1f, 1f);
 		this.clockText.transform.localRotation = new Quaternion(0f, 0f, 0f, 0f);
 		this.warmClockSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.warmClockSeq, 0f, DOTween.To(() => this.clockText.transform.localScale, delegate(Vector3 x)
+		this.warmClockSeq.Insert(0f, DOTween.To(() => this.clockText.transform.localScale, delegate(Vector3 x)
 		{
 			this.clockText.transform.localScale = x;
 		}, new Vector3(1f, 1f, 1f), 0f));
-		TweenSettingsExtensions.Insert(this.warmClockSeq, 0.1f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.clockText.transform.localScale, delegate(Vector3 x)
+		this.warmClockSeq.Insert(0.1f, DOTween.To(() => this.clockText.transform.localScale, delegate(Vector3 x)
 		{
 			this.clockText.transform.localScale = x;
-		}, new Vector3(0.33f, 0.33f, 0.33f), 0.9f), 1));
-		TweenSettingsExtensions.SetLoops<Sequence>(this.warmClockSeq, 5);
-		TweenExtensions.Play<Sequence>(this.warmClockSeq);
+		}, new Vector3(0.33f, 0.33f, 0.33f), 0.9f).SetEase(Ease.Linear));
+		this.warmClockSeq.SetLoops(5);
+		this.warmClockSeq.Play<Sequence>();
 		this.clockTimeStamp = Time.time;
 		this.clockMicroTimeStamp = Time.time;
 		this.clockMicroCount = this.warmUpTime;
@@ -209,7 +209,7 @@ public class vapeAttack : MonoBehaviour
 
 	public void fireVapeAttack()
 	{
-		Object.Destroy(this.clockText.gameObject);
+		UnityEngine.Object.Destroy(this.clockText.gameObject);
 		float num;
 		float num2;
 		if (this.inHackerMode)
@@ -225,7 +225,7 @@ public class vapeAttack : MonoBehaviour
 			num2 = (float)this.vapeNodeHeight / (float)this.rootVapeNodeHeight;
 		}
 		this.finalCountDownFired = false;
-		this.curVapeClockObject = Object.Instantiate<GameObject>(this.VapeClockObject);
+		this.curVapeClockObject = UnityEngine.Object.Instantiate<GameObject>(this.VapeClockObject);
 		if (this.inHackerMode)
 		{
 			this.curVapeClockObject.transform.SetParent(this.hackerModeManager.scoreHeaderObject.transform);
@@ -241,11 +241,11 @@ public class vapeAttack : MonoBehaviour
 		this.curVapeClockObject.GetComponent<RectTransform>().sizeDelta = new Vector2(this.curVapeClockObject.GetComponent<Image>().sprite.rect.width * num, this.curVapeClockObject.GetComponent<Image>().sprite.rect.height * num2);
 		this.curVapeClockObject.GetComponent<DOSClock>().DOSClockImage.GetComponent<RectTransform>().sizeDelta = new Vector2(this.curVapeClockObject.GetComponent<DOSClock>().DOSClockImage.sprite.rect.width * num, this.curVapeClockObject.GetComponent<DOSClock>().DOSClockImage.sprite.rect.height * num2);
 		this.VapeAttackClockSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.VapeAttackClockSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.curVapeClockObject.GetComponent<DOSClock>().DOSClockImage.fillAmount, delegate(float x)
+		this.VapeAttackClockSeq.Insert(0f, DOTween.To(() => this.curVapeClockObject.GetComponent<DOSClock>().DOSClockImage.fillAmount, delegate(float x)
 		{
 			this.curVapeClockObject.GetComponent<DOSClock>().DOSClockImage.fillAmount = x;
-		}, 0f, this.VapeTime), 1));
-		TweenExtensions.Play<Sequence>(this.VapeAttackClockSeq);
+		}, 0f, this.VapeTime).SetEase(Ease.Linear));
+		this.VapeAttackClockSeq.Play<Sequence>();
 		this.VapeGameTimeStamp = Time.time;
 		this.vapeIsHot = true;
 		this.vapeAttackFired = true;
@@ -340,7 +340,7 @@ public class vapeAttack : MonoBehaviour
 		GameManager.AudioSlinger.RemoveSound(AudioHubs.HACKERMODE, this.ClockAlmostUp.name);
 		GameManager.AudioSlinger.ChangeGlobalPitch(AudioLayer.MUSIC, 0.8f);
 		this.finalCountDownFired = true;
-		TweenExtensions.Pause<Sequence>(this.VapeAttackClockSeq);
+		this.VapeAttackClockSeq.Pause<Sequence>();
 		this.timeIsFrozen = true;
 		GameManager.TimeSlinger.FireTimer(30f, new Action(this.unFreezeTime), "cloudFreezeTimer");
 	}
@@ -359,28 +359,28 @@ public class vapeAttack : MonoBehaviour
 			short y = (short)Mathf.FloorToInt((float)(i / (int)(this.MATRIX_SIZE + 1)));
 			this.masterVapeNodes.Add(new vapeAttack.vapeNode(vapeNodeType.BLANKNODE, new vapeAttack.vapeNodePosition(x, y), this.blankNodeSprite));
 		}
-		int num5 = Mathf.CeilToInt(((float)this.MATRIX_SIZE + 1f) * ((float)this.MATRIX_SIZE + 1f) / Mathf.Ceil((float)num4 / (float)this.GROUP_SIZE));
-		int num6 = Random.Range(1, num5);
+		int max = Mathf.CeilToInt(((float)this.MATRIX_SIZE + 1f) * ((float)this.MATRIX_SIZE + 1f) / Mathf.Ceil((float)num4 / (float)this.GROUP_SIZE));
+		int num5 = UnityEngine.Random.Range(1, max);
 		for (int j = 0; j < num4; j++)
 		{
-			int num7 = num + j % (int)this.GROUP_SIZE;
-			if (num7 < this.masterVapeNodes.Count)
+			int num6 = num + j % (int)this.GROUP_SIZE;
+			if (num6 < this.masterVapeNodes.Count)
 			{
-				this.masterVapeNodes[num7].updateMyInfo(vapeNodeType.BOXNODE, this.boxNodeSprite);
+				this.masterVapeNodes[num6].updateMyInfo(vapeNodeType.BOXNODE, this.boxNodeSprite);
 				num2++;
 				if (num2 > (int)(this.GROUP_SIZE - 1))
 				{
-					int num8 = num + (int)this.GROUP_SIZE + num6;
-					if (num8 + (int)this.GROUP_SIZE < this.masterVapeNodes.Count)
+					int num7 = num + (int)this.GROUP_SIZE + num5;
+					if (num7 + (int)this.GROUP_SIZE < this.masterVapeNodes.Count)
 					{
-						num = num8;
+						num = num7;
 					}
 					else
 					{
 						num += (int)this.GROUP_SIZE;
 					}
 					num2 = 0;
-					num6 = Random.Range(1, num5);
+					num5 = UnityEngine.Random.Range(1, max);
 				}
 			}
 		}
@@ -389,7 +389,7 @@ public class vapeAttack : MonoBehaviour
 			list = this.getCurBlankBoxNodes();
 			for (int k = 0; k < (int)this.DEAD_NODE_SIZE; k++)
 			{
-				int index = Random.Range(0, list.Count);
+				int index = UnityEngine.Random.Range(0, list.Count);
 				this.masterVapeNodes[list[index]].updateMyInfo(vapeNodeType.DEADNODE, this.deadNodeSprite);
 				list.RemoveAt(index);
 			}
@@ -402,8 +402,8 @@ public class vapeAttack : MonoBehaviour
 		this.vapeNodeObjects = new Dictionary<string, GameObject>();
 		float num = (float)(this.vapeNodeWidth * (int)(this.MATRIX_SIZE + 1));
 		float num2 = (float)(this.vapeNodeHeight * (int)(this.MATRIX_SIZE + 1));
-		float num3 = 0f - num / 2f;
-		float num4 = num2 / 2f;
+		float x = 0f - num / 2f;
+		float y = num2 / 2f;
 		this.VapeHolder.GetComponent<RectTransform>().sizeDelta = new Vector2(num, num2);
 		this.vapeNodeHolder = new GameObject("VapeNodeHolder", new Type[]
 		{
@@ -416,15 +416,15 @@ public class vapeAttack : MonoBehaviour
 		this.vapeNodeHolder.GetComponent<RectTransform>().anchorMax = new Vector2(0f, 1f);
 		this.vapeNodeHolder.GetComponent<RectTransform>().pivot = new Vector2(0f, 1f);
 		this.vapeNodeHolder.transform.localScale = new Vector3(1f, 1f, 1f);
-		this.vapeNodeHolder.transform.localPosition = new Vector3(num3, num4, 0f);
+		this.vapeNodeHolder.transform.localPosition = new Vector3(x, y, 0f);
 		this.nodeBGIMG = new GameObject("nodeBGIMG", new Type[]
 		{
 			typeof(Image)
 		}).GetComponent<Image>();
 		this.nodeBGIMG.transform.SetParent(this.vapeNodeHolder.transform);
 		this.nodeBGIMG.sprite = this.pixelSprite;
-		this.nodeBGIMG.type = 3;
-		this.nodeBGIMG.fillMethod = 4;
+		this.nodeBGIMG.type = Image.Type.Filled;
+		this.nodeBGIMG.fillMethod = Image.FillMethod.Radial360;
 		this.nodeBGIMG.fillAmount = 1f;
 		this.nodeBGIMG.color = this.nodeBorderColor;
 		this.nodeBGIMG.GetComponent<RectTransform>().sizeDelta = new Vector2(num, num2);
@@ -437,7 +437,7 @@ public class vapeAttack : MonoBehaviour
 		{
 			float setX = (float)(i % (int)(this.MATRIX_SIZE + 1) * this.vapeNodeWidth);
 			float setY = (float)(Mathf.FloorToInt((float)(i / (int)(this.MATRIX_SIZE + 1))) * -(float)this.vapeNodeHeight);
-			GameObject gameObject = Object.Instantiate<GameObject>(this.VapeNodeObject);
+			GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(this.VapeNodeObject);
 			gameObject.GetComponent<VapeNodeObject>().blankNodeSprite = this.blankNodeSprite;
 			gameObject.GetComponent<VapeNodeObject>().boxNodeSprite = this.boxNodeSprite;
 			gameObject.GetComponent<VapeNodeObject>().goodNodeSprite = this.goodNodeSprite;
@@ -533,18 +533,18 @@ public class vapeAttack : MonoBehaviour
 		this.curActiveNode = string.Empty;
 		this.vapeAttackFired = false;
 		this.vapeIsHot = false;
-		TweenExtensions.Kill(this.VapeAttackClockSeq, false);
-		Object.Destroy(this.curVapeClockObject);
+		this.VapeAttackClockSeq.Kill(false);
+		UnityEngine.Object.Destroy(this.curVapeClockObject);
 		if (!this.inHackerMode)
 		{
 			GameManager.GetDOSTwitch().DismissTwitchHacker();
 		}
-		this.VapeAttackOverSeq = TweenSettingsExtensions.OnComplete<Sequence>(DOTween.Sequence(), new TweenCallback(this.VapeAttackFailOver));
-		TweenSettingsExtensions.Insert(this.VapeAttackOverSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.vapeNodeHolderCG.alpha, delegate(float x)
+		this.VapeAttackOverSeq = DOTween.Sequence().OnComplete(new TweenCallback(this.VapeAttackFailOver));
+		this.VapeAttackOverSeq.Insert(0f, DOTween.To(() => this.vapeNodeHolderCG.alpha, delegate(float x)
 		{
 			this.vapeNodeHolderCG.alpha = x;
-		}, 0f, 0.4f), 3));
-		TweenExtensions.Play<Sequence>(this.VapeAttackOverSeq);
+		}, 0f, 0.4f).SetEase(Ease.OutSine));
+		this.VapeAttackOverSeq.Play<Sequence>();
 	}
 
 	private void VapeAttackSucceeded()
@@ -559,26 +559,36 @@ public class vapeAttack : MonoBehaviour
 		{
 			GameManager.AudioSlinger.RemoveSound(AudioHubs.COMPUTER, this.ClockAlmostUp.name);
 		}
+		if (this.inHackerMode && this.hackerModeManager.FireAShell())
+		{
+			UnityEngine.Object.Destroy(this.vapeNodeHolder.gameObject);
+			this.prepVapeAttack();
+			this.warmVapeAttack();
+		}
+		else if (this.inHackerMode)
+		{
+			this.VapeAttackOverSeq = DOTween.Sequence().OnComplete(new TweenCallback(this.VapeAttackSucOver));
+		}
 		this.masterVapeNodes.Clear();
 		this.vapeNodeObjects.Clear();
 		this.curActiveNodeSet = false;
 		this.curActiveNode = string.Empty;
 		this.vapeAttackFired = false;
 		this.vapeIsHot = false;
-		TweenExtensions.Kill(this.VapeAttackClockSeq, false);
-		Object.Destroy(this.curVapeClockObject);
+		this.VapeAttackClockSeq.Kill(false);
+		UnityEngine.Object.Destroy(this.curVapeClockObject);
 		GameManager.GetDOSTwitch().DismissTwitchHacker();
-		this.VapeAttackOverSeq = TweenSettingsExtensions.OnComplete<Sequence>(DOTween.Sequence(), new TweenCallback(this.VapeAttackSucOver));
-		TweenSettingsExtensions.Insert(this.VapeAttackOverSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.vapeNodeHolderCG.alpha, delegate(float x)
+		this.VapeAttackOverSeq = DOTween.Sequence().OnComplete(new TweenCallback(this.VapeAttackSucOver));
+		this.VapeAttackOverSeq.Insert(0f, DOTween.To(() => this.vapeNodeHolderCG.alpha, delegate(float x)
 		{
 			this.vapeNodeHolderCG.alpha = x;
-		}, 0f, 0.4f), 3));
-		TweenExtensions.Play<Sequence>(this.VapeAttackOverSeq);
+		}, 0f, 0.4f).SetEase(Ease.OutSine));
+		this.VapeAttackOverSeq.Play<Sequence>();
 	}
 
 	private void VapeAttackFailOver()
 	{
-		Object.Destroy(this.vapeNodeHolder.gameObject);
+		UnityEngine.Object.Destroy(this.vapeNodeHolder.gameObject);
 		this.VapeHolder.GetComponent<CanvasGroup>().alpha = 0f;
 		if (this.isTwitchAttack)
 		{
@@ -614,7 +624,7 @@ public class vapeAttack : MonoBehaviour
 
 	private void VapeAttackSucOver()
 	{
-		Object.Destroy(this.vapeNodeHolder.gameObject);
+		UnityEngine.Object.Destroy(this.vapeNodeHolder.gameObject);
 		this.VapeHolder.GetComponent<CanvasGroup>().alpha = 0f;
 		if (this.isTwitchAttack)
 		{
@@ -668,7 +678,7 @@ public class vapeAttack : MonoBehaviour
 	private void unFreezeTime()
 	{
 		GameManager.AudioSlinger.ChangeGlobalPitch(AudioLayer.MUSIC, 1f);
-		TweenExtensions.Play<Sequence>(this.VapeAttackClockSeq);
+		this.VapeAttackClockSeq.Play<Sequence>();
 		this.timeIsFrozen = false;
 	}
 

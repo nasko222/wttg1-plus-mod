@@ -6,7 +6,7 @@ public class closeTxtBehavior : MonoBehaviour, IPointerDownHandler, IEventSystem
 {
 	public void OnPointerDown(PointerEventData eventData)
 	{
-		Object.Destroy(this.parentWindow);
+		UnityEngine.Object.Destroy(this.parentWindow);
 	}
 
 	public GameObject parentWindow;

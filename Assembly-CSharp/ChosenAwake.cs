@@ -19,13 +19,13 @@ public class ChosenAwake : MonoBehaviour
 	{
 		if (this.gIndexs.Count <= 0)
 		{
-			int item = Random.Range(0, this.firstRowLinks.Count);
-			int item2 = Random.Range(0, this.secondRowLinks.Count);
-			int item3 = Random.Range(0, this.thridRowLinks.Count);
-			int item4 = Random.Range(0, this.fourthRowLinks.Count);
-			int item5 = Random.Range(0, this.fithRowLinks.Count);
-			int item6 = Random.Range(0, this.sixthRowLinks.Count);
-			int item7 = Random.Range(0, this.seventhRowLinks.Count);
+			int item = UnityEngine.Random.Range(0, this.firstRowLinks.Count);
+			int item2 = UnityEngine.Random.Range(0, this.secondRowLinks.Count);
+			int item3 = UnityEngine.Random.Range(0, this.thridRowLinks.Count);
+			int item4 = UnityEngine.Random.Range(0, this.fourthRowLinks.Count);
+			int item5 = UnityEngine.Random.Range(0, this.fithRowLinks.Count);
+			int item6 = UnityEngine.Random.Range(0, this.sixthRowLinks.Count);
+			int item7 = UnityEngine.Random.Range(0, this.seventhRowLinks.Count);
 			this.gIndexs.Add(item);
 			this.gIndexs.Add(item2);
 			this.gIndexs.Add(item3);
@@ -208,11 +208,11 @@ public class ChosenAwake : MonoBehaviour
 		GameManager.GetTheCloud().addPlayerSkillPoints3(20);
 		GameManager.AudioSlinger.DealSound(AudioHubs.COMPUTER, AudioLayer.SOFTWARESFX, this.foundSound, 0.75f, false);
 		this.aniSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.aniSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.wikiLinkHolder.alpha, delegate(float x)
+		this.aniSeq.Insert(0f, DOTween.To(() => this.wikiLinkHolder.alpha, delegate(float x)
 		{
 			this.wikiLinkHolder.alpha = x;
-		}, 1f, 1f), 1));
-		TweenExtensions.Play<Sequence>(this.aniSeq);
+		}, 1f, 1f).SetEase(Ease.Linear));
+		this.aniSeq.Play<Sequence>();
 	}
 
 	private void Start()

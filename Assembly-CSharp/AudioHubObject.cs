@@ -193,7 +193,7 @@ public class AudioHubObject : MonoBehaviour
 			{
 				audioSource.Stop();
 			}
-			Object.Destroy(audioSource);
+			UnityEngine.Object.Destroy(audioSource);
 		}
 	}
 
@@ -227,7 +227,7 @@ public class AudioHubObject : MonoBehaviour
 	public void adjustSoundVolumes(float setPercentage, float setDuration)
 	{
 		List<string> list = new List<string>(this.currentAudioSources.Keys);
-		this.volumeSeq = TweenSettingsExtensions.OnComplete<Sequence>(DOTween.Sequence(), new TweenCallback(this.clearVolumeSeq));
+		this.volumeSeq = DOTween.Sequence().OnComplete(new TweenCallback(this.clearVolumeSeq));
 		for (int i = 0; i < list.Count; i++)
 		{
 			AudioLayer audioLayer = this.currentSoundsToLayers[list[i]];
@@ -237,12 +237,12 @@ public class AudioHubObject : MonoBehaviour
 			{
 				num *= GameManager.AudioSlinger.MuffeledLayerPerc(audioLayer);
 			}
-			TweenSettingsExtensions.Insert(this.volumeSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => tmpAS.volume, delegate(float x)
+			this.volumeSeq.Insert(0f, DOTween.To(() => tmpAS.volume, delegate(float x)
 			{
 				tmpAS.volume = x;
-			}, num, setDuration), 1));
+			}, num, setDuration).SetEase(Ease.Linear));
 		}
-		TweenExtensions.Play<Sequence>(this.volumeSeq);
+		this.volumeSeq.Play<Sequence>();
 	}
 
 	public void resetSoundVolumes()
@@ -265,7 +265,7 @@ public class AudioHubObject : MonoBehaviour
 	public void resetSoundVolumes(float setDuration)
 	{
 		List<string> list = new List<string>(this.currentAudioSources.Keys);
-		this.volumeSeq = TweenSettingsExtensions.OnComplete<Sequence>(DOTween.Sequence(), new TweenCallback(this.clearVolumeSeq));
+		this.volumeSeq = DOTween.Sequence().OnComplete(new TweenCallback(this.clearVolumeSeq));
 		for (int i = 0; i < list.Count; i++)
 		{
 			AudioLayer audioLayer = this.currentSoundsToLayers[list[i]];
@@ -275,12 +275,12 @@ public class AudioHubObject : MonoBehaviour
 			{
 				num *= GameManager.AudioSlinger.MuffeledLayerPerc(audioLayer);
 			}
-			TweenSettingsExtensions.Insert(this.volumeSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => tmpAS.volume, delegate(float x)
+			this.volumeSeq.Insert(0f, DOTween.To(() => tmpAS.volume, delegate(float x)
 			{
 				tmpAS.volume = x;
-			}, num, setDuration), 1));
+			}, num, setDuration).SetEase(Ease.Linear));
 		}
-		TweenExtensions.Play<Sequence>(this.volumeSeq);
+		this.volumeSeq.Play<Sequence>();
 	}
 
 	public void updateClipVolume(string clipName, float newVolLevel)
@@ -293,7 +293,7 @@ public class AudioHubObject : MonoBehaviour
 
 	private void clearVolumeSeq()
 	{
-		TweenExtensions.Kill(this.volumeSeq, true);
+		this.volumeSeq.Kill(true);
 		this.volumeSeq = null;
 	}
 

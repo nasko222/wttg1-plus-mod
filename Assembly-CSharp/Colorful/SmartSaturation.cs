@@ -42,7 +42,7 @@ namespace Colorful
 			base.OnDisable();
 			if (this._CurveTexture != null)
 			{
-				Object.DestroyImmediate(this._CurveTexture);
+				UnityEngine.Object.DestroyImmediate(this._CurveTexture);
 			}
 		}
 
@@ -50,12 +50,12 @@ namespace Colorful
 		{
 			if (this._CurveTexture == null)
 			{
-				this._CurveTexture = new Texture2D(256, 1, 1, false);
+				this._CurveTexture = new Texture2D(256, 1, TextureFormat.Alpha8, false);
 				this._CurveTexture.name = "Saturation Curve Texture";
-				this._CurveTexture.wrapMode = 1;
+				this._CurveTexture.wrapMode = TextureWrapMode.Clamp;
 				this._CurveTexture.anisoLevel = 0;
-				this._CurveTexture.filterMode = 1;
-				this._CurveTexture.hideFlags = 52;
+				this._CurveTexture.filterMode = FilterMode.Bilinear;
+				this._CurveTexture.hideFlags = HideFlags.DontSave;
 			}
 			Color[] pixels = this._CurveTexture.GetPixels();
 			for (int i = 0; i < 256; i++)

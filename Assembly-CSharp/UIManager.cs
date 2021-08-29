@@ -52,17 +52,17 @@ public class UIManager : MonoBehaviour
 
 	public void flashSaveIcon()
 	{
-		this.saveIconSeq = TweenSettingsExtensions.OnComplete<Sequence>(DOTween.Sequence(), new TweenCallback(this.resetSaveIcon));
-		TweenSettingsExtensions.Insert(this.saveIconSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.saveIconHolder.alpha, delegate(float x)
+		this.saveIconSeq = DOTween.Sequence().OnComplete(new TweenCallback(this.resetSaveIcon));
+		this.saveIconSeq.Insert(0f, DOTween.To(() => this.saveIconHolder.alpha, delegate(float x)
 		{
 			this.saveIconHolder.alpha = x;
-		}, 1f, 0.75f), 3));
-		TweenSettingsExtensions.Insert(this.saveIconSeq, 0.75f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.saveIconHolder.alpha, delegate(float x)
+		}, 1f, 0.75f).SetEase(Ease.OutSine));
+		this.saveIconSeq.Insert(0.75f, DOTween.To(() => this.saveIconHolder.alpha, delegate(float x)
 		{
 			this.saveIconHolder.alpha = x;
-		}, 0.2f, 0.75f), 3));
-		TweenSettingsExtensions.SetLoops<Sequence>(this.saveIconSeq, 3);
-		TweenExtensions.Play<Sequence>(this.saveIconSeq);
+		}, 0.2f, 0.75f).SetEase(Ease.OutSine));
+		this.saveIconSeq.SetLoops(3);
+		this.saveIconSeq.Play<Sequence>();
 	}
 
 	public void pauseMe()
@@ -81,18 +81,18 @@ public class UIManager : MonoBehaviour
 
 	public void fadeScreenInWithTime(float setTime)
 	{
-		TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.ScreenFadeHolder.alpha, delegate(float x)
+		DOTween.To(() => this.ScreenFadeHolder.alpha, delegate(float x)
 		{
 			this.ScreenFadeHolder.alpha = x;
-		}, 0f, setTime), 1);
+		}, 0f, setTime).SetEase(Ease.Linear);
 	}
 
 	public void fadeScreenOutWithTime(float setTime)
 	{
-		TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.ScreenFadeHolder.alpha, delegate(float x)
+		DOTween.To(() => this.ScreenFadeHolder.alpha, delegate(float x)
 		{
 			this.ScreenFadeHolder.alpha = x;
-		}, 1f, setTime), 1);
+		}, 1f, setTime).SetEase(Ease.Linear);
 	}
 
 	public void showShutDown()
@@ -100,30 +100,30 @@ public class UIManager : MonoBehaviour
 		GameManager.GetTheCloud().myTimeManager.freezeTime = true;
 		this.shutDownObject.SetActive(true);
 		this.shutDownSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.shutDownSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.shutDownObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		this.shutDownSeq.Insert(0f, DOTween.To(() => this.shutDownObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.shutDownObject.GetComponent<CanvasGroup>().alpha = x;
-		}, 1f, 0.25f), 1));
-		TweenSettingsExtensions.Insert(this.shutDownSeq, 0.25f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.shutDownWindowObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		}, 1f, 0.25f).SetEase(Ease.Linear));
+		this.shutDownSeq.Insert(0.25f, DOTween.To(() => this.shutDownWindowObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.shutDownWindowObject.GetComponent<CanvasGroup>().alpha = x;
-		}, 1f, 0.25f), 3));
-		TweenExtensions.Play<Sequence>(this.shutDownSeq);
+		}, 1f, 0.25f).SetEase(Ease.OutSine));
+		this.shutDownSeq.Play<Sequence>();
 	}
 
 	public void hideShutDown()
 	{
 		GameManager.GetTheCloud().myTimeManager.freezeTime = false;
-		this.shutDownSeq = TweenSettingsExtensions.OnComplete<Sequence>(DOTween.Sequence(), new TweenCallback(this.disableShutDownObject));
-		TweenSettingsExtensions.Insert(this.shutDownSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.shutDownWindowObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		this.shutDownSeq = DOTween.Sequence().OnComplete(new TweenCallback(this.disableShutDownObject));
+		this.shutDownSeq.Insert(0f, DOTween.To(() => this.shutDownWindowObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.shutDownWindowObject.GetComponent<CanvasGroup>().alpha = x;
-		}, 0f, 0.25f), 3));
-		TweenSettingsExtensions.Insert(this.shutDownSeq, 0.25f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.shutDownObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		}, 0f, 0.25f).SetEase(Ease.OutSine));
+		this.shutDownSeq.Insert(0.25f, DOTween.To(() => this.shutDownObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.shutDownObject.GetComponent<CanvasGroup>().alpha = x;
-		}, 0f, 0.25f), 1));
-		TweenExtensions.Play<Sequence>(this.shutDownSeq);
+		}, 0f, 0.25f).SetEase(Ease.Linear));
+		this.shutDownSeq.Play<Sequence>();
 	}
 
 	public void saveAndQuit()
@@ -170,51 +170,51 @@ public class UIManager : MonoBehaviour
 	public void displayNoInet()
 	{
 		this.inetSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.inetSeq, 0f, DOTween.To(() => this.inetConStatHolder.alpha, delegate(float x)
+		this.inetSeq.Insert(0f, DOTween.To(() => this.inetConStatHolder.alpha, delegate(float x)
 		{
 			this.inetConStatHolder.alpha = x;
 		}, 1f, 0.5f));
-		TweenSettingsExtensions.Insert(this.inetSeq, 4.5f, DOTween.To(() => this.inetConStatHolder.alpha, delegate(float x)
+		this.inetSeq.Insert(4.5f, DOTween.To(() => this.inetConStatHolder.alpha, delegate(float x)
 		{
 			this.inetConStatHolder.alpha = x;
 		}, 0f, 0.5f));
-		TweenExtensions.Play<Sequence>(this.inetSeq);
+		this.inetSeq.Play<Sequence>();
 	}
 
 	public void displayConfOffline()
 	{
 		this.confSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.confSeq, 0f, DOTween.To(() => this.confOfflineHolder.alpha, delegate(float x)
+		this.confSeq.Insert(0f, DOTween.To(() => this.confOfflineHolder.alpha, delegate(float x)
 		{
 			this.confOfflineHolder.alpha = x;
 		}, 1f, 0.5f));
-		TweenSettingsExtensions.Insert(this.confSeq, 4.5f, DOTween.To(() => this.confOfflineHolder.alpha, delegate(float x)
+		this.confSeq.Insert(4.5f, DOTween.To(() => this.confOfflineHolder.alpha, delegate(float x)
 		{
 			this.confOfflineHolder.alpha = x;
 		}, 0f, 0.5f));
-		TweenExtensions.Play<Sequence>(this.confSeq);
+		this.confSeq.Play<Sequence>();
 	}
 
 	public void displayMSGPopUp(string theMSGText)
 	{
 		bool flag = true;
 		this.msgText.text = theMSGText;
-		if (this.msgSeq != null && TweenExtensions.IsActive(this.msgSeq))
+		if (this.msgSeq != null && this.msgSeq.IsActive())
 		{
 			flag = false;
 		}
 		if (flag)
 		{
-			this.msgSeq = TweenSettingsExtensions.OnComplete<Sequence>(DOTween.Sequence(), new TweenCallback(this.clearMsgPopUpText));
-			TweenSettingsExtensions.Insert(this.msgSeq, 0f, DOTween.To(() => this.msgPopUpHolder.alpha, delegate(float x)
+			this.msgSeq = DOTween.Sequence().OnComplete(new TweenCallback(this.clearMsgPopUpText));
+			this.msgSeq.Insert(0f, DOTween.To(() => this.msgPopUpHolder.alpha, delegate(float x)
 			{
 				this.msgPopUpHolder.alpha = x;
 			}, 1f, 0.5f));
-			TweenSettingsExtensions.Insert(this.msgSeq, 4.5f, DOTween.To(() => this.msgPopUpHolder.alpha, delegate(float x)
+			this.msgSeq.Insert(4.5f, DOTween.To(() => this.msgPopUpHolder.alpha, delegate(float x)
 			{
 				this.msgPopUpHolder.alpha = x;
 			}, 0f, 0.5f));
-			TweenExtensions.Play<Sequence>(this.msgSeq);
+			this.msgSeq.Play<Sequence>();
 		}
 	}
 
@@ -222,22 +222,22 @@ public class UIManager : MonoBehaviour
 	{
 		this.BraceHolder.SetActive(true);
 		this.braceSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.braceSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.LeftClickIMG.gameObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		this.braceSeq.Insert(0f, DOTween.To(() => this.LeftClickIMG.gameObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.LeftClickIMG.gameObject.GetComponent<CanvasGroup>().alpha = x;
-		}, 1f, 0.2f), 1));
-		TweenSettingsExtensions.Insert(this.braceSeq, 0.2f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.LeftClickIMG.gameObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		}, 1f, 0.2f).SetEase(Ease.Linear));
+		this.braceSeq.Insert(0.2f, DOTween.To(() => this.LeftClickIMG.gameObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.LeftClickIMG.gameObject.GetComponent<CanvasGroup>().alpha = x;
-		}, 0f, 0.2f), 1));
-		TweenSettingsExtensions.SetLoops<Sequence>(this.braceSeq, -1);
-		TweenExtensions.Play<Sequence>(this.braceSeq);
+		}, 0f, 0.2f).SetEase(Ease.Linear));
+		this.braceSeq.SetLoops(-1);
+		this.braceSeq.Play<Sequence>();
 	}
 
 	public void hideBrace()
 	{
 		this.BraceHolder.SetActive(false);
-		TweenExtensions.Kill(this.braceSeq, true);
+		this.braceSeq.Kill(true);
 	}
 
 	public void triggerFlashCreep()
@@ -261,18 +261,18 @@ public class UIManager : MonoBehaviour
 
 	private void fadeScreenIn()
 	{
-		TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.ScreenFadeHolder.alpha, delegate(float x)
+		DOTween.To(() => this.ScreenFadeHolder.alpha, delegate(float x)
 		{
 			this.ScreenFadeHolder.alpha = x;
-		}, 0f, this.screenFadeTime), 1);
+		}, 0f, this.screenFadeTime).SetEase(Ease.Linear);
 	}
 
 	private void fadeScreenOut()
 	{
-		TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.ScreenFadeHolder.alpha, delegate(float x)
+		DOTween.To(() => this.ScreenFadeHolder.alpha, delegate(float x)
 		{
 			this.ScreenFadeHolder.alpha = x;
-		}, 1f, this.screenFadeTime), 1);
+		}, 1f, this.screenFadeTime).SetEase(Ease.Linear);
 	}
 
 	private void resetSaveIcon()
@@ -297,15 +297,15 @@ public class UIManager : MonoBehaviour
 		GameManager.AudioSlinger.DealSound(AudioHubs.PLAYER, AudioLayer.SFX, this.gameOverClip, 1f, false, 0.3f);
 		GameManager.TimeSlinger.FireTimer(5f, new Action(this.quitToMainMenu));
 		this.gameOverSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.gameOverSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<Color, Color, ColorOptions>>(DOTween.To(() => this.gameOverIMG.color, delegate(Color x)
+		this.gameOverSeq.Insert(0f, DOTween.To(() => this.gameOverIMG.color, delegate(Color x)
 		{
 			this.gameOverIMG.color = x;
-		}, new Color(1f, 1f, 1f, 1f), 0.7f), 3));
-		TweenSettingsExtensions.Insert(this.gameOverSeq, 0.7f, TweenSettingsExtensions.SetEase<TweenerCore<Color, Color, ColorOptions>>(DOTween.To(() => this.gameOverReason.color, delegate(Color x)
+		}, new Color(1f, 1f, 1f, 1f), 0.7f).SetEase(Ease.OutSine));
+		this.gameOverSeq.Insert(0.7f, DOTween.To(() => this.gameOverReason.color, delegate(Color x)
 		{
 			this.gameOverReason.color = x;
-		}, new Color(1f, 1f, 1f, 1f), 0.7f), 1));
-		TweenExtensions.Play<Sequence>(this.gameOverSeq);
+		}, new Color(1f, 1f, 1f, 1f), 0.7f).SetEase(Ease.Linear));
+		this.gameOverSeq.Play<Sequence>();
 	}
 
 	private void clearResetModem()

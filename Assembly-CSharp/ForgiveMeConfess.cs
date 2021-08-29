@@ -106,12 +106,12 @@ public class ForgiveMeConfess : MonoBehaviour
 			if (rData.data == "1")
 			{
 				GameManager.AudioSlinger.DealSound(AudioHubs.COMPUTER, AudioLayer.SOFTWARESFX, this.confessSubmitSFX, 1f, false);
-				this.confessFormSeq = TweenSettingsExtensions.OnComplete<Sequence>(DOTween.Sequence(), new TweenCallback(this.disableConfessInput));
-				TweenSettingsExtensions.Insert(this.confessFormSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.confessFormHolder.alpha, delegate(float x)
+				this.confessFormSeq = DOTween.Sequence().OnComplete(new TweenCallback(this.disableConfessInput));
+				this.confessFormSeq.Insert(0f, DOTween.To(() => this.confessFormHolder.alpha, delegate(float x)
 				{
 					this.confessFormHolder.alpha = x;
-				}, 0f, 0.5f), 1));
-				TweenExtensions.Play<Sequence>(this.confessFormSeq);
+				}, 0f, 0.5f).SetEase(Ease.Linear));
+				this.confessFormSeq.Play<Sequence>();
 			}
 			else
 			{

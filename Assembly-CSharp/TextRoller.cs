@@ -38,7 +38,7 @@ public class TextRoller : MonoBehaviour
 	private void killMe()
 	{
 		this.rollActive = false;
-		Object.Destroy(this);
+		UnityEngine.Object.Destroy(this);
 	}
 
 	private void Awake()
@@ -46,7 +46,7 @@ public class TextRoller : MonoBehaviour
 		this.myTextObject = base.GetComponent<Text>();
 		if (this.myTextObject == null)
 		{
-			Object.Destroy(this);
+			UnityEngine.Object.Destroy(this);
 		}
 	}
 

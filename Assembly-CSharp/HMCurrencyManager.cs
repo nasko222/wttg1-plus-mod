@@ -52,14 +52,14 @@ public class HMCurrencyManager : MonoBehaviour
 			this.myHMM.lockMenus();
 			this.compileBTN.GetComponent<HMBTNObject>().lockMe();
 			this.currentStackAddingValue = this.myGameData.currentStacks;
-			TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.pointsToStackDefaultIMGCG.alpha, delegate(float x)
+			DOTween.To(() => this.pointsToStackDefaultIMGCG.alpha, delegate(float x)
 			{
 				this.pointsToStackDefaultIMGCG.alpha = x;
-			}, 0f, 0.35f), 3);
-			TweenSettingsExtensions.SetDelay<TweenerCore<float, float, FloatOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.pointsToStackHoldActionGroup.GetComponent<CanvasGroup>().alpha, delegate(float x)
+			}, 0f, 0.35f).SetEase(Ease.OutSine);
+			DOTween.To(() => this.pointsToStackHoldActionGroup.GetComponent<CanvasGroup>().alpha, delegate(float x)
 			{
 				this.pointsToStackHoldActionGroup.GetComponent<CanvasGroup>().alpha = x;
-			}, 1f, 0.35f), 2), 0.35f);
+			}, 1f, 0.35f).SetEase(Ease.InSine).SetDelay(0.35f);
 			GameManager.TimeSlinger.FireIntTimer(0.7f, new Action<int>(this.triggerAddNewStacks), num);
 		}
 		else
@@ -68,10 +68,10 @@ public class HMCurrencyManager : MonoBehaviour
 			GameManager.TimeSlinger.FireTimer(5f, new Action(this.pointsToStackBTN.GetComponent<HMBTNObject>().releaseHold));
 			GameManager.TimeSlinger.FireTimer(5f, new Action(this.resetPointsToStackCost));
 			this.pointsToStackCost.SetActive(true);
-			TweenSettingsExtensions.SetDelay<TweenerCore<float, float, FloatOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.pointsToStackCost.GetComponent<CanvasGroup>().alpha, delegate(float x)
+			DOTween.To(() => this.pointsToStackCost.GetComponent<CanvasGroup>().alpha, delegate(float x)
 			{
 				this.pointsToStackCost.GetComponent<CanvasGroup>().alpha = x;
-			}, 0f, 2f), 1), 3f);
+			}, 0f, 2f).SetEase(Ease.Linear).SetDelay(3f);
 		}
 	}
 
@@ -99,54 +99,54 @@ public class HMCurrencyManager : MonoBehaviour
 		{
 			this.myHMM.fireATextRollerWithSFX(this.currentPointsText.gameObject, this.tmpCurrentPointsValue, this.tmpCurrentPointsValue - this.pointsToStacksValue, this.myHMM.rollerDelayPerUnit, 0.95f, this.TextRollSFX, AudioHubs.HACKERMODE, AudioLayer.HACKINGSFX, 0.2f);
 			GameManager.TimeSlinger.FireTimer(0.675f, new Action(this.addNewStackValue));
-			this.stackAddSeq = TweenSettingsExtensions.OnComplete<Sequence>(DOTween.Sequence(), new TweenCallback(this.aniAddNewStacks));
+			this.stackAddSeq = DOTween.Sequence().OnComplete(new TweenCallback(this.aniAddNewStacks));
 			this.stackAddSeq.timeScale = 1.5f;
-			TweenSettingsExtensions.Insert(this.stackAddSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.pointsFullWhite.fillAmount, delegate(float x)
+			this.stackAddSeq.Insert(0f, DOTween.To(() => this.pointsFullWhite.fillAmount, delegate(float x)
 			{
 				this.pointsFullWhite.fillAmount = x;
-			}, 0f, 0.7f), 1));
-			TweenSettingsExtensions.Insert(this.stackAddSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.StackAddIcon.transform.localScale, delegate(Vector3 x)
+			}, 0f, 0.7f).SetEase(Ease.Linear));
+			this.stackAddSeq.Insert(0f, DOTween.To(() => this.StackAddIcon.transform.localScale, delegate(Vector3 x)
 			{
 				this.StackAddIcon.transform.localScale = x;
-			}, new Vector3(1.8f, 1.8f, 1.8f), 0.1f), 1));
-			TweenSettingsExtensions.Insert(this.stackAddSeq, 0.7f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.StackAddIcon.GetComponent<CanvasGroup>().alpha, delegate(float x)
+			}, new Vector3(1.8f, 1.8f, 1.8f), 0.1f).SetEase(Ease.Linear));
+			this.stackAddSeq.Insert(0.7f, DOTween.To(() => this.StackAddIcon.GetComponent<CanvasGroup>().alpha, delegate(float x)
 			{
 				this.StackAddIcon.GetComponent<CanvasGroup>().alpha = x;
-			}, 1f, 0.1f), 1));
-			TweenSettingsExtensions.Insert(this.stackAddSeq, 0.8f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.StackAddIcon.transform.localScale, delegate(Vector3 x)
+			}, 1f, 0.1f).SetEase(Ease.Linear));
+			this.stackAddSeq.Insert(0.8f, DOTween.To(() => this.StackAddIcon.transform.localScale, delegate(Vector3 x)
 			{
 				this.StackAddIcon.transform.localScale = x;
-			}, new Vector3(1f, 1f, 1f), 0.55f), 3));
-			TweenSettingsExtensions.Insert(this.stackAddSeq, 1.35f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.StackAddIcon.GetComponent<CanvasGroup>().alpha, delegate(float x)
+			}, new Vector3(1f, 1f, 1f), 0.55f).SetEase(Ease.OutSine));
+			this.stackAddSeq.Insert(1.35f, DOTween.To(() => this.StackAddIcon.GetComponent<CanvasGroup>().alpha, delegate(float x)
 			{
 				this.StackAddIcon.GetComponent<CanvasGroup>().alpha = x;
-			}, 0f, 0.55f), 1));
-			TweenSettingsExtensions.Insert(this.stackAddSeq, 1.35f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.pointsTrans.GetComponent<CanvasGroup>().alpha, delegate(float x)
+			}, 0f, 0.55f).SetEase(Ease.Linear));
+			this.stackAddSeq.Insert(1.35f, DOTween.To(() => this.pointsTrans.GetComponent<CanvasGroup>().alpha, delegate(float x)
 			{
 				this.pointsTrans.GetComponent<CanvasGroup>().alpha = x;
-			}, 1f, 0.45f), 1));
-			TweenSettingsExtensions.Insert(this.stackAddSeq, 1.9f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.pointsFullWhite.fillAmount, delegate(float x)
+			}, 1f, 0.45f).SetEase(Ease.Linear));
+			this.stackAddSeq.Insert(1.9f, DOTween.To(() => this.pointsFullWhite.fillAmount, delegate(float x)
 			{
 				this.pointsFullWhite.fillAmount = x;
-			}, 1f, 0f), 1));
-			TweenSettingsExtensions.Insert(this.stackAddSeq, 1.91f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.pointsTrans.GetComponent<CanvasGroup>().alpha, delegate(float x)
+			}, 1f, 0f).SetEase(Ease.Linear));
+			this.stackAddSeq.Insert(1.91f, DOTween.To(() => this.pointsTrans.GetComponent<CanvasGroup>().alpha, delegate(float x)
 			{
 				this.pointsTrans.GetComponent<CanvasGroup>().alpha = x;
-			}, 0.3f, 0f), 1));
-			TweenExtensions.Play<Sequence>(this.stackAddSeq);
+			}, 0.3f, 0f).SetEase(Ease.Linear));
+			this.stackAddSeq.Play<Sequence>();
 			this.currentStackIndex--;
 			this.tmpCurrentPointsValue -= this.pointsToStacksValue;
 		}
 		else
 		{
-			TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.pointsToStackHoldActionGroup.GetComponent<CanvasGroup>().alpha, delegate(float x)
+			DOTween.To(() => this.pointsToStackHoldActionGroup.GetComponent<CanvasGroup>().alpha, delegate(float x)
 			{
 				this.pointsToStackHoldActionGroup.GetComponent<CanvasGroup>().alpha = x;
-			}, 0f, 0.35f), 3);
-			TweenSettingsExtensions.SetDelay<TweenerCore<float, float, FloatOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.pointsToStackDefaultIMGCG.alpha, delegate(float x)
+			}, 0f, 0.35f).SetEase(Ease.OutSine);
+			DOTween.To(() => this.pointsToStackDefaultIMGCG.alpha, delegate(float x)
 			{
 				this.pointsToStackDefaultIMGCG.alpha = x;
-			}, 1f, 0.35f), 2), 0.35f);
+			}, 1f, 0.35f).SetEase(Ease.InSine).SetDelay(0.35f);
 			this.pointsToStackBTN.GetComponent<HMBTNObject>().releaseHold();
 			this.currentStackIndex = 0;
 			this.tmpCurrentPointsValue = 0;
@@ -165,16 +165,16 @@ public class HMCurrencyManager : MonoBehaviour
 			GameManager.AudioSlinger.DealSound(AudioHubs.HACKERMODE, AudioLayer.HACKINGSFX, this.RemoveStackSFX, 1f, false);
 			this.stacksAwayIcon.transform.localScale = new Vector3(1f, 1f, 1f);
 			this.stacksAwayIcon.gameObject.GetComponent<CanvasGroup>().alpha = 1f;
-			this.stackRemoveSeq = TweenSettingsExtensions.OnComplete<Sequence>(DOTween.Sequence(), new TweenCallback(this.removeStackAni));
-			TweenSettingsExtensions.Insert(this.stackRemoveSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.stacksAwayIcon.transform.localScale, delegate(Vector3 x)
+			this.stackRemoveSeq = DOTween.Sequence().OnComplete(new TweenCallback(this.removeStackAni));
+			this.stackRemoveSeq.Insert(0f, DOTween.To(() => this.stacksAwayIcon.transform.localScale, delegate(Vector3 x)
 			{
 				this.stacksAwayIcon.transform.localScale = x;
-			}, new Vector3(1.5f, 1.5f, 1.5f), 0.4f), 1));
-			TweenSettingsExtensions.Insert(this.stackRemoveSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.stacksAwayIcon.gameObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
+			}, new Vector3(1.5f, 1.5f, 1.5f), 0.4f).SetEase(Ease.Linear));
+			this.stackRemoveSeq.Insert(0f, DOTween.To(() => this.stacksAwayIcon.gameObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
 			{
 				this.stacksAwayIcon.gameObject.GetComponent<CanvasGroup>().alpha = x;
-			}, 0f, 0.4f), 1));
-			TweenExtensions.Play<Sequence>(this.stackRemoveSeq);
+			}, 0f, 0.4f).SetEase(Ease.Linear));
+			this.stackRemoveSeq.Play<Sequence>();
 		}
 		else
 		{
@@ -196,19 +196,19 @@ public class HMCurrencyManager : MonoBehaviour
 	private void presentBinCompiler()
 	{
 		GameManager.AudioSlinger.DealSound(AudioHubs.HACKERMODE, AudioLayer.HACKINGSFX, this.BinShowSFX, 0.85f, false);
-		TweenSettingsExtensions.SetRelative<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.binCompilerObject.transform.localPosition, delegate(Vector3 x)
+		DOTween.To(() => this.binCompilerObject.transform.localPosition, delegate(Vector3 x)
 		{
 			this.binCompilerObject.transform.localPosition = x;
-		}, new Vector3(0f, (float)Screen.height - 137f, 0f), 0.75f), 6), true);
+		}, new Vector3(0f, (float)Screen.height - 137f, 0f), 0.75f).SetEase(Ease.OutQuad).SetRelative(true);
 	}
 
 	private void hideBinCompiler()
 	{
 		GameManager.AudioSlinger.DealSound(AudioHubs.HACKERMODE, AudioLayer.HACKINGSFX, this.BinHideSFX, 0.85f, false);
-		TweenSettingsExtensions.SetRelative<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.binCompilerObject.transform.localPosition, delegate(Vector3 x)
+		DOTween.To(() => this.binCompilerObject.transform.localPosition, delegate(Vector3 x)
 		{
 			this.binCompilerObject.transform.localPosition = x;
-		}, new Vector3(0f, (float)(-(float)Screen.height) + 137f, 0f), 0.75f), 5), true);
+		}, new Vector3(0f, (float)(-(float)Screen.height) + 137f, 0f), 0.75f).SetEase(Ease.InQuad).SetRelative(true);
 		GameManager.TimeSlinger.FireTimer(0.65f, new Action(this.myHMM.showMenus));
 	}
 

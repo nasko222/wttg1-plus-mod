@@ -45,32 +45,30 @@ public class computerController : MonoBehaviour
 		}
 		if (flag)
 		{
-			float num;
+			float x;
 			if (mousePosition.x < this.cursorUIMinX)
 			{
-				num = this.cursorUIMinX;
+				x = this.cursorUIMinX;
 			}
 			else
 			{
-				num = this.cursorUIMaxX;
+				x = this.cursorUIMaxX;
 			}
-			Vector3 position;
-			position..ctor(num, mousePosition.y, 0f);
+			Vector3 position = new Vector3(x, mousePosition.y, 0f);
 			this.cursorUIIcon.transform.position = position;
 		}
 		if (flag2)
 		{
-			float num2;
+			float y;
 			if (mousePosition.y < this.cursorUIMinY)
 			{
-				num2 = this.cursorUIMinY;
+				y = this.cursorUIMinY;
 			}
 			else
 			{
-				num2 = this.cursorUIMaxY;
+				y = this.cursorUIMaxY;
 			}
-			Vector3 position2;
-			position2..ctor(this.cursorUIIcon.transform.position.x, num2, 0f);
+			Vector3 position2 = new Vector3(this.cursorUIIcon.transform.position.x, y, 0f);
 			this.cursorUIIcon.transform.position = position2;
 		}
 	}

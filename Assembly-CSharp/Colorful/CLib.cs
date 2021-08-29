@@ -12,7 +12,7 @@ namespace Colorful
 
 		public static bool IsLinearColorSpace()
 		{
-			return QualitySettings.activeColorSpace == 1;
+			return QualitySettings.activeColorSpace == ColorSpace.Linear;
 		}
 
 		public static bool Approximately(float source, float about, float range = 0.0001f)

@@ -16,10 +16,10 @@ namespace Colorful
 				return;
 			}
 			base.Material.SetVector("_Shadows", this.Shadows * (this.Shadows.a * 2f));
-			float num = 1f + (1f - (this.Midtones.r * 0.299f + this.Midtones.g * 0.587f + this.Midtones.b * 0.114f));
-			base.Material.SetVector("_Midtones", this.Midtones * num * (this.Midtones.a * 2f));
-			num = 1f + (1f - (this.Highlights.r * 0.299f + this.Highlights.g * 0.587f + this.Highlights.b * 0.114f));
-			base.Material.SetVector("_Highlights", this.Highlights * num * (this.Highlights.a * 2f));
+			float b = 1f + (1f - (this.Midtones.r * 0.299f + this.Midtones.g * 0.587f + this.Midtones.b * 0.114f));
+			base.Material.SetVector("_Midtones", this.Midtones * b * (this.Midtones.a * 2f));
+			b = 1f + (1f - (this.Highlights.r * 0.299f + this.Highlights.g * 0.587f + this.Highlights.b * 0.114f));
+			base.Material.SetVector("_Highlights", this.Highlights * b * (this.Highlights.a * 2f));
 			base.Material.SetFloat("_Amount", this.Amount);
 			Graphics.Blit(source, destination, base.Material, (int)this.Mode);
 		}

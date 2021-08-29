@@ -12,11 +12,11 @@ public class ChosenAwakeLink : MonoBehaviour, IPointerEnterHandler, IPointerExit
 	{
 		Color color = base.GetComponent<Image>().color;
 		this.aniSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.aniSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<Color, Color, ColorOptions>>(DOTween.To(() => base.GetComponent<Image>().color, delegate(Color x)
+		this.aniSeq.Insert(0f, DOTween.To(() => base.GetComponent<Image>().color, delegate(Color x)
 		{
 			base.GetComponent<Image>().color = x;
-		}, new Color(color.r, color.g, color.b, 1f), 0.5f), 1));
-		TweenExtensions.Play<Sequence>(this.aniSeq);
+		}, new Color(color.r, color.g, color.b, 1f), 0.5f).SetEase(Ease.Linear));
+		this.aniSeq.Play<Sequence>();
 	}
 
 	public void hidePiece()

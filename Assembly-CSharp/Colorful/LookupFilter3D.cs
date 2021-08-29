@@ -42,14 +42,14 @@ namespace Colorful
 					if (this.m_Material2D == null)
 					{
 						this.m_Material2D = new Material(this.Shader2DSafe);
-						this.m_Material2D.hideFlags = 61;
+						this.m_Material2D.hideFlags = HideFlags.HideAndDontSave;
 					}
 					return this.m_Material2D;
 				}
 				if (this.m_Material3D == null)
 				{
 					this.m_Material3D = new Material(this.Shader3DSafe);
-					this.m_Material3D.hideFlags = 61;
+					this.m_Material3D.hideFlags = HideFlags.HideAndDontSave;
 				}
 				return this.m_Material3D;
 			}
@@ -83,15 +83,15 @@ namespace Colorful
 		{
 			if (this.m_Material2D)
 			{
-				Object.DestroyImmediate(this.m_Material2D);
+				UnityEngine.Object.DestroyImmediate(this.m_Material2D);
 			}
 			if (this.m_Material3D)
 			{
-				Object.DestroyImmediate(this.m_Material3D);
+				UnityEngine.Object.DestroyImmediate(this.m_Material3D);
 			}
 			if (this.m_Lut3D)
 			{
-				Object.DestroyImmediate(this.m_Lut3D);
+				UnityEngine.Object.DestroyImmediate(this.m_Lut3D);
 			}
 			this.m_BaseTextureName = string.Empty;
 		}
@@ -118,10 +118,10 @@ namespace Colorful
 			}
 			if (this.m_Lut3D)
 			{
-				Object.DestroyImmediate(this.m_Lut3D);
+				UnityEngine.Object.DestroyImmediate(this.m_Lut3D);
 			}
-			this.m_Lut3D = new Texture3D(num, num, num, 5, false);
-			this.m_Lut3D.hideFlags = 61;
+			this.m_Lut3D = new Texture3D(num, num, num, TextureFormat.ARGB32, false);
+			this.m_Lut3D.hideFlags = HideFlags.HideAndDontSave;
 			this.m_Lut3D.SetPixels(array);
 			this.m_Lut3D.Apply();
 			this.m_BaseTextureName = string.Empty;
@@ -156,11 +156,11 @@ namespace Colorful
 			}
 			if (this.m_Lut3D)
 			{
-				Object.DestroyImmediate(this.m_Lut3D);
+				UnityEngine.Object.DestroyImmediate(this.m_Lut3D);
 			}
-			this.m_Lut3D = new Texture3D(height, height, height, 5, false);
-			this.m_Lut3D.hideFlags = 61;
-			this.m_Lut3D.wrapMode = 1;
+			this.m_Lut3D = new Texture3D(height, height, height, TextureFormat.ARGB32, false);
+			this.m_Lut3D.hideFlags = HideFlags.HideAndDontSave;
+			this.m_Lut3D.wrapMode = TextureWrapMode.Clamp;
 			this.m_Lut3D.SetPixels(array);
 			this.m_Lut3D.Apply();
 		}

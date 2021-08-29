@@ -11,36 +11,36 @@ public class LoadingScreen : MonoBehaviour
 {
 	private void prepLoading()
 	{
-		this.prepSeq = TweenSettingsExtensions.OnComplete<Sequence>(DOTween.Sequence(), new TweenCallback(this.startLoading));
-		TweenSettingsExtensions.Insert(this.prepSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<Color, Color, ColorOptions>>(DOTween.To(() => this.redRoomDef.color, delegate(Color x)
+		this.prepSeq = DOTween.Sequence().OnComplete(new TweenCallback(this.startLoading));
+		this.prepSeq.Insert(0f, DOTween.To(() => this.redRoomDef.color, delegate(Color x)
 		{
 			this.redRoomDef.color = x;
-		}, new Color(1f, 1f, 1f, 1f), 0.75f), 1));
-		TweenSettingsExtensions.Insert(this.prepSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<Color, Color, ColorOptions>>(DOTween.To(() => this.loadingIcon.color, delegate(Color x)
+		}, new Color(1f, 1f, 1f, 1f), 0.75f).SetEase(Ease.Linear));
+		this.prepSeq.Insert(0f, DOTween.To(() => this.loadingIcon.color, delegate(Color x)
 		{
 			this.loadingIcon.color = x;
-		}, new Color(1f, 1f, 1f, 1f), 0.5f), 1));
-		TweenSettingsExtensions.Insert(this.prepSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.loadingIcon.rectTransform.localScale, delegate(Vector3 x)
+		}, new Color(1f, 1f, 1f, 1f), 0.5f).SetEase(Ease.Linear));
+		this.prepSeq.Insert(0f, DOTween.To(() => this.loadingIcon.rectTransform.localScale, delegate(Vector3 x)
 		{
 			this.loadingIcon.rectTransform.localScale = x;
-		}, new Vector3(1f, 1f, 1f), 0.5f), 3));
-		TweenExtensions.Play<Sequence>(this.prepSeq);
+		}, new Vector3(1f, 1f, 1f), 0.5f).SetEase(Ease.OutSine));
+		this.prepSeq.Play<Sequence>();
 	}
 
 	private void startLoading()
 	{
 		GameManager.TimeSlinger.FireTimer(2.5f, new Action(this.loadGame));
 		this.loadingSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.loadingSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<Color, Color, ColorOptions>>(DOTween.To(() => this.loadingIcon.color, delegate(Color x)
+		this.loadingSeq.Insert(0f, DOTween.To(() => this.loadingIcon.color, delegate(Color x)
 		{
 			this.loadingIcon.color = x;
-		}, new Color(1f, 1f, 1f, 0.05f), 0.75f), 1));
-		TweenSettingsExtensions.Insert(this.loadingSeq, 0.75f, TweenSettingsExtensions.SetEase<TweenerCore<Color, Color, ColorOptions>>(DOTween.To(() => this.loadingIcon.color, delegate(Color x)
+		}, new Color(1f, 1f, 1f, 0.05f), 0.75f).SetEase(Ease.Linear));
+		this.loadingSeq.Insert(0.75f, DOTween.To(() => this.loadingIcon.color, delegate(Color x)
 		{
 			this.loadingIcon.color = x;
-		}, new Color(1f, 1f, 1f, 1f), 0.75f), 1));
-		TweenSettingsExtensions.SetLoops<Sequence>(this.loadingSeq, -1);
-		TweenExtensions.Play<Sequence>(this.loadingSeq);
+		}, new Color(1f, 1f, 1f, 1f), 0.75f).SetEase(Ease.Linear));
+		this.loadingSeq.SetLoops(-1);
+		this.loadingSeq.Play<Sequence>();
 	}
 
 	private void loadGame()
@@ -50,12 +50,12 @@ public class LoadingScreen : MonoBehaviour
 
 	private IEnumerator loadGameAdd()
 	{
-		AsyncOperation result = SceneManager.LoadSceneAsync(1, 1);
+		AsyncOperation result = SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
 		while (!result.isDone)
 		{
 			yield return new WaitForEndOfFrame();
 		}
-		Object.Destroy(this.MenuWorld);
+		UnityEngine.Object.Destroy(this.MenuWorld);
 		yield break;
 	}
 

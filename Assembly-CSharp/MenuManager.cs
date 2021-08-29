@@ -10,23 +10,23 @@ public class MenuManager : MonoBehaviour
 {
 	public void setDefaultCursor()
 	{
-		Cursor.SetCursor(this.defaultCursor, Vector2.zero, 0);
+		Cursor.SetCursor(this.defaultCursor, Vector2.zero, CursorMode.Auto);
 	}
 
 	public void setHoverCursor()
 	{
-		Cursor.SetCursor(this.hoverCursor, Vector2.zero, 0);
+		Cursor.SetCursor(this.hoverCursor, Vector2.zero, CursorMode.Auto);
 	}
 
 	public void beginGame()
 	{
 		this.glitchFX.enabled = false;
-		this.gameSeq = TweenSettingsExtensions.OnComplete<Sequence>(DOTween.Sequence(), new TweenCallback(this.startLoad));
-		TweenSettingsExtensions.Insert(this.gameSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.startMenu.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		this.gameSeq = DOTween.Sequence().OnComplete(new TweenCallback(this.startLoad));
+		this.gameSeq.Insert(0f, DOTween.To(() => this.startMenu.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.startMenu.GetComponent<CanvasGroup>().alpha = x;
-		}, 0f, 0.25f), 1));
-		TweenExtensions.Play<Sequence>(this.gameSeq);
+		}, 0f, 0.25f).SetEase(Ease.Linear));
+		this.gameSeq.Play<Sequence>();
 	}
 
 	public void showOpts()
@@ -35,15 +35,15 @@ public class MenuManager : MonoBehaviour
 		GameManager.TimeSlinger.FireTimer(0.25f, new Action(this.enableOptMenu));
 		this.glitchFX.enabled = false;
 		this.optSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.optSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.startMenu.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		this.optSeq.Insert(0f, DOTween.To(() => this.startMenu.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.startMenu.GetComponent<CanvasGroup>().alpha = x;
-		}, 0f, 0.25f), 1));
-		TweenSettingsExtensions.Insert(this.optSeq, 0.25f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.optionsMenu.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		}, 0f, 0.25f).SetEase(Ease.Linear));
+		this.optSeq.Insert(0.25f, DOTween.To(() => this.optionsMenu.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.optionsMenu.GetComponent<CanvasGroup>().alpha = x;
-		}, 1f, 0.25f), 1));
-		TweenExtensions.Play<Sequence>(this.optSeq);
+		}, 1f, 0.25f).SetEase(Ease.Linear));
+		this.optSeq.Play<Sequence>();
 	}
 
 	public void hideOpts()
@@ -52,15 +52,15 @@ public class MenuManager : MonoBehaviour
 		GameManager.TimeSlinger.FireTimer(0.25f, new Action(this.enableStartMenu));
 		this.glitchFX.enabled = true;
 		this.optSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.optSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.optionsMenu.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		this.optSeq.Insert(0f, DOTween.To(() => this.optionsMenu.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.optionsMenu.GetComponent<CanvasGroup>().alpha = x;
-		}, 0f, 0.25f), 1));
-		TweenSettingsExtensions.Insert(this.optSeq, 0.25f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.startMenu.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		}, 0f, 0.25f).SetEase(Ease.Linear));
+		this.optSeq.Insert(0.25f, DOTween.To(() => this.startMenu.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.startMenu.GetComponent<CanvasGroup>().alpha = x;
-		}, 1f, 0.25f), 1));
-		TweenExtensions.Play<Sequence>(this.optSeq);
+		}, 1f, 0.25f).SetEase(Ease.Linear));
+		this.optSeq.Play<Sequence>();
 	}
 
 	public void loadHackerMode()
@@ -74,15 +74,15 @@ public class MenuManager : MonoBehaviour
 		GameManager.TimeSlinger.FireTimer(0.25f, new Action(this.enableTwitchMenu));
 		this.glitchFX.enabled = false;
 		this.twitchSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.twitchSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.startMenu.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		this.twitchSeq.Insert(0f, DOTween.To(() => this.startMenu.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.startMenu.GetComponent<CanvasGroup>().alpha = x;
-		}, 0f, 0.25f), 1));
-		TweenSettingsExtensions.Insert(this.twitchSeq, 0.25f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.twitchMenu.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		}, 0f, 0.25f).SetEase(Ease.Linear));
+		this.twitchSeq.Insert(0.25f, DOTween.To(() => this.twitchMenu.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.twitchMenu.GetComponent<CanvasGroup>().alpha = x;
-		}, 1f, 0.25f), 1));
-		TweenExtensions.Play<Sequence>(this.twitchSeq);
+		}, 1f, 0.25f).SetEase(Ease.Linear));
+		this.twitchSeq.Play<Sequence>();
 	}
 
 	public void hideTwitch()
@@ -91,15 +91,15 @@ public class MenuManager : MonoBehaviour
 		GameManager.TimeSlinger.FireTimer(0.25f, new Action(this.enableStartMenu));
 		this.glitchFX.enabled = true;
 		this.twitchSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.twitchSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.twitchMenu.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		this.twitchSeq.Insert(0f, DOTween.To(() => this.twitchMenu.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.twitchMenu.GetComponent<CanvasGroup>().alpha = x;
-		}, 0f, 0.25f), 1));
-		TweenSettingsExtensions.Insert(this.twitchSeq, 0.25f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.startMenu.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		}, 0f, 0.25f).SetEase(Ease.Linear));
+		this.twitchSeq.Insert(0.25f, DOTween.To(() => this.startMenu.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.startMenu.GetComponent<CanvasGroup>().alpha = x;
-		}, 1f, 0.25f), 1));
-		TweenExtensions.Play<Sequence>(this.twitchSeq);
+		}, 1f, 0.25f).SetEase(Ease.Linear));
+		this.twitchSeq.Play<Sequence>();
 	}
 
 	private void enableOptMenu()
@@ -142,7 +142,7 @@ public class MenuManager : MonoBehaviour
 	{
 		this.glitchFX = this.mainCamera.gameObject.GetComponent<Glitch>();
 		Cursor.visible = true;
-		Cursor.lockState = 0;
+		Cursor.lockState = CursorLockMode.None;
 		this.setDefaultCursor();
 	}
 

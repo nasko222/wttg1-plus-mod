@@ -24,11 +24,11 @@ public class TheDollMaker : MonoBehaviour
 	{
 		GameManager.AudioSlinger.DealSound(AudioHubs.COMPUTER, AudioLayer.COMPUTERSFX, this.clickSound, 0.8f, false);
 		Sequence sequence = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(sequence, 0f, TweenSettingsExtensions.SetEase<TweenerCore<Color, Color, ColorOptions>>(DOTween.To(() => this.hashHolder.color, delegate(Color x)
+		sequence.Insert(0f, DOTween.To(() => this.hashHolder.color, delegate(Color x)
 		{
 			this.hashHolder.color = x;
-		}, new Color(this.hashHolder.color.r, this.hashHolder.color.g, this.hashHolder.color.b, 1f), 0.75f), 1));
-		TweenExtensions.Play<Sequence>(sequence);
+		}, new Color(this.hashHolder.color.r, this.hashHolder.color.g, this.hashHolder.color.b, 1f), 0.75f).SetEase(Ease.Linear));
+		sequence.Play<Sequence>();
 	}
 
 	private void OnEnable()

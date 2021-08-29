@@ -18,7 +18,7 @@ public class KidnapperBehavior : MonoBehaviour
 	public void triggerWalkbackJumpIdle()
 	{
 		this.myAC.SetTrigger("endWalking");
-		TweenExtensions.Kill(this.myMoveSeq, false);
+		this.myMoveSeq.Kill(false);
 		this.doFootSteps = false;
 		base.transform.localRotation = Quaternion.Euler(this.walkBackJumpROT);
 		base.transform.localPosition = new Vector3(this.walkBackJumpPOS.x, this.walkBackJumpPOS.y, this.walkBackJumpPOS.z);
@@ -42,36 +42,36 @@ public class KidnapperBehavior : MonoBehaviour
 		GameManager.AudioSlinger.DealSound(AudioHubs.KIDNAPPER, AudioLayer.BACKGROUND, this.goodEveningClip, 0.9f, false, 0.3f);
 		this.myAC.SetTrigger("N2CJump");
 		this.myMoveSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.myMoveSeq, 3.5f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => base.transform.localPosition, delegate(Vector3 x)
+		this.myMoveSeq.Insert(3.5f, DOTween.To(() => base.transform.localPosition, delegate(Vector3 x)
 		{
 			base.transform.localPosition = x;
-		}, new Vector3(-3.823f, -3.579f, 2.263f), 0.4f), 1));
-		TweenSettingsExtensions.Insert(this.myMoveSeq, 3.5f, TweenSettingsExtensions.SetEase<TweenerCore<Quaternion, Vector3, QuaternionOptions>>(DOTween.To(() => base.transform.localRotation, delegate(Quaternion x)
+		}, new Vector3(-3.823f, -3.579f, 2.263f), 0.4f).SetEase(Ease.Linear));
+		this.myMoveSeq.Insert(3.5f, DOTween.To(() => base.transform.localRotation, delegate(Quaternion x)
 		{
 			base.transform.localRotation = x;
-		}, new Vector3(7.169f, base.transform.localRotation.eulerAngles.y, base.transform.localRotation.eulerAngles.z), 0.4f), 1));
-		TweenSettingsExtensions.Insert(this.myMoveSeq, 3.9f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => base.transform.localPosition, delegate(Vector3 x)
+		}, new Vector3(7.169f, base.transform.localRotation.eulerAngles.y, base.transform.localRotation.eulerAngles.z), 0.4f).SetEase(Ease.Linear));
+		this.myMoveSeq.Insert(3.9f, DOTween.To(() => base.transform.localPosition, delegate(Vector3 x)
 		{
 			base.transform.localPosition = x;
-		}, new Vector3(-3.903f, -3.579f, 2.263f), 1.5f), 1));
-		TweenExtensions.Play<Sequence>(this.myMoveSeq);
+		}, new Vector3(-3.903f, -3.579f, 2.263f), 1.5f).SetEase(Ease.Linear));
+		this.myMoveSeq.Play<Sequence>();
 	}
 
 	public void triggerGotoClimbPoint()
 	{
 		this.endFootStepSounds();
-		TweenExtensions.Kill(this.myMoveSeq, false);
+		this.myMoveSeq.Kill(false);
 		GameManager.TimeSlinger.FireTimer(0.2f, new Action(this.switchBackToIdle));
-		this.myMoveSeq = TweenSettingsExtensions.OnComplete<Sequence>(DOTween.Sequence(), new TweenCallback(this.triggerClimbJump));
-		TweenSettingsExtensions.Insert(this.myMoveSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => base.transform.localPosition, delegate(Vector3 x)
+		this.myMoveSeq = DOTween.Sequence().OnComplete(new TweenCallback(this.triggerClimbJump));
+		this.myMoveSeq.Insert(0f, DOTween.To(() => base.transform.localPosition, delegate(Vector3 x)
 		{
 			base.transform.localPosition = x;
-		}, this.climbJumpPOS, 0.3f), 1));
-		TweenSettingsExtensions.Insert(this.myMoveSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<Quaternion, Vector3, QuaternionOptions>>(DOTween.To(() => base.transform.localRotation, delegate(Quaternion x)
+		}, this.climbJumpPOS, 0.3f).SetEase(Ease.Linear));
+		this.myMoveSeq.Insert(0f, DOTween.To(() => base.transform.localRotation, delegate(Quaternion x)
 		{
 			base.transform.localRotation = x;
-		}, new Vector3(this.climbJumpROT.x, this.climbJumpROT.y, this.climbJumpROT.z), 0.3f), 1));
-		TweenExtensions.Play<Sequence>(this.myMoveSeq);
+		}, new Vector3(this.climbJumpROT.x, this.climbJumpROT.y, this.climbJumpROT.z), 0.3f).SetEase(Ease.Linear));
+		this.myMoveSeq.Play<Sequence>();
 	}
 
 	public void triggerClimbJump()
@@ -85,23 +85,23 @@ public class KidnapperBehavior : MonoBehaviour
 		GameManager.AudioSlinger.DealSound(AudioHubs.KIDNAPPER, AudioLayer.BACKGROUND, this.indoorFootStep2, 1f, false, 3.9f);
 		GameManager.AudioSlinger.DealSound(AudioHubs.KIDNAPPER, AudioLayer.BACKGROUND, this.indoorFootStep3, 1f, false, 4.55f);
 		this.myMoveSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.myMoveSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.meshObject.transform.localPosition, delegate(Vector3 x)
+		this.myMoveSeq.Insert(0f, DOTween.To(() => this.meshObject.transform.localPosition, delegate(Vector3 x)
 		{
 			this.meshObject.transform.localPosition = x;
-		}, new Vector3(this.meshObject.transform.localPosition.x, this.meshObject.transform.localPosition.y, 1f), 0.1f), 1));
-		TweenSettingsExtensions.Insert(this.myMoveSeq, 0.28f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.meshObject.transform.localPosition, delegate(Vector3 x)
+		}, new Vector3(this.meshObject.transform.localPosition.x, this.meshObject.transform.localPosition.y, 1f), 0.1f).SetEase(Ease.Linear));
+		this.myMoveSeq.Insert(0.28f, DOTween.To(() => this.meshObject.transform.localPosition, delegate(Vector3 x)
 		{
 			this.meshObject.transform.localPosition = x;
-		}, new Vector3(0.4f, 5.9f, 2.57f), 2f), 1));
-		TweenSettingsExtensions.Insert(this.myMoveSeq, 2f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.meshObject.transform.localPosition, delegate(Vector3 x)
+		}, new Vector3(0.4f, 5.9f, 2.57f), 2f).SetEase(Ease.Linear));
+		this.myMoveSeq.Insert(2f, DOTween.To(() => this.meshObject.transform.localPosition, delegate(Vector3 x)
 		{
 			this.meshObject.transform.localPosition = x;
-		}, new Vector3(1f, 7.2f, 2.8f), 0.4f), 1));
-		TweenSettingsExtensions.Insert(this.myMoveSeq, 2.7f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.meshObject.transform.localPosition, delegate(Vector3 x)
+		}, new Vector3(1f, 7.2f, 2.8f), 0.4f).SetEase(Ease.Linear));
+		this.myMoveSeq.Insert(2.7f, DOTween.To(() => this.meshObject.transform.localPosition, delegate(Vector3 x)
 		{
 			this.meshObject.transform.localPosition = x;
-		}, new Vector3(1f, 1.2f, 5.4f), 0.5f), 1));
-		TweenExtensions.Play<Sequence>(this.myMoveSeq);
+		}, new Vector3(1f, 1.2f, 5.4f), 0.5f).SetEase(Ease.Linear));
+		this.myMoveSeq.Play<Sequence>();
 	}
 
 	public void triggerRoamMode(float roamTime)
@@ -109,12 +109,12 @@ public class KidnapperBehavior : MonoBehaviour
 		base.transform.localPosition = this.roamModeSpawnPOS;
 		GameManager.AudioSlinger.DealSound(AudioHubs.KIDNAPPER, AudioLayer.BACKGROUND, this.theSource, 0.4f, false);
 		this.myAC.SetTrigger("triggerWalking");
-		this.myMoveSeq = TweenSettingsExtensions.OnComplete<Sequence>(DOTween.Sequence(), new TweenCallback(this.endFootStepSounds));
-		TweenSettingsExtensions.Insert(this.myMoveSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => base.transform.localPosition, delegate(Vector3 x)
+		this.myMoveSeq = DOTween.Sequence().OnComplete(new TweenCallback(this.endFootStepSounds));
+		this.myMoveSeq.Insert(0f, DOTween.To(() => base.transform.localPosition, delegate(Vector3 x)
 		{
 			base.transform.localPosition = x;
-		}, this.roamModeEndPOS, roamTime * 0.8f), 1));
-		TweenExtensions.Play<Sequence>(this.myMoveSeq);
+		}, this.roamModeEndPOS, roamTime * 0.8f).SetEase(Ease.Linear));
+		this.myMoveSeq.Play<Sequence>();
 		this.roamTimeStamp = Time.time;
 		this.doFootSteps = true;
 		this.fi = 0;
@@ -123,7 +123,7 @@ public class KidnapperBehavior : MonoBehaviour
 	public void endRoamMode()
 	{
 		this.myAC.SetTrigger("endWalking");
-		TweenExtensions.Kill(this.myMoveSeq, false);
+		this.myMoveSeq.Kill(false);
 		this.triggerGotoSpawn();
 		GameManager.AudioSlinger.DealSound(AudioHubs.KIDNAPPER, AudioLayer.BACKGROUND, this.nothingHere, 0.2f, false);
 	}

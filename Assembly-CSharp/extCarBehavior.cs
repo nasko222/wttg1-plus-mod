@@ -4,6 +4,7 @@ using DG.Tweening;
 using DG.Tweening.Core;
 using DG.Tweening.Plugins.Options;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class extCarBehavior : MonoBehaviour
 {
@@ -40,27 +41,27 @@ public class extCarBehavior : MonoBehaviour
 		this.pullOverAudioSource.Play();
 		if (this.myDriveAwaySeq != null && this.myDriveAwaySeq != null)
 		{
-			TweenExtensions.Complete(this.myDriveAwaySeq);
+			this.myDriveAwaySeq.Complete();
 		}
 		this.turnRightBlinkerOn();
-		this.myDriveAwaySeq = TweenSettingsExtensions.OnComplete<Sequence>(DOTween.Sequence(), new TweenCallback(this.presentPulledOver));
-		TweenSettingsExtensions.Insert(this.myDriveAwaySeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => base.transform.position, delegate(Vector3 x)
+		this.myDriveAwaySeq = DOTween.Sequence().OnComplete(new TweenCallback(this.presentPulledOver));
+		this.myDriveAwaySeq.Insert(0f, DOTween.To(() => base.transform.position, delegate(Vector3 x)
 		{
 			base.transform.position = x;
-		}, new Vector3(this.hitchStopLocation.x * 0.99f, base.transform.position.y, this.hitchStopLocation.z), 7.826f), 6));
-		TweenSettingsExtensions.Insert(this.myDriveAwaySeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.driveByAudioSource.volume, delegate(float x)
+		}, new Vector3(this.hitchStopLocation.x * 0.99f, base.transform.position.y, this.hitchStopLocation.z), 7.826f).SetEase(Ease.OutQuad));
+		this.myDriveAwaySeq.Insert(0f, DOTween.To(() => this.driveByAudioSource.volume, delegate(float x)
 		{
 			this.driveByAudioSource.volume = x;
-		}, 0f, 6f), 1));
-		TweenSettingsExtensions.Insert(this.myDriveAwaySeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.pullOverAudioSource.volume, delegate(float x)
+		}, 0f, 6f).SetEase(Ease.Linear));
+		this.myDriveAwaySeq.Insert(0f, DOTween.To(() => this.pullOverAudioSource.volume, delegate(float x)
 		{
 			this.pullOverAudioSource.volume = x;
-		}, 0.85f, 2f), 1));
-		TweenSettingsExtensions.Insert(this.myDriveAwaySeq, 5f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.WHEEL_SPEED, delegate(float x)
+		}, 0.85f, 2f).SetEase(Ease.Linear));
+		this.myDriveAwaySeq.Insert(5f, DOTween.To(() => this.WHEEL_SPEED, delegate(float x)
 		{
 			this.WHEEL_SPEED = x;
-		}, 0f, 2.826f), 1));
-		TweenExtensions.Play<Sequence>(this.myDriveAwaySeq);
+		}, 0f, 2.826f).SetEase(Ease.Linear));
+		this.myDriveAwaySeq.Play<Sequence>();
 	}
 
 	private void destroyMe()
@@ -69,7 +70,7 @@ public class extCarBehavior : MonoBehaviour
 		{
 			this.TriggerRespawn();
 		}
-		Object.Destroy(base.gameObject);
+		UnityEngine.Object.Destroy(base.gameObject);
 	}
 
 	private void dismissPullOverAniDone()
@@ -80,19 +81,19 @@ public class extCarBehavior : MonoBehaviour
 		this.turnLeftBlinkerOn();
 		if (this.myDriveAwaySeq != null && this.myDriveAwaySeq != null)
 		{
-			TweenExtensions.Complete(this.myDriveAwaySeq);
+			this.myDriveAwaySeq.Complete();
 		}
-		this.myDriveAwaySeq = TweenSettingsExtensions.OnComplete<Sequence>(DOTween.Sequence(), new TweenCallback(this.theCarIsOff));
-		TweenSettingsExtensions.Insert(this.myDriveAwaySeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => base.transform.position, delegate(Vector3 x)
+		this.myDriveAwaySeq = DOTween.Sequence().OnComplete(new TweenCallback(this.theCarIsOff));
+		this.myDriveAwaySeq.Insert(0f, DOTween.To(() => base.transform.position, delegate(Vector3 x)
 		{
 			base.transform.position = x;
-		}, new Vector3(base.transform.position.x * 1.2f, base.transform.position.y, this.setZValue), 4.5f), 2));
-		TweenExtensions.Play<Sequence>(this.myDriveAwaySeq);
-		Tweener tweener = TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.driveByAudioSource.volume, delegate(float x)
+		}, new Vector3(base.transform.position.x * 1.2f, base.transform.position.y, this.setZValue), 4.5f).SetEase(Ease.InSine));
+		this.myDriveAwaySeq.Play<Sequence>();
+		Tweener t = DOTween.To(() => this.driveByAudioSource.volume, delegate(float x)
 		{
 			this.driveByAudioSource.volume = x;
-		}, 1f, 7f), 1);
-		TweenExtensions.Play<Tweener>(tweener);
+		}, 1f, 7f).SetEase(Ease.Linear);
+		t.Play<Tweener>();
 		this.comingFromPullOver = true;
 		this.carIsMoving = true;
 	}
@@ -259,22 +260,22 @@ public class extCarBehavior : MonoBehaviour
 		this.windowDownAudioSource.Play();
 		if (this.myPullOverSeq != null && this.myPullOverSeq != null)
 		{
-			TweenExtensions.Complete(this.myPullOverSeq);
+			this.myPullOverSeq.Complete();
 		}
 		this.myPullOverSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.myPullOverSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.domeLight.intensity, delegate(float x)
+		this.myPullOverSeq.Insert(0f, DOTween.To(() => this.domeLight.intensity, delegate(float x)
 		{
 			this.domeLight.intensity = x;
-		}, 1.5f, 0.55f), 1));
-		TweenSettingsExtensions.Insert(this.myPullOverSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.passWindow.transform.localPosition, delegate(Vector3 x)
+		}, 1.5f, 0.55f).SetEase(Ease.Linear));
+		this.myPullOverSeq.Insert(0f, DOTween.To(() => this.passWindow.transform.localPosition, delegate(Vector3 x)
 		{
 			this.passWindow.transform.localPosition = x;
-		}, new Vector3(this.passWindow.transform.localPosition.x, 0.252f, this.passWindow.transform.localPosition.z), 3.9f), 1));
-		TweenSettingsExtensions.Insert(this.myPullOverSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<Quaternion, Vector3, QuaternionOptions>>(DOTween.To(() => this.passWindow.transform.localRotation, delegate(Quaternion x)
+		}, new Vector3(this.passWindow.transform.localPosition.x, 0.252f, this.passWindow.transform.localPosition.z), 3.9f).SetEase(Ease.Linear));
+		this.myPullOverSeq.Insert(0f, DOTween.To(() => this.passWindow.transform.localRotation, delegate(Quaternion x)
 		{
 			this.passWindow.transform.localRotation = x;
-		}, new Vector3(0f, 0f, -9.8f), 3.9f), 1));
-		TweenExtensions.Play<Sequence>(this.myPullOverSeq);
+		}, new Vector3(0f, 0f, -9.8f), 3.9f).SetEase(Ease.Linear));
+		this.myPullOverSeq.Play<Sequence>();
 	}
 
 	public void dismissPulledOver()
@@ -282,30 +283,30 @@ public class extCarBehavior : MonoBehaviour
 		this.windowUpAudioSource.Play();
 		if (this.myPullOverSeq != null && this.myPullOverSeq != null)
 		{
-			TweenExtensions.Complete(this.myPullOverSeq);
+			this.myPullOverSeq.Complete();
 		}
-		this.myPullOverSeq = TweenSettingsExtensions.OnComplete<Sequence>(DOTween.Sequence(), new TweenCallback(this.dismissPullOverAniDone));
-		TweenSettingsExtensions.Insert(this.myPullOverSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.passWindow.transform.localPosition, delegate(Vector3 x)
+		this.myPullOverSeq = DOTween.Sequence().OnComplete(new TweenCallback(this.dismissPullOverAniDone));
+		this.myPullOverSeq.Insert(0f, DOTween.To(() => this.passWindow.transform.localPosition, delegate(Vector3 x)
 		{
 			this.passWindow.transform.localPosition = x;
-		}, this.defaultPassWindowPos, 2.8f), 1));
-		TweenSettingsExtensions.Insert(this.myPullOverSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<Quaternion, Vector3, QuaternionOptions>>(DOTween.To(() => this.passWindow.transform.localRotation, delegate(Quaternion x)
+		}, this.defaultPassWindowPos, 2.8f).SetEase(Ease.Linear));
+		this.myPullOverSeq.Insert(0f, DOTween.To(() => this.passWindow.transform.localRotation, delegate(Quaternion x)
 		{
 			this.passWindow.transform.localRotation = x;
-		}, new Vector3(this.defaultPassWindowRot.eulerAngles.x, this.defaultPassWindowRot.eulerAngles.y, this.defaultPassWindowRot.eulerAngles.z), 2.8f), 1));
-		TweenSettingsExtensions.Insert(this.myPullOverSeq, 2.8f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.domeLight.intensity, delegate(float x)
+		}, new Vector3(this.defaultPassWindowRot.eulerAngles.x, this.defaultPassWindowRot.eulerAngles.y, this.defaultPassWindowRot.eulerAngles.z), 2.8f).SetEase(Ease.Linear));
+		this.myPullOverSeq.Insert(2.8f, DOTween.To(() => this.domeLight.intensity, delegate(float x)
 		{
 			this.domeLight.intensity = x;
-		}, 0f, 0.55f), 1));
-		TweenExtensions.Play<Sequence>(this.myPullOverSeq);
+		}, 0f, 0.55f).SetEase(Ease.Linear));
+		this.myPullOverSeq.Play<Sequence>();
 	}
 
 	public void refreshReflectProbe()
 	{
 		if (this.reflectProbe != null && this.reflectProbe != null)
 		{
-			this.reflectProbe.refreshMode = 1;
-			this.reflectProbe.timeSlicingMode = 0;
+			this.reflectProbe.refreshMode = ReflectionProbeRefreshMode.EveryFrame;
+			this.reflectProbe.timeSlicingMode = ReflectionProbeTimeSlicingMode.AllFacesAtOnce;
 		}
 	}
 
@@ -313,14 +314,14 @@ public class extCarBehavior : MonoBehaviour
 	{
 		if (this.myPullOverSeq != null && this.myOpenDoorSeq != null)
 		{
-			TweenExtensions.Complete(this.myOpenDoorSeq);
+			this.myOpenDoorSeq.Complete();
 		}
 		this.myOpenDoorSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.myOpenDoorSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<Quaternion, Vector3, QuaternionOptions>>(DOTween.To(() => this.passDoor.transform.localRotation, delegate(Quaternion x)
+		this.myOpenDoorSeq.Insert(0f, DOTween.To(() => this.passDoor.transform.localRotation, delegate(Quaternion x)
 		{
 			this.passDoor.transform.localRotation = x;
-		}, new Vector3(this.passDoor.transform.localRotation.eulerAngles.x, -15f, this.passDoor.transform.localRotation.eulerAngles.z), 1.3f), 9));
-		TweenExtensions.Play<Sequence>(this.myOpenDoorSeq);
+		}, new Vector3(this.passDoor.transform.localRotation.eulerAngles.x, -15f, this.passDoor.transform.localRotation.eulerAngles.z), 1.3f).SetEase(Ease.OutCubic));
+		this.myOpenDoorSeq.Play<Sequence>();
 	}
 
 	private void Update()

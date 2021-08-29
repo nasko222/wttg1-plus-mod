@@ -103,7 +103,7 @@ public class OptionMenu : MonoBehaviour
 				num4 = 0f;
 			}
 			string setRes = this.avResolutions[j].width.ToString() + "X" + this.avResolutions[j].height.ToString();
-			GameObject gameObject = Object.Instantiate<GameObject>(this.resLinkObject);
+			GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(this.resLinkObject);
 			gameObject.transform.SetParent(this.resHolder.transform);
 			gameObject.GetComponent<ResLink>().myMenuManager = this.myMenuManager;
 			gameObject.GetComponent<ResLink>().buildMe(new Action<int>(this.resHit), setRes, j, num, num2);
@@ -274,7 +274,7 @@ public class OptionMenu : MonoBehaviour
 	{
 		for (int i = 0; i < this.resLinkObjs.Count; i++)
 		{
-			Object.Destroy(this.resLinkObjs[i]);
+			UnityEngine.Object.Destroy(this.resLinkObjs[i]);
 		}
 		this.resLinkObjs.Clear();
 	}

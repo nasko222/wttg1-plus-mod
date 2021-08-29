@@ -144,7 +144,7 @@ public class HackPoll : MonoBehaviour
 				string str = string.Empty;
 				for (int i = 0; i < 10; i++)
 				{
-					str = list[Random.Range(0, list.Count)];
+					str = list[UnityEngine.Random.Range(0, list.Count)];
 				}
 				this.pickedBlackHatHacker = str;
 				this.myDOSTwitch.myTwitchIRC.SendMsg("The BLACKHATS Have Won!");

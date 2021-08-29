@@ -16,48 +16,48 @@ public class SiteBTN : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
 	public void OnPointerEnter(PointerEventData eventData)
 	{
 		GameManager.GetTheUIManager().setHoverCursor();
-		TweenSettingsExtensions.SetEase<TweenerCore<Color, Color, ColorOptions>>(DOTween.To(() => this.buttonIMG.color, delegate(Color x)
+		DOTween.To(() => this.buttonIMG.color, delegate(Color x)
 		{
 			this.buttonIMG.color = x;
-		}, this.hoverStateBTNColor, 0.3f), 1);
+		}, this.hoverStateBTNColor, 0.3f).SetEase(Ease.Linear);
 		if (this.buttonText != null)
 		{
-			TweenSettingsExtensions.SetEase<TweenerCore<Color, Color, ColorOptions>>(DOTween.To(() => this.buttonText.color, delegate(Color x)
+			DOTween.To(() => this.buttonText.color, delegate(Color x)
 			{
 				this.buttonText.color = x;
-			}, this.hoverStateTextColor, 0.3f), 1);
+			}, this.hoverStateTextColor, 0.3f).SetEase(Ease.Linear);
 		}
 	}
 
 	public void OnPointerExit(PointerEventData eventData)
 	{
 		GameManager.GetTheUIManager().setDefaultCursor();
-		TweenSettingsExtensions.SetEase<TweenerCore<Color, Color, ColorOptions>>(DOTween.To(() => this.buttonIMG.color, delegate(Color x)
+		DOTween.To(() => this.buttonIMG.color, delegate(Color x)
 		{
 			this.buttonIMG.color = x;
-		}, this.defaultStateBTNColor, 0.3f), 1);
+		}, this.defaultStateBTNColor, 0.3f).SetEase(Ease.Linear);
 		if (this.buttonText != null)
 		{
-			TweenSettingsExtensions.SetEase<TweenerCore<Color, Color, ColorOptions>>(DOTween.To(() => this.buttonText.color, delegate(Color x)
+			DOTween.To(() => this.buttonText.color, delegate(Color x)
 			{
 				this.buttonText.color = x;
-			}, this.defaultStateTextColor, 0.3f), 1);
+			}, this.defaultStateTextColor, 0.3f).SetEase(Ease.Linear);
 		}
 	}
 
 	public void OnPointerDown(PointerEventData eventData)
 	{
 		GameManager.GetTheUIManager().setDefaultCursor();
-		TweenSettingsExtensions.SetEase<TweenerCore<Color, Color, ColorOptions>>(DOTween.To(() => this.buttonIMG.color, delegate(Color x)
+		DOTween.To(() => this.buttonIMG.color, delegate(Color x)
 		{
 			this.buttonIMG.color = x;
-		}, this.defaultStateBTNColor, 0.3f), 1);
+		}, this.defaultStateBTNColor, 0.3f).SetEase(Ease.Linear);
 		if (this.buttonText != null)
 		{
-			TweenSettingsExtensions.SetEase<TweenerCore<Color, Color, ColorOptions>>(DOTween.To(() => this.buttonText.color, delegate(Color x)
+			DOTween.To(() => this.buttonText.color, delegate(Color x)
 			{
 				this.buttonText.color = x;
-			}, this.defaultStateTextColor, 0.3f), 1);
+			}, this.defaultStateTextColor, 0.3f).SetEase(Ease.Linear);
 		}
 		if (this.myCallBackAction != null)
 		{

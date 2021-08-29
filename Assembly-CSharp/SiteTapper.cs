@@ -27,11 +27,11 @@ public class SiteTapper : MonoBehaviour
 			{
 				if (this.canTapRoot)
 				{
-					num = Random.Range(-1, base.GetComponent<SiteHolder>().subPages.Count);
+					num = UnityEngine.Random.Range(-1, base.GetComponent<SiteHolder>().subPages.Count);
 				}
 				else
 				{
-					num = Random.Range(0, base.GetComponent<SiteHolder>().subPages.Count);
+					num = UnityEngine.Random.Range(0, base.GetComponent<SiteHolder>().subPages.Count);
 				}
 				if (num == -1)
 				{

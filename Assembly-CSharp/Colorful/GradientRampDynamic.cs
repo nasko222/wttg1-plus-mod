@@ -37,10 +37,10 @@ namespace Colorful
 		{
 			if (this.m_RampTexture == null)
 			{
-				this.m_RampTexture = new Texture2D(256, 1, 3, false);
-				this.m_RampTexture.filterMode = 1;
-				this.m_RampTexture.wrapMode = 1;
-				this.m_RampTexture.hideFlags = 61;
+				this.m_RampTexture = new Texture2D(256, 1, TextureFormat.RGB24, false);
+				this.m_RampTexture.filterMode = FilterMode.Bilinear;
+				this.m_RampTexture.wrapMode = TextureWrapMode.Clamp;
+				this.m_RampTexture.hideFlags = HideFlags.HideAndDontSave;
 			}
 			Color[] array = new Color[256];
 			for (int i = 0; i < 256; i++)

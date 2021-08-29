@@ -69,14 +69,14 @@ public class SceneManagerWTTG : MonoBehaviour
 		{
 			GameManager.AudioSlinger.DealSound(AudioHubs.PLAYER, AudioLayer.BACKGROUND, this.lightSwitchOffSound, 0.25f, false, 0.1f);
 			GameManager.GetTheCloud().myTimeManager.freezeTime = true;
-			TweenSettingsExtensions.Insert(this.switchSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.lightSwitchKnob.transform.localPosition, delegate(Vector3 x)
+			this.switchSeq.Insert(0f, DOTween.To(() => this.lightSwitchKnob.transform.localPosition, delegate(Vector3 x)
 			{
 				this.lightSwitchKnob.transform.localPosition = x;
-			}, this.offSwitchPOS, 0.2f), 1));
-			TweenSettingsExtensions.Insert(this.switchSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<Quaternion, Vector3, QuaternionOptions>>(DOTween.To(() => this.lightSwitchKnob.transform.localRotation, delegate(Quaternion x)
+			}, this.offSwitchPOS, 0.2f).SetEase(Ease.Linear));
+			this.switchSeq.Insert(0f, DOTween.To(() => this.lightSwitchKnob.transform.localRotation, delegate(Quaternion x)
 			{
 				this.lightSwitchKnob.transform.localRotation = x;
-			}, this.offSwitchROT, 0.2f), 1));
+			}, this.offSwitchROT, 0.2f).SetEase(Ease.Linear));
 		}
 		else
 		{
@@ -85,16 +85,16 @@ public class SceneManagerWTTG : MonoBehaviour
 			{
 				GameManager.GetTheCloud().myTimeManager.freezeTime = false;
 			}
-			TweenSettingsExtensions.Insert(this.switchSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.lightSwitchKnob.transform.localPosition, delegate(Vector3 x)
+			this.switchSeq.Insert(0f, DOTween.To(() => this.lightSwitchKnob.transform.localPosition, delegate(Vector3 x)
 			{
 				this.lightSwitchKnob.transform.localPosition = x;
-			}, this.defaultLightSwitchKnobPOS, 0.2f), 1));
-			TweenSettingsExtensions.Insert(this.switchSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<Quaternion, Vector3, QuaternionOptions>>(DOTween.To(() => this.lightSwitchKnob.transform.localRotation, delegate(Quaternion x)
+			}, this.defaultLightSwitchKnobPOS, 0.2f).SetEase(Ease.Linear));
+			this.switchSeq.Insert(0f, DOTween.To(() => this.lightSwitchKnob.transform.localRotation, delegate(Quaternion x)
 			{
 				this.lightSwitchKnob.transform.localRotation = x;
-			}, this.defaultLightSwitchKnobROT, 0.2f), 1));
+			}, this.defaultLightSwitchKnobROT, 0.2f).SetEase(Ease.Linear));
 		}
-		TweenExtensions.Play<Sequence>(this.switchSeq);
+		this.switchSeq.Play<Sequence>();
 	}
 
 	public void triggerLightJump()
@@ -186,14 +186,14 @@ public class SceneManagerWTTG : MonoBehaviour
 		GameManager.AudioSlinger.RemoveSound(AudioHubs.PLAYER, "Uneasy1.wav");
 		GameManager.AudioSlinger.DealSound(AudioHubs.PLAYER, AudioLayer.MOMENT, this.rwsTune, 0.75f, false, 0.5f);
 		GameManager.GetTheUIManager().fadeScreenOutWithTime(0.2f);
-		TweenSettingsExtensions.SetDelay<TweenerCore<float, float, FloatOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.teaserText.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		DOTween.To(() => this.teaserText.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.teaserText.GetComponent<CanvasGroup>().alpha = x;
-		}, 1f, 10f), 1), 2.1f);
-		TweenSettingsExtensions.SetDelay<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => GameManager.GetTheMainController().mainCamera.transform.localPosition, delegate(Vector3 x)
+		}, 1f, 10f).SetEase(Ease.Linear).SetDelay(2.1f);
+		DOTween.To(() => GameManager.GetTheMainController().mainCamera.transform.localPosition, delegate(Vector3 x)
 		{
 			GameManager.GetTheMainController().mainCamera.transform.localPosition = x;
-		}, Vector3.zero, 0.1f), 0.3f);
+		}, Vector3.zero, 0.1f).SetDelay(0.3f);
 		GameManager.TimeSlinger.FireTimer(28.5f, new Action(this.tirggerMainScreen));
 	}
 

@@ -19,7 +19,7 @@ namespace Colorful
 		protected override void Start()
 		{
 			base.Start();
-			this.m_DurationTimerEnd = Random.Range(this.RandomDuration.x, this.RandomDuration.y);
+			this.m_DurationTimerEnd = UnityEngine.Random.Range(this.RandomDuration.x, this.RandomDuration.y);
 		}
 
 		protected virtual void Update()
@@ -35,7 +35,7 @@ namespace Colorful
 				{
 					this.m_DurationTimer = 0f;
 					this.m_Activated = false;
-					this.m_EveryTimerEnd = Random.Range(this.RandomEvery.x, this.RandomEvery.y);
+					this.m_EveryTimerEnd = UnityEngine.Random.Range(this.RandomEvery.x, this.RandomEvery.y);
 				}
 			}
 			else
@@ -45,7 +45,7 @@ namespace Colorful
 				{
 					this.m_EveryTimer = 0f;
 					this.m_Activated = true;
-					this.m_DurationTimerEnd = Random.Range(this.RandomDuration.x, this.RandomDuration.y);
+					this.m_DurationTimerEnd = UnityEngine.Random.Range(this.RandomDuration.x, this.RandomDuration.y);
 				}
 			}
 		}
@@ -67,7 +67,7 @@ namespace Colorful
 			}
 			else
 			{
-				RenderTexture temporary = RenderTexture.GetTemporary(source.width, source.width, 0, 0);
+				RenderTexture temporary = RenderTexture.GetTemporary(source.width, source.width, 0, RenderTextureFormat.ARGB32);
 				this.DoTearing(source, temporary, this.SettingsTearing);
 				this.DoInterferences(temporary, destination, this.SettingsInterferences);
 				temporary.Release();
@@ -83,20 +83,20 @@ namespace Colorful
 		protected virtual void DoTearing(RenderTexture source, RenderTexture destination, Glitch.TearingSettings settings)
 		{
 			base.Material.SetVector("_Params", new Vector4(settings.Speed, settings.Intensity, settings.MaxDisplacement, settings.YuvOffset));
-			int num = 1;
+			int pass = 1;
 			if (settings.AllowFlipping && settings.YuvColorBleeding)
 			{
-				num = 4;
+				pass = 4;
 			}
 			else if (settings.AllowFlipping)
 			{
-				num = 2;
+				pass = 2;
 			}
 			else if (settings.YuvColorBleeding)
 			{
-				num = 3;
+				pass = 3;
 			}
-			Graphics.Blit(source, destination, base.Material, num);
+			Graphics.Blit(source, destination, base.Material, pass);
 		}
 
 		protected override string GetShaderName()

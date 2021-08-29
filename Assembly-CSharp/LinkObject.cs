@@ -56,7 +56,7 @@ public class LinkObject : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 			}
 			else
 			{
-				int num = Random.Range(0, 20);
+				int num = UnityEngine.Random.Range(0, 20);
 				if (num == 2)
 				{
 					GameManager.GetTheHackerManager().launchHack();
@@ -64,7 +64,7 @@ public class LinkObject : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 				else
 				{
 					string pageURL = base.gameObject.GetComponentInParent<SiteHolder>().mySiteDeff.PageURL;
-					int startIndex = Random.Range(0, pageURL.Length - 6);
+					int startIndex = UnityEngine.Random.Range(0, pageURL.Length - 6);
 					string str = pageURL.Substring(startIndex, 6) + ".html";
 					string theURL = "http://" + pageURL + ".ann/" + str;
 					GameManager.GetTheAnnBehavior().forceLoadURL(theURL, false);

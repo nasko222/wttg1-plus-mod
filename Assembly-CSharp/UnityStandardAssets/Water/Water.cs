@@ -39,16 +39,15 @@ namespace UnityStandardAssets.Water
 			this.UpdateCameraModes(current, camera2);
 			if (waterMode >= Water.WaterMode.Reflective)
 			{
-				float num = -Vector3.Dot(up, position) - this.clipPlaneOffset;
-				Vector4 plane;
-				plane..ctor(up.x, up.y, up.z, num);
+				float w = -Vector3.Dot(up, position) - this.clipPlaneOffset;
+				Vector4 plane = new Vector4(up.x, up.y, up.z, w);
 				Matrix4x4 zero = Matrix4x4.zero;
 				Water.CalculateReflectionMatrix(ref zero, plane);
 				Vector3 position2 = current.transform.position;
 				Vector3 position3 = zero.MultiplyPoint(position2);
 				camera.worldToCameraMatrix = current.worldToCameraMatrix * zero;
-				Vector4 vector = this.CameraSpacePlane(camera, position, up, 1f);
-				camera.projectionMatrix = current.CalculateObliqueMatrix(vector);
+				Vector4 clipPlane = this.CameraSpacePlane(camera, position, up, 1f);
+				camera.projectionMatrix = current.CalculateObliqueMatrix(clipPlane);
 				camera.cullingMask = (-17 & this.reflectLayers.value);
 				camera.targetTexture = this.m_ReflectionTexture;
 				GL.invertCulling = true;
@@ -63,8 +62,8 @@ namespace UnityStandardAssets.Water
 			if (waterMode >= Water.WaterMode.Refractive)
 			{
 				camera2.worldToCameraMatrix = current.worldToCameraMatrix;
-				Vector4 vector2 = this.CameraSpacePlane(camera2, position, up, -1f);
-				camera2.projectionMatrix = current.CalculateObliqueMatrix(vector2);
+				Vector4 clipPlane2 = this.CameraSpacePlane(camera2, position, up, -1f);
+				camera2.projectionMatrix = current.CalculateObliqueMatrix(clipPlane2);
 				camera2.cullingMask = (-17 & this.refractLayers.value);
 				camera2.targetTexture = this.m_RefractionTexture;
 				camera2.transform.position = current.transform.position;
@@ -107,22 +106,22 @@ namespace UnityStandardAssets.Water
 		{
 			if (this.m_ReflectionTexture)
 			{
-				Object.DestroyImmediate(this.m_ReflectionTexture);
+				UnityEngine.Object.DestroyImmediate(this.m_ReflectionTexture);
 				this.m_ReflectionTexture = null;
 			}
 			if (this.m_RefractionTexture)
 			{
-				Object.DestroyImmediate(this.m_RefractionTexture);
+				UnityEngine.Object.DestroyImmediate(this.m_RefractionTexture);
 				this.m_RefractionTexture = null;
 			}
 			foreach (KeyValuePair<Camera, Camera> keyValuePair in this.m_ReflectionCameras)
 			{
-				Object.DestroyImmediate(keyValuePair.Value.gameObject);
+				UnityEngine.Object.DestroyImmediate(keyValuePair.Value.gameObject);
 			}
 			this.m_ReflectionCameras.Clear();
 			foreach (KeyValuePair<Camera, Camera> keyValuePair2 in this.m_RefractionCameras)
 			{
-				Object.DestroyImmediate(keyValuePair2.Value.gameObject);
+				UnityEngine.Object.DestroyImmediate(keyValuePair2.Value.gameObject);
 			}
 			this.m_RefractionCameras.Clear();
 		}
@@ -140,13 +139,11 @@ namespace UnityStandardAssets.Water
 			}
 			Vector4 vector = sharedMaterial.GetVector("WaveSpeed");
 			float @float = sharedMaterial.GetFloat("_WaveScale");
-			Vector4 vector2;
-			vector2..ctor(@float, @float, @float * 0.4f, @float * 0.45f);
+			Vector4 value = new Vector4(@float, @float, @float * 0.4f, @float * 0.45f);
 			double num = (double)Time.timeSinceLevelLoad / 20.0;
-			Vector4 vector3;
-			vector3..ctor((float)Math.IEEERemainder((double)(vector.x * vector2.x) * num, 1.0), (float)Math.IEEERemainder((double)(vector.y * vector2.y) * num, 1.0), (float)Math.IEEERemainder((double)(vector.z * vector2.z) * num, 1.0), (float)Math.IEEERemainder((double)(vector.w * vector2.w) * num, 1.0));
-			sharedMaterial.SetVector("_WaveOffset", vector3);
-			sharedMaterial.SetVector("_WaveScale4", vector2);
+			Vector4 value2 = new Vector4((float)Math.IEEERemainder((double)(vector.x * value.x) * num, 1.0), (float)Math.IEEERemainder((double)(vector.y * value.y) * num, 1.0), (float)Math.IEEERemainder((double)(vector.z * value.z) * num, 1.0), (float)Math.IEEERemainder((double)(vector.w * value.w) * num, 1.0));
+			sharedMaterial.SetVector("_WaveOffset", value2);
+			sharedMaterial.SetVector("_WaveScale4", value);
 		}
 
 		private void UpdateCameraModes(Camera src, Camera dest)
@@ -157,7 +154,7 @@ namespace UnityStandardAssets.Water
 			}
 			dest.clearFlags = src.clearFlags;
 			dest.backgroundColor = src.backgroundColor;
-			if (src.clearFlags == 1)
+			if (src.clearFlags == CameraClearFlags.Skybox)
 			{
 				Skybox component = src.GetComponent<Skybox>();
 				Skybox component2 = dest.GetComponent<Skybox>();
@@ -190,12 +187,12 @@ namespace UnityStandardAssets.Water
 				{
 					if (this.m_ReflectionTexture)
 					{
-						Object.DestroyImmediate(this.m_ReflectionTexture);
+						UnityEngine.Object.DestroyImmediate(this.m_ReflectionTexture);
 					}
 					this.m_ReflectionTexture = new RenderTexture(this.textureSize, this.textureSize, 16);
 					this.m_ReflectionTexture.name = "__WaterReflection" + base.GetInstanceID();
 					this.m_ReflectionTexture.isPowerOfTwo = true;
-					this.m_ReflectionTexture.hideFlags = 52;
+					this.m_ReflectionTexture.hideFlags = HideFlags.DontSave;
 					this.m_OldReflectionTextureSize = this.textureSize;
 				}
 				this.m_ReflectionCameras.TryGetValue(currentCamera, out reflectionCamera);
@@ -217,7 +214,7 @@ namespace UnityStandardAssets.Water
 					reflectionCamera.transform.position = base.transform.position;
 					reflectionCamera.transform.rotation = base.transform.rotation;
 					reflectionCamera.gameObject.AddComponent<FlareLayer>();
-					gameObject.hideFlags = 61;
+					gameObject.hideFlags = HideFlags.HideAndDontSave;
 					this.m_ReflectionCameras[currentCamera] = reflectionCamera;
 				}
 			}
@@ -227,12 +224,12 @@ namespace UnityStandardAssets.Water
 				{
 					if (this.m_RefractionTexture)
 					{
-						Object.DestroyImmediate(this.m_RefractionTexture);
+						UnityEngine.Object.DestroyImmediate(this.m_RefractionTexture);
 					}
 					this.m_RefractionTexture = new RenderTexture(this.textureSize, this.textureSize, 16);
 					this.m_RefractionTexture.name = "__WaterRefraction" + base.GetInstanceID();
 					this.m_RefractionTexture.isPowerOfTwo = true;
-					this.m_RefractionTexture.hideFlags = 52;
+					this.m_RefractionTexture.hideFlags = HideFlags.DontSave;
 					this.m_OldRefractionTextureSize = this.textureSize;
 				}
 				this.m_RefractionCameras.TryGetValue(currentCamera, out refractionCamera);
@@ -254,7 +251,7 @@ namespace UnityStandardAssets.Water
 					refractionCamera.transform.position = base.transform.position;
 					refractionCamera.transform.rotation = base.transform.rotation;
 					refractionCamera.gameObject.AddComponent<FlareLayer>();
-					gameObject2.hideFlags = 61;
+					gameObject2.hideFlags = HideFlags.HideAndDontSave;
 					this.m_RefractionCameras[currentCamera] = refractionCamera;
 				}
 			}
@@ -294,11 +291,11 @@ namespace UnityStandardAssets.Water
 
 		private Vector4 CameraSpacePlane(Camera cam, Vector3 pos, Vector3 normal, float sideSign)
 		{
-			Vector3 vector = pos + normal * this.clipPlaneOffset;
+			Vector3 point = pos + normal * this.clipPlaneOffset;
 			Matrix4x4 worldToCameraMatrix = cam.worldToCameraMatrix;
-			Vector3 vector2 = worldToCameraMatrix.MultiplyPoint(vector);
-			Vector3 vector3 = worldToCameraMatrix.MultiplyVector(normal).normalized * sideSign;
-			return new Vector4(vector3.x, vector3.y, vector3.z, -Vector3.Dot(vector2, vector3));
+			Vector3 lhs = worldToCameraMatrix.MultiplyPoint(point);
+			Vector3 rhs = worldToCameraMatrix.MultiplyVector(normal).normalized * sideSign;
+			return new Vector4(rhs.x, rhs.y, rhs.z, -Vector3.Dot(lhs, rhs));
 		}
 
 		private static void CalculateReflectionMatrix(ref Matrix4x4 reflectionMat, Vector4 plane)

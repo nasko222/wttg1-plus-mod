@@ -7,7 +7,7 @@ public class SPTapFile : MonoBehaviour
 	private void iWasTapped()
 	{
 		base.GetComponent<SubPageHolder>().getKeyIndex(out this.setIndex, out this.setHash);
-		int index = Random.Range(0, this.linkObjs.Count);
+		int index = UnityEngine.Random.Range(0, this.linkObjs.Count);
 		this.linkObjs[index].deadUnlessTapped = false;
 		this.linkObjs[index].hasTapAction = true;
 		this.linkObjs[index].tapAction = new Action(this.generateTxtDoc);

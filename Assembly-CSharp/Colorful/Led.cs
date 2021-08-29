@@ -10,12 +10,12 @@ namespace Colorful
 	{
 		protected override void OnRenderImage(RenderTexture source, RenderTexture destination)
 		{
-			float num = this.Scale;
+			float x = this.Scale;
 			if (this.Mode == Led.SizeMode.PixelPerfect)
 			{
-				num = (float)source.width / this.Scale;
+				x = (float)source.width / this.Scale;
 			}
-			base.Material.SetVector("_Params", new Vector4(num, (!this.AutomaticRatio) ? this.Ratio : ((float)source.width / (float)source.height), this.Brightness, this.Shape));
+			base.Material.SetVector("_Params", new Vector4(x, (!this.AutomaticRatio) ? this.Ratio : ((float)source.width / (float)source.height), this.Brightness, this.Shape));
 			Graphics.Blit(source, destination, base.Material);
 		}
 

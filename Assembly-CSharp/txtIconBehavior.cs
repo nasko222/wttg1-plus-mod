@@ -19,15 +19,15 @@ public class txtIconBehavior : MonoBehaviour, IPointerDownHandler, IEventSystemH
 
 	private void buildTxtDoc()
 	{
-		GameObject gameObject = Object.Instantiate<GameObject>(this.txtObject);
+		GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(this.txtObject);
 		gameObject.transform.SetParent(this.windowHolderRT);
 		gameObject.GetComponent<txtBehavior>().mainController = this.mainController;
 		gameObject.GetComponent<txtBehavior>().windowHolderRT = this.windowHolderRT;
 		gameObject.GetComponent<txtBehavior>().dragPlane = this.dragPlane;
 		gameObject.GetComponent<txtBehavior>().buildMe((float)Screen.width, (float)Screen.height, this.txtTile, this.txtText);
 		Vector2 myWH = gameObject.GetComponent<txtBehavior>().getMyWH();
-		float setX = Random.Range(20f, (float)Screen.width - myWH.x - 20f);
-		float setY = -Random.Range(60f, (float)Screen.height - myWH.y - 20f);
+		float setX = UnityEngine.Random.Range(20f, (float)Screen.width - myWH.x - 20f);
+		float setY = -UnityEngine.Random.Range(60f, (float)Screen.height - myWH.y - 20f);
 		gameObject.GetComponent<txtBehavior>().rePOSme(setX, setY);
 	}
 

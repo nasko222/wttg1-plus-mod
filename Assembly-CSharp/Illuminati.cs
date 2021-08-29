@@ -51,10 +51,10 @@ public class Illuminati : MonoBehaviour
 			GameManager.AudioSlinger.DealSound(AudioHubs.COMPUTER, AudioLayer.SFX, this.showPasscode, 1f, false);
 			this.foo2 = false;
 			this.secretHash = string.Empty;
-			TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.secretHolder.GetComponent<CanvasGroup>().alpha, delegate(float x)
+			DOTween.To(() => this.secretHolder.GetComponent<CanvasGroup>().alpha, delegate(float x)
 			{
 				this.secretHolder.GetComponent<CanvasGroup>().alpha = x;
-			}, 1f, 1f), 1);
+			}, 1f, 1f).SetEase(Ease.Linear);
 		}
 	}
 
@@ -69,7 +69,7 @@ public class Illuminati : MonoBehaviour
 
 	private void Update()
 	{
-		if (this.foo2 && Input.GetKeyDown(54))
+		if (this.foo2 && Input.GetKeyDown(KeyCode.Alpha6))
 		{
 			this.secretHash += "6";
 			this.checkForProperCode();

@@ -299,23 +299,23 @@ namespace UltimateGameTools.MeshSimplifier
 					Vector3 vector = Vector3.zero;
 					if (Math.Abs(boneWeight.weight0) > 1E-05f)
 					{
-						Vector3 vector2 = bindposes[boneWeight.boneIndex0].MultiplyPoint3x4(array[i]);
-						vector += bones[boneWeight.boneIndex0].transform.localToWorldMatrix.MultiplyPoint3x4(vector2) * boneWeight.weight0;
+						Vector3 point = bindposes[boneWeight.boneIndex0].MultiplyPoint3x4(array[i]);
+						vector += bones[boneWeight.boneIndex0].transform.localToWorldMatrix.MultiplyPoint3x4(point) * boneWeight.weight0;
 					}
 					if (Math.Abs(boneWeight.weight1) > 1E-05f)
 					{
-						Vector3 vector2 = bindposes[boneWeight.boneIndex1].MultiplyPoint3x4(array[i]);
-						vector += bones[boneWeight.boneIndex1].transform.localToWorldMatrix.MultiplyPoint3x4(vector2) * boneWeight.weight1;
+						Vector3 point = bindposes[boneWeight.boneIndex1].MultiplyPoint3x4(array[i]);
+						vector += bones[boneWeight.boneIndex1].transform.localToWorldMatrix.MultiplyPoint3x4(point) * boneWeight.weight1;
 					}
 					if (Math.Abs(boneWeight.weight2) > 1E-05f)
 					{
-						Vector3 vector2 = bindposes[boneWeight.boneIndex2].MultiplyPoint3x4(array[i]);
-						vector += bones[boneWeight.boneIndex2].transform.localToWorldMatrix.MultiplyPoint3x4(vector2) * boneWeight.weight2;
+						Vector3 point = bindposes[boneWeight.boneIndex2].MultiplyPoint3x4(array[i]);
+						vector += bones[boneWeight.boneIndex2].transform.localToWorldMatrix.MultiplyPoint3x4(point) * boneWeight.weight2;
 					}
 					if (Math.Abs(boneWeight.weight3) > 1E-05f)
 					{
-						Vector3 vector2 = bindposes[boneWeight.boneIndex3].MultiplyPoint3x4(array[i]);
-						vector += bones[boneWeight.boneIndex3].transform.localToWorldMatrix.MultiplyPoint3x4(vector2) * boneWeight.weight3;
+						Vector3 point = bindposes[boneWeight.boneIndex3].MultiplyPoint3x4(array[i]);
+						vector += bones[boneWeight.boneIndex3].transform.localToWorldMatrix.MultiplyPoint3x4(point) * boneWeight.weight3;
 					}
 					array[i] = vector;
 				}
@@ -391,8 +391,7 @@ namespace UltimateGameTools.MeshSimplifier
 						Vector4 item = (!bTangent) ? Vector4.zero : av4TangentsIn[num2];
 						Vector2 vector2 = (!bUV) ? Vector2.zero : av2Mapping1In[num];
 						Vector2 vector3 = (!bUV2) ? Vector2.zero : av2Mapping2In[num2];
-						Color32 color;
-						color..ctor(0, 0, 0, 0);
+						Color32 color = new Color32(0, 0, 0, 0);
 						if (acolColorsIn != null && acolColorsIn.Length > 0)
 						{
 							color = acolColorsIn[num2];
@@ -701,9 +700,9 @@ namespace UltimateGameTools.MeshSimplifier
 						int num3 = triangle.TexAt(t.Vertices[num]);
 						if (num2 != num3)
 						{
-							Vector2 vector = aMapping[num2];
-							Vector2 vector2 = aMapping[num3];
-							if (vector == vector2)
+							Vector2 lhs = aMapping[num2];
+							Vector2 rhs = aMapping[num3];
+							if (lhs == rhs)
 							{
 								t.SetTexAt(t.Vertices[num], num3);
 							}
@@ -960,7 +959,7 @@ namespace UltimateGameTools.MeshSimplifier
 						return this.m_aUV[i];
 					}
 				}
-				Debug.LogError("TexAt(): Vertex not found");
+				UnityEngine.Debug.LogError("TexAt(): Vertex not found");
 				return 0;
 			}
 
@@ -979,7 +978,7 @@ namespace UltimateGameTools.MeshSimplifier
 						return;
 					}
 				}
-				Debug.LogError("SetTexAt(): Vertex not found");
+				UnityEngine.Debug.LogError("SetTexAt(): Vertex not found");
 			}
 
 			public void SetTexAt(int i, int uv)

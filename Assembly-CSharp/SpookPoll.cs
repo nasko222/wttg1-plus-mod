@@ -36,19 +36,19 @@ public class SpookPoll : MonoBehaviour
 		int num = 0;
 		for (int i = 0; i < 20; i++)
 		{
-			num = Random.Range(0, 11);
+			num = UnityEngine.Random.Range(0, 11);
 		}
 		if (num < 3)
 		{
-			GameManager.TimeSlinger.FireTimer(Random.Range(30f, 210f), new Action(GameManager.GetTheSceneManager().triggerLightJump));
+			GameManager.TimeSlinger.FireTimer(UnityEngine.Random.Range(30f, 210f), new Action(GameManager.GetTheSceneManager().triggerLightJump));
 		}
 		else if (num < 7 && num >= 3)
 		{
-			GameManager.TimeSlinger.FireTimer(Random.Range(30f, 210f), new Action(GameManager.GetTheBreatherManager().triggerBreatherWindowJump));
+			GameManager.TimeSlinger.FireTimer(UnityEngine.Random.Range(30f, 210f), new Action(GameManager.GetTheBreatherManager().triggerBreatherWindowJump));
 		}
 		else
 		{
-			GameManager.TimeSlinger.FireTimer(Random.Range(30f, 210f), new Action(GameManager.GetTheUIManager().triggerFlashCreep));
+			GameManager.TimeSlinger.FireTimer(UnityEngine.Random.Range(30f, 210f), new Action(GameManager.GetTheUIManager().triggerFlashCreep));
 		}
 	}
 

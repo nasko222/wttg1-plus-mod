@@ -61,21 +61,21 @@ public class notesBehavior : MonoBehaviour
 
 	private float getStrHeight(string theString)
 	{
-		TextGenerationSettings textGenerationSettings = default(TextGenerationSettings);
+		TextGenerationSettings settings = default(TextGenerationSettings);
 		TextGenerator textGenerator = new TextGenerator();
-		textGenerationSettings.textAnchor = 0;
-		textGenerationSettings.generateOutOfBounds = true;
-		textGenerationSettings.generationExtents = new Vector2(this.noteField.GetComponent<RectTransform>().sizeDelta.x, this.noteField.GetComponent<RectTransform>().sizeDelta.y);
-		textGenerationSettings.pivot = Vector2.zero;
-		textGenerationSettings.richText = false;
-		textGenerationSettings.font = this.noteFont;
-		textGenerationSettings.fontSize = 14;
-		textGenerationSettings.fontStyle = 0;
-		textGenerationSettings.lineSpacing = 1f;
-		textGenerationSettings.scaleFactor = 1f;
-		textGenerationSettings.verticalOverflow = 1;
-		textGenerationSettings.horizontalOverflow = 0;
-		return textGenerator.GetPreferredHeight(theString, textGenerationSettings);
+		settings.textAnchor = TextAnchor.UpperLeft;
+		settings.generateOutOfBounds = true;
+		settings.generationExtents = new Vector2(this.noteField.GetComponent<RectTransform>().sizeDelta.x, this.noteField.GetComponent<RectTransform>().sizeDelta.y);
+		settings.pivot = Vector2.zero;
+		settings.richText = false;
+		settings.font = this.noteFont;
+		settings.fontSize = 14;
+		settings.fontStyle = FontStyle.Normal;
+		settings.lineSpacing = 1f;
+		settings.scaleFactor = 1f;
+		settings.verticalOverflow = VerticalWrapMode.Overflow;
+		settings.horizontalOverflow = HorizontalWrapMode.Wrap;
+		return textGenerator.GetPreferredHeight(theString, settings);
 	}
 
 	private void Start()

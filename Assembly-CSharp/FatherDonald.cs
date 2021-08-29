@@ -7,7 +7,7 @@ public class FatherDonald : MonoBehaviour
 {
 	private void iWasTapped()
 	{
-		int index = Random.Range(0, this.keyBTNS.Count);
+		int index = UnityEngine.Random.Range(0, this.keyBTNS.Count);
 		this.keyBTNS[index].deadUnlessTapped = false;
 		this.keyBTNS[index].hasTapAction = true;
 		this.keyBTNS[index].tapAction = new Action(this.showTheHash);

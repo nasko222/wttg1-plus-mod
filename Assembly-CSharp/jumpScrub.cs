@@ -16,7 +16,7 @@ public class jumpScrub : MonoBehaviour
 
 	private void Update()
 	{
-		if (Input.GetKeyDown(32))
+		if (Input.GetKeyDown(KeyCode.Space))
 		{
 			this.badGuy.SetActive(true);
 			this.badLight.SetActive(true);

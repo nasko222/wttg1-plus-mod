@@ -20,7 +20,7 @@ namespace UnityStandardAssets.Water
 			{
 				this.sharedMaterial.shader.maximumLOD = 201;
 			}
-			if (!SystemInfo.SupportsRenderTextureFormat(1))
+			if (!SystemInfo.SupportsRenderTextureFormat(RenderTextureFormat.Depth))
 			{
 				this.edgeBlend = false;
 			}
@@ -30,7 +30,7 @@ namespace UnityStandardAssets.Water
 				Shader.DisableKeyword("WATER_EDGEBLEND_OFF");
 				if (Camera.main)
 				{
-					Camera.main.depthTextureMode |= 1;
+					Camera.main.depthTextureMode |= DepthTextureMode.Depth;
 				}
 			}
 			else
@@ -44,7 +44,7 @@ namespace UnityStandardAssets.Water
 		{
 			if (currentCam && this.edgeBlend)
 			{
-				currentCam.depthTextureMode |= 1;
+				currentCam.depthTextureMode |= DepthTextureMode.Depth;
 			}
 		}
 

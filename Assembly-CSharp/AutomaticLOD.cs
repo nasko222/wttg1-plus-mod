@@ -290,11 +290,9 @@ public class AutomaticLOD : MonoBehaviour
 				}
 			}
 		}
-		Vector3 vector3;
-		vector3..ctor(num, num2, num3);
-		Vector3 vector4;
-		vector4..ctor(num4, num5, num6);
-		return (vector4 + vector3) * 0.5f;
+		Vector3 b = new Vector3(num, num2, num3);
+		Vector3 a = new Vector3(num4, num5, num6);
+		return (a + b) * 0.5f;
 	}
 
 	public float ComputeViewSpaceBounds(Vector3 v3CameraPos, Vector3 v3CameraDir, Vector3 v3CameraUp, out Vector3 v3Min, out Vector3 v3Max, out Vector3 v3Center)
@@ -311,31 +309,31 @@ public class AutomaticLOD : MonoBehaviour
 		{
 			for (int i = 0; i < 2; i++)
 			{
-				Vector3 vector = (i != 0) ? base.GetComponent<Renderer>().bounds.max : base.GetComponent<Renderer>().bounds.min;
-				Vector3 vector2 = matrix4x.inverse.MultiplyPoint(vector);
-				if (vector2.x < num)
+				Vector3 point = (i != 0) ? base.GetComponent<Renderer>().bounds.max : base.GetComponent<Renderer>().bounds.min;
+				Vector3 vector = matrix4x.inverse.MultiplyPoint(point);
+				if (vector.x < num)
 				{
-					num = vector2.x;
+					num = vector.x;
 				}
-				if (vector2.y < num2)
+				if (vector.y < num2)
 				{
-					num2 = vector2.y;
+					num2 = vector.y;
 				}
-				if (vector2.z < num3)
+				if (vector.z < num3)
 				{
-					num3 = vector2.z;
+					num3 = vector.z;
 				}
-				if (vector2.x > num4)
+				if (vector.x > num4)
 				{
-					num4 = vector2.x;
+					num4 = vector.x;
 				}
-				if (vector2.y > num5)
+				if (vector.y > num5)
 				{
-					num5 = vector2.y;
+					num5 = vector.y;
 				}
-				if (vector2.z > num6)
+				if (vector.z > num6)
 				{
-					num6 = vector2.z;
+					num6 = vector.z;
 				}
 			}
 		}
@@ -345,37 +343,37 @@ public class AutomaticLOD : MonoBehaviour
 			{
 				for (int k = 0; k < 2; k++)
 				{
-					Vector3 vector3 = (k != 0) ? this.m_listDependentChildren[j].GetComponent<Renderer>().bounds.max : this.m_listDependentChildren[j].GetComponent<Renderer>().bounds.min;
-					Vector3 vector4 = matrix4x.inverse.MultiplyPoint(vector3);
-					if (vector4.x < num)
+					Vector3 point2 = (k != 0) ? this.m_listDependentChildren[j].GetComponent<Renderer>().bounds.max : this.m_listDependentChildren[j].GetComponent<Renderer>().bounds.min;
+					Vector3 vector2 = matrix4x.inverse.MultiplyPoint(point2);
+					if (vector2.x < num)
 					{
-						num = vector4.x;
+						num = vector2.x;
 					}
-					if (vector4.y < num2)
+					if (vector2.y < num2)
 					{
-						num2 = vector4.y;
+						num2 = vector2.y;
 					}
-					if (vector4.z < num3)
+					if (vector2.z < num3)
 					{
-						num3 = vector4.z;
+						num3 = vector2.z;
 					}
-					if (vector4.x > num4)
+					if (vector2.x > num4)
 					{
-						num4 = vector4.x;
+						num4 = vector2.x;
 					}
-					if (vector4.y > num5)
+					if (vector2.y > num5)
 					{
-						num5 = vector4.y;
+						num5 = vector2.y;
 					}
-					if (vector4.z > num6)
+					if (vector2.z > num6)
 					{
-						num6 = vector4.z;
+						num6 = vector2.z;
 					}
 				}
 			}
 		}
-		v3Min..ctor(num, num2, num3);
-		v3Max..ctor(num4, num5, num6);
+		v3Min = new Vector3(num, num2, num3);
+		v3Max = new Vector3(num4, num5, num6);
 		return (num4 - num) * (num5 - num2);
 	}
 
@@ -607,11 +605,11 @@ public class AutomaticLOD : MonoBehaviour
 					{
 						if (Application.isEditor && !Application.isPlaying)
 						{
-							Object.DestroyImmediate(component.m_listLODLevels[nLevel].m_gameObject);
+							UnityEngine.Object.DestroyImmediate(component.m_listLODLevels[nLevel].m_gameObject);
 						}
 						else
 						{
-							Object.Destroy(component.m_listLODLevels[nLevel].m_gameObject);
+							UnityEngine.Object.Destroy(component.m_listLODLevels[nLevel].m_gameObject);
 						}
 					}
 				}
@@ -673,15 +671,15 @@ public class AutomaticLOD : MonoBehaviour
 					{
 						if (Application.isEditor && !Application.isPlaying)
 						{
-							Object.DestroyImmediate(components[i]);
+							UnityEngine.Object.DestroyImmediate(components[i]);
 						}
 						else
 						{
-							Object.Destroy(components[i]);
+							UnityEngine.Object.Destroy(components[i]);
 						}
 					}
 					component.m_meshSimplifier = component.gameObject.AddComponent<Simplifier>();
-					component.m_meshSimplifier.hideFlags = 2;
+					component.m_meshSimplifier.hideFlags = HideFlags.HideInInspector;
 					IEnumerator enumerator = component.m_meshSimplifier.ProgressiveMesh(gameObject, component.m_originalMesh, root.m_aRelevanceSpheres, component.name, progress);
 					while (enumerator.MoveNext())
 					{
@@ -709,15 +707,15 @@ public class AutomaticLOD : MonoBehaviour
 						{
 							if (Application.isEditor && !Application.isPlaying)
 							{
-								Object.DestroyImmediate(components2[j]);
+								UnityEngine.Object.DestroyImmediate(components2[j]);
 							}
 							else
 							{
-								Object.Destroy(components2[j]);
+								UnityEngine.Object.Destroy(components2[j]);
 							}
 						}
 						component.m_meshSimplifier = component.gameObject.AddComponent<Simplifier>();
-						component.m_meshSimplifier.hideFlags = 2;
+						component.m_meshSimplifier.hideFlags = HideFlags.HideInInspector;
 						IEnumerator enumerator2 = component.m_meshSimplifier.ProgressiveMesh(gameObject, component.m_originalMesh, root.m_aRelevanceSpheres, component.name, progress);
 						while (enumerator2.MoveNext())
 						{
@@ -773,8 +771,8 @@ public class AutomaticLOD : MonoBehaviour
 		float num2 = 0f;
 		if (this.m_evalMode == AutomaticLOD.EvalMode.CameraDistance)
 		{
-			Vector3 vector = base.transform.TransformPoint(this.m_localCenter.x, this.m_localCenter.y, this.m_localCenter.z);
-			num = Vector3.Distance(vector, currentCamera.transform.position);
+			Vector3 a = base.transform.TransformPoint(this.m_localCenter.x, this.m_localCenter.y, this.m_localCenter.z);
+			num = Vector3.Distance(a, currentCamera.transform.position);
 		}
 		else if (this.m_evalMode == AutomaticLOD.EvalMode.ScreenCoverage)
 		{
@@ -1199,11 +1197,11 @@ public class AutomaticLOD : MonoBehaviour
 					{
 						if (Application.isEditor && !Application.isPlaying)
 						{
-							Object.DestroyImmediate(lodlevelData.m_gameObject);
+							UnityEngine.Object.DestroyImmediate(lodlevelData.m_gameObject);
 						}
 						else
 						{
-							Object.Destroy(lodlevelData.m_gameObject);
+							UnityEngine.Object.Destroy(lodlevelData.m_gameObject);
 						}
 					}
 					lodlevelData.m_bUsesOriginalMesh = false;
@@ -1214,11 +1212,11 @@ public class AutomaticLOD : MonoBehaviour
 			{
 				if (Application.isEditor && !Application.isPlaying)
 				{
-					Object.DestroyImmediate(components[i]);
+					UnityEngine.Object.DestroyImmediate(components[i]);
 				}
 				else
 				{
-					Object.Destroy(components[i]);
+					UnityEngine.Object.Destroy(components[i]);
 				}
 			}
 			if (component.m_meshSimplifier != null)
@@ -1242,7 +1240,7 @@ public class AutomaticLOD : MonoBehaviour
 		{
 			return new Mesh();
 		}
-		Mesh mesh = Object.Instantiate<Mesh>(automaticLOD.m_originalMesh);
+		Mesh mesh = UnityEngine.Object.Instantiate<Mesh>(automaticLOD.m_originalMesh);
 		mesh.Clear();
 		return mesh;
 	}
@@ -1292,11 +1290,11 @@ public class AutomaticLOD : MonoBehaviour
 			{
 				if (Application.isEditor && !Application.isPlaying)
 				{
-					Object.DestroyImmediate(levelData.m_gameObject);
+					UnityEngine.Object.DestroyImmediate(levelData.m_gameObject);
 				}
 				else
 				{
-					Object.Destroy(levelData.m_gameObject);
+					UnityEngine.Object.Destroy(levelData.m_gameObject);
 				}
 			}
 			levelData.m_gameObject = AutomaticLOD.CreateBasicObjectCopy(automaticLOD.gameObject, levelData.m_mesh, automaticLOD.gameObject.transform);

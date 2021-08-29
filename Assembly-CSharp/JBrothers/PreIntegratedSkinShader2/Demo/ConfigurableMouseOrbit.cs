@@ -68,9 +68,9 @@ namespace JBrothers.PreIntegratedSkinShader2.Demo
 				{
 					Touch touch = Input.GetTouch(0);
 					Touch touch2 = Input.GetTouch(1);
-					Vector2 vector = touch.position - touch.deltaPosition;
-					Vector2 vector2 = touch2.position - touch2.deltaPosition;
-					float magnitude = (vector - vector2).magnitude;
+					Vector2 a = touch.position - touch.deltaPosition;
+					Vector2 b = touch2.position - touch2.deltaPosition;
+					float magnitude = (a - b).magnitude;
 					float magnitude2 = (touch.position - touch2.position).magnitude;
 					float num = magnitude - magnitude2;
 					this.distance = Mathf.Clamp(this.distance * (1f + num * this.zoomSpeed * 0.1f), this.distanceMin, this.distanceMax);
@@ -78,13 +78,13 @@ namespace JBrothers.PreIntegratedSkinShader2.Demo
 			}
 			this.y = ConfigurableMouseOrbit.ClampAngle(this.y, this.yMinLimit, this.yMaxLimit);
 			Quaternion quaternion = Quaternion.Euler(this.y, this.x, 0f);
-			Vector3 vector3 = quaternion * new Vector3(0f, 0f, -this.distance) + this.target.position;
+			Vector3 vector = quaternion * new Vector3(0f, 0f, -this.distance) + this.target.position;
 			if (this.centerToAABB && this.target.GetComponent<Renderer>())
 			{
-				vector3 += this.target.transform.InverseTransformPoint(this.target.GetComponent<Renderer>().bounds.center);
+				vector += this.target.transform.InverseTransformPoint(this.target.GetComponent<Renderer>().bounds.center);
 			}
 			base.transform.localRotation = quaternion;
-			base.transform.localPosition = vector3;
+			base.transform.localPosition = vector;
 		}
 
 		private static float ClampAngle(float angle, float min, float max)

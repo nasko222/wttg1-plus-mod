@@ -27,57 +27,57 @@ public class HMMenuObject : MonoBehaviour
 	public void showMe(float setDelay = 2f)
 	{
 		this.aniSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.aniSeq, setDelay, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.MenuBG.fillAmount, delegate(float x)
+		this.aniSeq.Insert(setDelay, DOTween.To(() => this.MenuBG.fillAmount, delegate(float x)
 		{
 			this.MenuBG.fillAmount = x;
-		}, 1f, 1f), 1));
-		TweenSettingsExtensions.Insert(this.aniSeq, setDelay, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.MenuBase.fillAmount, delegate(float x)
+		}, 1f, 1f).SetEase(Ease.Linear));
+		this.aniSeq.Insert(setDelay, DOTween.To(() => this.MenuBase.fillAmount, delegate(float x)
 		{
 			this.MenuBase.fillAmount = x;
-		}, 1f, 1f), 1));
-		TweenSettingsExtensions.Insert(this.aniSeq, setDelay + 1f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.MenuLineNumber.fillAmount, delegate(float x)
+		}, 1f, 1f).SetEase(Ease.Linear));
+		this.aniSeq.Insert(setDelay + 1f, DOTween.To(() => this.MenuLineNumber.fillAmount, delegate(float x)
 		{
 			this.MenuLineNumber.fillAmount = x;
-		}, 1f, 0.5f), 3));
-		TweenSettingsExtensions.Insert(this.aniSeq, setDelay + 1f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.MenuTitleHolder.transform.localPosition, delegate(Vector3 x)
+		}, 1f, 0.5f).SetEase(Ease.OutSine));
+		this.aniSeq.Insert(setDelay + 1f, DOTween.To(() => this.MenuTitleHolder.transform.localPosition, delegate(Vector3 x)
 		{
 			this.MenuTitleHolder.transform.localPosition = x;
-		}, new Vector3(0f, 0f, 0f), 0.65f), 3));
-		TweenSettingsExtensions.Insert(this.aniSeq, setDelay + 1f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.MenuTitleHolder.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		}, new Vector3(0f, 0f, 0f), 0.65f).SetEase(Ease.OutSine));
+		this.aniSeq.Insert(setDelay + 1f, DOTween.To(() => this.MenuTitleHolder.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.MenuTitleHolder.GetComponent<CanvasGroup>().alpha = x;
-		}, 1f, 0f), 1));
-		TweenExtensions.Play<Sequence>(this.aniSeq);
+		}, 1f, 0f).SetEase(Ease.Linear));
+		this.aniSeq.Play<Sequence>();
 	}
 
 	public void hideMe()
 	{
 		this.aniSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.aniSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.MenuLineHolder.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		this.aniSeq.Insert(0f, DOTween.To(() => this.MenuLineHolder.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.MenuLineHolder.GetComponent<CanvasGroup>().alpha = x;
-		}, 0f, 0.35f), 3));
-		TweenSettingsExtensions.Insert(this.aniSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.MenuTitleHolder.transform.localPosition, delegate(Vector3 x)
+		}, 0f, 0.35f).SetEase(Ease.OutSine));
+		this.aniSeq.Insert(0f, DOTween.To(() => this.MenuTitleHolder.transform.localPosition, delegate(Vector3 x)
 		{
 			this.MenuTitleHolder.transform.localPosition = x;
-		}, new Vector3(0f, -46f, 0f), 0.35f), 1));
-		TweenSettingsExtensions.Insert(this.aniSeq, 0.35f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.MenuBase.fillAmount, delegate(float x)
+		}, new Vector3(0f, -46f, 0f), 0.35f).SetEase(Ease.Linear));
+		this.aniSeq.Insert(0.35f, DOTween.To(() => this.MenuBase.fillAmount, delegate(float x)
 		{
 			this.MenuBase.fillAmount = x;
-		}, 0f, 0.65f), 1));
-		TweenSettingsExtensions.Insert(this.aniSeq, 0.35f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.MenuBG.fillAmount, delegate(float x)
+		}, 0f, 0.65f).SetEase(Ease.Linear));
+		this.aniSeq.Insert(0.35f, DOTween.To(() => this.MenuBG.fillAmount, delegate(float x)
 		{
 			this.MenuBG.fillAmount = x;
-		}, 0f, 0.65f), 1));
-		TweenSettingsExtensions.Insert(this.aniSeq, 0.35f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.MenuLineNumber.fillAmount, delegate(float x)
+		}, 0f, 0.65f).SetEase(Ease.Linear));
+		this.aniSeq.Insert(0.35f, DOTween.To(() => this.MenuLineNumber.fillAmount, delegate(float x)
 		{
 			this.MenuLineNumber.fillAmount = x;
-		}, 0f, 0.65f), 3));
-		TweenSettingsExtensions.Insert(this.aniSeq, 0.35f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.MenuTitleHolder.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		}, 0f, 0.65f).SetEase(Ease.OutSine));
+		this.aniSeq.Insert(0.35f, DOTween.To(() => this.MenuTitleHolder.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.MenuTitleHolder.GetComponent<CanvasGroup>().alpha = x;
-		}, 0f, 0.35f), 3));
-		TweenExtensions.Play<Sequence>(this.aniSeq);
+		}, 0f, 0.35f).SetEase(Ease.OutSine));
+		this.aniSeq.Play<Sequence>();
 	}
 
 	public GameObject MenuObject;

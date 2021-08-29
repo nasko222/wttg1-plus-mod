@@ -59,9 +59,9 @@ public class MicManager : MonoBehaviour
 	{
 		this.listenToPlayer = true;
 		int num = 0;
-		int num2 = 0;
-		Microphone.GetDeviceCaps(this.micDevToTest, ref num, ref num2);
-		this.tmpAC = Microphone.Start(this.defaultMic, true, 300, num2);
+		int frequency = 0;
+		Microphone.GetDeviceCaps(this.micDevToTest, out num, out frequency);
+		this.tmpAC = Microphone.Start(this.defaultMic, true, 300, frequency);
 		while (Microphone.GetPosition(this.defaultMic) <= 0)
 		{
 		}
@@ -80,9 +80,9 @@ public class MicManager : MonoBehaviour
 	private void startRec()
 	{
 		int num = 0;
-		int num2 = 0;
-		Microphone.GetDeviceCaps(this.micDevToTest, ref num, ref num2);
-		this.tmpAC = Microphone.Start(this.micDevToTest, true, 300, num2);
+		int frequency = 0;
+		Microphone.GetDeviceCaps(this.micDevToTest, out num, out frequency);
+		this.tmpAC = Microphone.Start(this.micDevToTest, true, 300, frequency);
 		while (Microphone.GetPosition(this.micDevToTest) <= 0)
 		{
 		}

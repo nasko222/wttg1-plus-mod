@@ -21,7 +21,7 @@ public class ForgiveMe : MonoBehaviour
 		bool flag = false;
 		if (this.iHaveKey)
 		{
-			int num = Random.Range(0, 20);
+			int num = UnityEngine.Random.Range(0, 20);
 			if (num == 13)
 			{
 				flag = true;
@@ -34,12 +34,12 @@ public class ForgiveMe : MonoBehaviour
 		}
 		else if (this.haveLiveConfessions)
 		{
-			int num2 = Random.Range(0, 10);
+			int num2 = UnityEngine.Random.Range(0, 10);
 			if (num2 < 5)
 			{
 				if (this.liveConfessions.Count > 0)
 				{
-					int index = Random.Range(0, this.liveConfessions.Count);
+					int index = UnityEngine.Random.Range(0, this.liveConfessions.Count);
 					string confessionText2 = this.liveConfessions[index].confessionText;
 					this.confTextHolder.text = confessionText2;
 					this.tmpLiveConfessions.Add(this.liveConfessions[index]);
@@ -52,7 +52,7 @@ public class ForgiveMe : MonoBehaviour
 						this.liveConfessions.Add(this.tmpLiveConfessions[i]);
 					}
 					this.tmpLiveConfessions.Clear();
-					int index2 = Random.Range(0, this.liveConfessions.Count);
+					int index2 = UnityEngine.Random.Range(0, this.liveConfessions.Count);
 					string confessionText3 = this.liveConfessions[index2].confessionText;
 					this.confTextHolder.text = confessionText3;
 					this.tmpLiveConfessions.Add(this.liveConfessions[index2]);
@@ -61,7 +61,7 @@ public class ForgiveMe : MonoBehaviour
 			}
 			else if (this.theConfessions.Count > 0)
 			{
-				int index3 = Random.Range(0, this.theConfessions.Count);
+				int index3 = UnityEngine.Random.Range(0, this.theConfessions.Count);
 				string confessionText4 = this.theConfessions[index3].confessionText;
 				this.confTextHolder.text = confessionText4;
 				this.tmpLocalConfessions.Add(this.theConfessions[index3]);
@@ -74,7 +74,7 @@ public class ForgiveMe : MonoBehaviour
 					this.theConfessions.Add(this.tmpLocalConfessions[j]);
 				}
 				this.tmpLocalConfessions.Clear();
-				int index4 = Random.Range(0, this.theConfessions.Count);
+				int index4 = UnityEngine.Random.Range(0, this.theConfessions.Count);
 				string confessionText5 = this.theConfessions[index4].confessionText;
 				this.confTextHolder.text = confessionText5;
 				this.theConfessions.RemoveAt(index4);
@@ -82,7 +82,7 @@ public class ForgiveMe : MonoBehaviour
 		}
 		else if (this.theConfessions.Count > 0)
 		{
-			int index5 = Random.Range(0, this.theConfessions.Count);
+			int index5 = UnityEngine.Random.Range(0, this.theConfessions.Count);
 			string confessionText6 = this.theConfessions[index5].confessionText;
 			this.confTextHolder.text = confessionText6;
 			this.tmpLocalConfessions.Add(this.theConfessions[index5]);
@@ -95,7 +95,7 @@ public class ForgiveMe : MonoBehaviour
 				this.theConfessions.Add(this.tmpLocalConfessions[k]);
 			}
 			this.tmpLocalConfessions.Clear();
-			int index6 = Random.Range(0, this.theConfessions.Count);
+			int index6 = UnityEngine.Random.Range(0, this.theConfessions.Count);
 			string confessionText7 = this.theConfessions[index6].confessionText;
 			this.confTextHolder.text = confessionText7;
 			this.theConfessions.RemoveAt(index6);

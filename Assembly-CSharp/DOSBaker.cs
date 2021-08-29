@@ -101,7 +101,7 @@ public class DOSBaker : MonoBehaviour
 		this.theRects = texture2D.PackTextures(this.textsToPack, 2, 2048);
 		Debug.Log(this.theRects);
 		Debug.Log(texture2D);
-		byte[] bytes = ImageConversion.EncodeToJPG(texture2D);
+		byte[] bytes = texture2D.EncodeToJPG();
 		File.WriteAllBytes(Application.dataPath + "/foobar.jpg", bytes);
 		Debug.Log(Application.dataPath);
 	}

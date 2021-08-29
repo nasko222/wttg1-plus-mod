@@ -30,7 +30,7 @@ public class actionController : MonoBehaviour
 	{
 		if (!this.lockAction)
 		{
-			if (Physics.Raycast(this.myCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f)), ref this.actionHit, float.PositiveInfinity, 8192))
+			if (Physics.Raycast(this.myCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f)), out this.actionHit, float.PositiveInfinity, 8192))
 			{
 				this.mySceneManager.checkAction(this.actionHit);
 			}

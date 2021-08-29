@@ -6,7 +6,7 @@ public class LODSampleLODScene : MonoBehaviour
 {
 	private void Start()
 	{
-		AutomaticLOD[] array = Object.FindObjectsOfType<AutomaticLOD>();
+		AutomaticLOD[] array = UnityEngine.Object.FindObjectsOfType<AutomaticLOD>();
 		this.m_sceneLODObjects = new List<AutomaticLOD>();
 		this.m_objectMaterials = new Dictionary<GameObject, Material[]>();
 		this.m_nMaxLODLevels = 0;
@@ -37,11 +37,11 @@ public class LODSampleLODScene : MonoBehaviour
 	private void Update()
 	{
 		this.m_nCamMode = 0;
-		if (Input.GetKey(105))
+		if (Input.GetKey(KeyCode.I))
 		{
 			this.m_nCamMode = 1;
 		}
-		else if (Input.GetKey(111))
+		else if (Input.GetKey(KeyCode.O))
 		{
 			this.m_nCamMode = -1;
 		}
@@ -51,7 +51,7 @@ public class LODSampleLODScene : MonoBehaviour
 			this.m_fCurrentDistanceSlider = Mathf.Clamp01(this.m_fCurrentDistanceSlider);
 			this.UpdateCamera(this.m_fCurrentDistanceSlider);
 		}
-		if (Input.GetKeyDown(119))
+		if (Input.GetKeyDown(KeyCode.W))
 		{
 			this.m_bWireframe = !this.m_bWireframe;
 			this.SetWireframe(this.m_bWireframe);

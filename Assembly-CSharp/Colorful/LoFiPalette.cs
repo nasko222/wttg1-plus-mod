@@ -43,8 +43,8 @@ namespace Colorful
 			base.Material.SetTexture("_LookupTex", this.LookupTexture);
 			base.Material.SetVector("_Params1", new Vector3(1f / (float)this.LookupTexture.width, 1f / (float)this.LookupTexture.height, num - 1f));
 			base.Material.SetVector("_Params2", new Vector2(this.Amount, this.PixelSize));
-			int num2 = ((!this.Pixelize) ? 4 : 6) + ((!CLib.IsLinearColorSpace()) ? 0 : 1);
-			Graphics.Blit(source, destination, base.Material, num2);
+			int pass = ((!this.Pixelize) ? 4 : 6) + ((!CLib.IsLinearColorSpace()) ? 0 : 1);
+			Graphics.Blit(source, destination, base.Material, pass);
 		}
 
 		protected override void RenderLut3D(RenderTexture source, RenderTexture destination)
@@ -57,12 +57,12 @@ namespace Colorful
 			{
 				base.SetIdentityLut();
 			}
-			this.m_Lut3D.filterMode = 0;
+			this.m_Lut3D.filterMode = FilterMode.Point;
 			base.Material.SetTexture("_LookupTex", this.m_Lut3D);
 			float num = (float)this.m_Lut3D.width;
 			base.Material.SetVector("_Params", new Vector4((num - 1f) / (1f * num), 1f / (2f * num), this.Amount, this.PixelSize));
-			int num2 = ((!this.Pixelize) ? 0 : 2) + ((!CLib.IsLinearColorSpace()) ? 0 : 1);
-			Graphics.Blit(source, destination, base.Material, num2);
+			int pass = ((!this.Pixelize) ? 0 : 2) + ((!CLib.IsLinearColorSpace()) ? 0 : 1);
+			Graphics.Blit(source, destination, base.Material, pass);
 		}
 
 		public LoFiPalette.Preset Palette;

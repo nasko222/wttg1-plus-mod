@@ -12,12 +12,12 @@ namespace Colorful
 		{
 			base.Material.SetVector("_Center", new Vector2(this.Center.x * (float)source.width, this.Center.y * (float)source.height));
 			base.Material.SetVector("_Params", new Vector3(this.Scale, this.DotSize, this.Smoothness));
-			Matrix4x4 matrix4x = default(Matrix4x4);
-			matrix4x.SetRow(0, this.CMYKRot(this.Angle + 0.2617994f));
-			matrix4x.SetRow(1, this.CMYKRot(this.Angle + 1.30899692f));
-			matrix4x.SetRow(2, this.CMYKRot(this.Angle));
-			matrix4x.SetRow(3, this.CMYKRot(this.Angle + 0.7853982f));
-			base.Material.SetMatrix("_MatRot", matrix4x);
+			Matrix4x4 value = default(Matrix4x4);
+			value.SetRow(0, this.CMYKRot(this.Angle + 0.2617994f));
+			value.SetRow(1, this.CMYKRot(this.Angle + 1.30899692f));
+			value.SetRow(2, this.CMYKRot(this.Angle));
+			value.SetRow(3, this.CMYKRot(this.Angle + 0.7853982f));
+			base.Material.SetMatrix("_MatRot", value);
 			Graphics.Blit(source, destination, base.Material, (!this.Desaturate) ? 0 : 1);
 		}
 

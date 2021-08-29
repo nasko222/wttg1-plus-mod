@@ -71,10 +71,10 @@ public class GlobalAudioController : MonoBehaviour
 			{
 				num *= this.myHub.muffledPerc;
 			}
-			TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => tmpAudioSource.volume, delegate(float x)
+			DOTween.To(() => tmpAudioSource.volume, delegate(float x)
 			{
 				tmpAudioSource.volume = x;
-			}, num * percentage, duration), 1);
+			}, num * percentage, duration).SetEase(Ease.Linear);
 		}
 	}
 
@@ -102,10 +102,10 @@ public class GlobalAudioController : MonoBehaviour
 			{
 				num *= this.myHub.muffledPerc;
 			}
-			TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => tmpAudioSource.volume, delegate(float x)
+			DOTween.To(() => tmpAudioSource.volume, delegate(float x)
 			{
 				tmpAudioSource.volume = x;
-			}, num, duration), 1);
+			}, num, duration).SetEase(Ease.Linear);
 		}
 	}
 
@@ -144,7 +144,7 @@ public class GlobalAudioController : MonoBehaviour
 
 	public void KillMe()
 	{
-		Object.Destroy(this);
+		UnityEngine.Object.Destroy(this);
 	}
 
 	private void Awake()

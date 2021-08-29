@@ -161,20 +161,20 @@ public class DOSAttack : MonoBehaviour
 			num2 = (float)this.nodeWidth / (float)this.rootNodeWidth;
 		}
 		num = Mathf.RoundToInt((float)num * num2);
-		TextGenerationSettings textGenerationSettings = default(TextGenerationSettings);
+		TextGenerationSettings settings = default(TextGenerationSettings);
 		TextGenerator textGenerator = new TextGenerator();
-		textGenerationSettings.textAnchor = 1;
-		textGenerationSettings.generateOutOfBounds = true;
-		textGenerationSettings.generationExtents = new Vector2(50f, 20f);
-		textGenerationSettings.pivot = Vector2.zero;
-		textGenerationSettings.richText = true;
-		textGenerationSettings.font = this.clockFont;
-		textGenerationSettings.fontSize = num;
-		textGenerationSettings.fontStyle = 0;
-		textGenerationSettings.lineSpacing = 1f;
-		textGenerationSettings.scaleFactor = 1f;
-		textGenerationSettings.verticalOverflow = 1;
-		textGenerationSettings.horizontalOverflow = 0;
+		settings.textAnchor = TextAnchor.UpperCenter;
+		settings.generateOutOfBounds = true;
+		settings.generationExtents = new Vector2(50f, 20f);
+		settings.pivot = Vector2.zero;
+		settings.richText = true;
+		settings.font = this.clockFont;
+		settings.fontSize = num;
+		settings.fontStyle = FontStyle.Normal;
+		settings.lineSpacing = 1f;
+		settings.scaleFactor = 1f;
+		settings.verticalOverflow = VerticalWrapMode.Overflow;
+		settings.horizontalOverflow = HorizontalWrapMode.Wrap;
 		this.clockTextHolder = new GameObject("clockTextHolder", new Type[]
 		{
 			typeof(RectTransform)
@@ -182,7 +182,7 @@ public class DOSAttack : MonoBehaviour
 		if (this.inHackerMode)
 		{
 			this.clockTextHolder.transform.SetParent(this.hackerModeManager.scoreHeaderObject.transform);
-			this.clockTextHolder.sizeDelta = new Vector2(textGenerator.GetPreferredWidth(this.warmUpTime.ToString(), textGenerationSettings), textGenerator.GetPreferredHeight(this.warmUpTime.ToString(), textGenerationSettings));
+			this.clockTextHolder.sizeDelta = new Vector2(textGenerator.GetPreferredWidth(this.warmUpTime.ToString(), settings), textGenerator.GetPreferredHeight(this.warmUpTime.ToString(), settings));
 			this.clockTextHolder.anchorMin = new Vector2(0f, 1f);
 			this.clockTextHolder.anchorMax = new Vector2(0f, 1f);
 			this.clockTextHolder.pivot = new Vector2(0f, 1f);
@@ -192,7 +192,7 @@ public class DOSAttack : MonoBehaviour
 		else
 		{
 			this.clockTextHolder.transform.SetParent(this.DOSHolder.transform);
-			this.clockTextHolder.sizeDelta = new Vector2(textGenerator.GetPreferredWidth(this.warmUpTime.ToString(), textGenerationSettings), textGenerator.GetPreferredHeight(this.warmUpTime.ToString(), textGenerationSettings));
+			this.clockTextHolder.sizeDelta = new Vector2(textGenerator.GetPreferredWidth(this.warmUpTime.ToString(), settings), textGenerator.GetPreferredHeight(this.warmUpTime.ToString(), settings));
 			this.clockTextHolder.anchorMin = new Vector2(0f, 1f);
 			this.clockTextHolder.anchorMax = new Vector2(0f, 1f);
 			this.clockTextHolder.pivot = new Vector2(0f, 1f);
@@ -208,20 +208,20 @@ public class DOSAttack : MonoBehaviour
 		this.clockText.color = this.clockColor;
 		this.clockText.fontSize = num;
 		this.clockText.transform.SetParent(this.clockTextHolder.transform);
-		this.clockText.rectTransform.sizeDelta = new Vector2(textGenerator.GetPreferredWidth(this.clockText.text, textGenerationSettings), textGenerator.GetPreferredHeight(this.clockText.text, textGenerationSettings));
+		this.clockText.rectTransform.sizeDelta = new Vector2(textGenerator.GetPreferredWidth(this.clockText.text, settings), textGenerator.GetPreferredHeight(this.clockText.text, settings));
 		this.clockText.transform.localScale = new Vector3(1f, 1f, 1f);
 		this.clockText.transform.localPosition = new Vector3(this.clockText.rectTransform.sizeDelta.x / 2f, -(this.clockText.rectTransform.sizeDelta.y / 2f), 0f);
 		this.warmClockSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.warmClockSeq, 0f, DOTween.To(() => this.clockText.transform.localScale, delegate(Vector3 x)
+		this.warmClockSeq.Insert(0f, DOTween.To(() => this.clockText.transform.localScale, delegate(Vector3 x)
 		{
 			this.clockText.transform.localScale = x;
 		}, new Vector3(1f, 1f, 1f), 0f));
-		TweenSettingsExtensions.Insert(this.warmClockSeq, 0.1f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.clockText.transform.localScale, delegate(Vector3 x)
+		this.warmClockSeq.Insert(0.1f, DOTween.To(() => this.clockText.transform.localScale, delegate(Vector3 x)
 		{
 			this.clockText.transform.localScale = x;
-		}, new Vector3(0.33f, 0.33f, 0.33f), 0.9f), 1));
-		TweenSettingsExtensions.SetLoops<Sequence>(this.warmClockSeq, 5);
-		TweenExtensions.Play<Sequence>(this.warmClockSeq);
+		}, new Vector3(0.33f, 0.33f, 0.33f), 0.9f).SetEase(Ease.Linear));
+		this.warmClockSeq.SetLoops(5);
+		this.warmClockSeq.Play<Sequence>();
 		this.clockTimeStamp = Time.time;
 		this.clockMicroTimeStamp = Time.time;
 		this.clockMicroCount = this.warmUpTime;
@@ -238,8 +238,8 @@ public class DOSAttack : MonoBehaviour
 
 	public void fireDOSAttack()
 	{
-		Object.Destroy(this.clockText.gameObject);
-		Object.Destroy(this.clockTextHolder.gameObject);
+		UnityEngine.Object.Destroy(this.clockText.gameObject);
+		UnityEngine.Object.Destroy(this.clockTextHolder.gameObject);
 		float num;
 		float num2;
 		if (this.inHackerMode)
@@ -255,7 +255,7 @@ public class DOSAttack : MonoBehaviour
 			num2 = (float)this.nodeHeight / (float)this.rootNodeHeight;
 		}
 		this.finalCountDownFired = false;
-		this.setDOSClockObject = Object.Instantiate<GameObject>(this.DOSClockObject);
+		this.setDOSClockObject = UnityEngine.Object.Instantiate<GameObject>(this.DOSClockObject);
 		this.setDOSClockObject.GetComponent<RectTransform>().anchorMin = new Vector2(0f, 1f);
 		this.setDOSClockObject.GetComponent<RectTransform>().anchorMax = new Vector2(0f, 1f);
 		this.setDOSClockObject.GetComponent<RectTransform>().pivot = new Vector2(0f, 1f);
@@ -274,11 +274,11 @@ public class DOSAttack : MonoBehaviour
 		this.setDOSClockObject.transform.localScale = new Vector3(1f, 1f, 1f);
 		this.setDOSClockObject.transform.localRotation = new Quaternion(0f, 0f, 0f, 0f);
 		this.DOSAttackClockSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.DOSAttackClockSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.setDOSClockObject.GetComponent<DOSClock>().DOSClockImage.fillAmount, delegate(float x)
+		this.DOSAttackClockSeq.Insert(0f, DOTween.To(() => this.setDOSClockObject.GetComponent<DOSClock>().DOSClockImage.fillAmount, delegate(float x)
 		{
 			this.setDOSClockObject.GetComponent<DOSClock>().DOSClockImage.fillAmount = x;
-		}, 0f, this.DOSTime), 1));
-		TweenExtensions.Play<Sequence>(this.DOSAttackClockSeq);
+		}, 0f, this.DOSTime).SetEase(Ease.Linear));
+		this.DOSAttackClockSeq.Play<Sequence>();
 		this.startNodeObject.stopSubAction();
 		this.hotNodeObject = this.startNodeObject;
 		this.hotNodeObject.tap();
@@ -325,7 +325,7 @@ public class DOSAttack : MonoBehaviour
 		this.currentTreeNodes.Clear();
 		this.currentActionFilledNodeCount = 0;
 		this.reCount = 0;
-		if (Random.Range(1, 3) == 1)
+		if (UnityEngine.Random.Range(1, 3) == 1)
 		{
 			this.clockWise = false;
 		}
@@ -340,8 +340,8 @@ public class DOSAttack : MonoBehaviour
 			this.masterNodes.Add(new DOSAttack.node(nodeType.WHITENODE, new DOSAttack.nodePosition(num, num2), this.whiteNodeSprite, this));
 			this.nodeLookUp.Add(num + ":" + num2, i);
 		}
-		this.startEndNodes.Add(new DOSAttack.nodePosition((short)Random.Range(0, (int)this.MATRIX_SIZE), 0));
-		this.startEndNodes.Add(new DOSAttack.nodePosition((short)Random.Range(0, (int)this.MATRIX_SIZE), this.MATRIX_SIZE));
+		this.startEndNodes.Add(new DOSAttack.nodePosition((short)UnityEngine.Random.Range(0, (int)this.MATRIX_SIZE), 0));
+		this.startEndNodes.Add(new DOSAttack.nodePosition((short)UnityEngine.Random.Range(0, (int)this.MATRIX_SIZE), this.MATRIX_SIZE));
 		DOSAttack.node node = this.masterNodes[this.nodeLookUp[this.startEndNodes[0].x + ":" + this.startEndNodes[0].y]];
 		node.myType = nodeType.STARTNODE;
 		node.mySprite = this.startNodeSprite;
@@ -375,7 +375,7 @@ public class DOSAttack : MonoBehaviour
 		DOSAttack.nodePosition nodePosition = new DOSAttack.nodePosition(0, 0);
 		while (flag)
 		{
-			nodePosition = new DOSAttack.nodePosition((short)Random.Range(0, (int)(this.MATRIX_SIZE + 1)), (short)Random.Range(0, (int)(this.MATRIX_SIZE + 1)));
+			nodePosition = new DOSAttack.nodePosition((short)UnityEngine.Random.Range(0, (int)(this.MATRIX_SIZE + 1)), (short)UnityEngine.Random.Range(0, (int)(this.MATRIX_SIZE + 1)));
 			if (nodePosition != this.startEndNodes[0] && nodePosition != this.startEndNodes[1])
 			{
 				if (this.actionBlockNodes.Count > 0)
@@ -822,9 +822,9 @@ public class DOSAttack : MonoBehaviour
 		}).GetComponent<Image>();
 		this.nodeBGIMG.transform.SetParent(this.nodeHolder.transform);
 		this.nodeBGIMG.sprite = this.pixelSprite;
-		this.nodeBGIMG.type = 3;
-		this.nodeBGIMG.type = 3;
-		this.nodeBGIMG.fillMethod = 4;
+		this.nodeBGIMG.type = Image.Type.Filled;
+		this.nodeBGIMG.type = Image.Type.Filled;
+		this.nodeBGIMG.fillMethod = Image.FillMethod.Radial360;
 		this.nodeBGIMG.fillAmount = 0f;
 		this.nodeBGIMG.color = this.nodeBorderColor;
 		this.nodeBGIMG.GetComponent<RectTransform>().sizeDelta = new Vector2(num, num2);
@@ -837,7 +837,7 @@ public class DOSAttack : MonoBehaviour
 		{
 			float setX = (float)(i % (int)(this.MATRIX_SIZE + 1) * this.nodeWidth);
 			float setY = (float)(Mathf.FloorToInt((float)(i / (int)(this.MATRIX_SIZE + 1))) * -(float)this.nodeHeight);
-			GameObject gameObject = Object.Instantiate<GameObject>(this.NodeObject);
+			GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(this.NodeObject);
 			gameObject.transform.SetParent(this.nodeHolder.transform);
 			gameObject.GetComponent<NodeObject>().myDoSAttack = this;
 			gameObject.GetComponent<NodeObject>().trollNode = this.trollNodesActive;
@@ -853,10 +853,10 @@ public class DOSAttack : MonoBehaviour
 			}
 			this.nodeObjects.Add(gameObject.GetComponent<NodeObject>().myNodeData.myPos.x.ToString() + ":" + gameObject.GetComponent<NodeObject>().myNodeData.myPos.y.ToString(), gameObject);
 		}
-		TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.nodeBGIMG.fillAmount, delegate(float x)
+		DOTween.To(() => this.nodeBGIMG.fillAmount, delegate(float x)
 		{
 			this.nodeBGIMG.fillAmount = x;
-		}, 1f, 0.4f), 1);
+		}, 1f, 0.4f).SetEase(Ease.Linear);
 		this.masterNodes.Clear();
 		this.nodeLookUp.Clear();
 		this.startEndNodes.Clear();
@@ -1113,7 +1113,7 @@ public class DOSAttack : MonoBehaviour
 
 	private void ReloadDOSAttack()
 	{
-		Object.Destroy(this.nodeHolder.gameObject);
+		UnityEngine.Object.Destroy(this.nodeHolder.gameObject);
 		this.prepDOSAttack();
 		this.warmDOSAttack();
 	}
@@ -1137,31 +1137,31 @@ public class DOSAttack : MonoBehaviour
 		this.hotNodeObject = null;
 		this.actionNodeActivatedCount = 0;
 		this.allActionNodesActivated = false;
-		TweenExtensions.Kill(this.DOSAttackClockSeq, false);
-		Object.Destroy(this.setDOSClockObject);
+		this.DOSAttackClockSeq.Kill(false);
+		UnityEngine.Object.Destroy(this.setDOSClockObject);
 		if (flag)
 		{
-			this.DOSAttackOverSeq = TweenSettingsExtensions.OnComplete<Sequence>(DOTween.Sequence(), new TweenCallback(this.DOSAttackSucOver));
+			this.DOSAttackOverSeq = DOTween.Sequence().OnComplete(new TweenCallback(this.DOSAttackSucOver));
 		}
 		else
 		{
-			this.DOSAttackOverSeq = TweenSettingsExtensions.OnComplete<Sequence>(DOTween.Sequence(), new TweenCallback(this.ReloadDOSAttack));
+			this.DOSAttackOverSeq = DOTween.Sequence().OnComplete(new TweenCallback(this.ReloadDOSAttack));
 		}
 		GameManager.GetDOSTwitch().DismissTwitchHacker();
-		TweenSettingsExtensions.Insert(this.DOSAttackOverSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.nodeBGIMG.fillAmount, delegate(float x)
+		this.DOSAttackOverSeq.Insert(0f, DOTween.To(() => this.nodeBGIMG.fillAmount, delegate(float x)
 		{
 			this.nodeBGIMG.fillAmount = x;
-		}, 0f, 0.4f), 1));
-		TweenSettingsExtensions.Insert(this.DOSAttackOverSeq, 0.4f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.nodeHolderCG.alpha, delegate(float x)
+		}, 0f, 0.4f).SetEase(Ease.Linear));
+		this.DOSAttackOverSeq.Insert(0.4f, DOTween.To(() => this.nodeHolderCG.alpha, delegate(float x)
 		{
 			this.nodeHolderCG.alpha = x;
-		}, 0f, 0.3f), 3));
-		TweenExtensions.Play<Sequence>(this.DOSAttackOverSeq);
+		}, 0f, 0.3f).SetEase(Ease.OutSine));
+		this.DOSAttackOverSeq.Play<Sequence>();
 	}
 
 	private void DOSAttackSucOver()
 	{
-		Object.Destroy(this.nodeHolder.gameObject);
+		UnityEngine.Object.Destroy(this.nodeHolder.gameObject);
 		if (this.isTwitchAttack)
 		{
 			GameManager.GetDOSTwitch().myTwitchIRC.SendMsg("@" + this.twitchHackerName + " IS 1337!", 10f);
@@ -1207,27 +1207,27 @@ public class DOSAttack : MonoBehaviour
 		this.hotNodeObject = null;
 		this.actionNodeActivatedCount = 0;
 		this.allActionNodesActivated = false;
-		TweenExtensions.Kill(this.DOSAttackClockSeq, false);
-		Object.Destroy(this.setDOSClockObject);
+		this.DOSAttackClockSeq.Kill(false);
+		UnityEngine.Object.Destroy(this.setDOSClockObject);
 		if (!this.inHackerMode)
 		{
 			GameManager.GetDOSTwitch().DismissTwitchHacker();
 		}
-		this.DOSAttackOverSeq = TweenSettingsExtensions.OnComplete<Sequence>(DOTween.Sequence(), new TweenCallback(this.DOSAttackFailOver));
-		TweenSettingsExtensions.Insert(this.DOSAttackOverSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.nodeBGIMG.fillAmount, delegate(float x)
+		this.DOSAttackOverSeq = DOTween.Sequence().OnComplete(new TweenCallback(this.DOSAttackFailOver));
+		this.DOSAttackOverSeq.Insert(0f, DOTween.To(() => this.nodeBGIMG.fillAmount, delegate(float x)
 		{
 			this.nodeBGIMG.fillAmount = x;
-		}, 0f, 0.4f), 1));
-		TweenSettingsExtensions.Insert(this.DOSAttackOverSeq, 0.4f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.nodeHolderCG.alpha, delegate(float x)
+		}, 0f, 0.4f).SetEase(Ease.Linear));
+		this.DOSAttackOverSeq.Insert(0.4f, DOTween.To(() => this.nodeHolderCG.alpha, delegate(float x)
 		{
 			this.nodeHolderCG.alpha = x;
-		}, 0f, 0.3f), 3));
-		TweenExtensions.Play<Sequence>(this.DOSAttackOverSeq);
+		}, 0f, 0.3f).SetEase(Ease.OutSine));
+		this.DOSAttackOverSeq.Play<Sequence>();
 	}
 
 	private void DOSAttackFailOver()
 	{
-		Object.Destroy(this.nodeHolder.gameObject);
+		UnityEngine.Object.Destroy(this.nodeHolder.gameObject);
 		if (this.isTwitchAttack)
 		{
 			if (this.twitchHackerLevel == "1337")

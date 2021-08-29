@@ -8,7 +8,7 @@ public class rrLampScrub : MonoBehaviour
 {
 	private void setFadeLightTime()
 	{
-		this.fadeTimeWindow = Random.Range(this.minWaitTime, this.maxWaitTime);
+		this.fadeTimeWindow = UnityEngine.Random.Range(this.minWaitTime, this.maxWaitTime);
 		this.fadeTimeStamp = Time.time;
 		this.fadeTheLight = true;
 	}
@@ -16,23 +16,23 @@ public class rrLampScrub : MonoBehaviour
 	private void fadeLight()
 	{
 		this.lightFadeSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.lightFadeSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.mainLight.intensity, delegate(float x)
+		this.lightFadeSeq.Insert(0f, DOTween.To(() => this.mainLight.intensity, delegate(float x)
 		{
 			this.mainLight.intensity = x;
-		}, this.mainLightDefaultValue * 0.65f, 0.8f), 1));
-		TweenSettingsExtensions.Insert(this.lightFadeSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.ambLight.intensity, delegate(float x)
+		}, this.mainLightDefaultValue * 0.65f, 0.8f).SetEase(Ease.Linear));
+		this.lightFadeSeq.Insert(0f, DOTween.To(() => this.ambLight.intensity, delegate(float x)
 		{
 			this.ambLight.intensity = x;
-		}, this.ambLightDefaultValue * 0.4f, 0.8f), 1));
-		TweenSettingsExtensions.Insert(this.lightFadeSeq, 0.9f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.mainLight.intensity, delegate(float x)
+		}, this.ambLightDefaultValue * 0.4f, 0.8f).SetEase(Ease.Linear));
+		this.lightFadeSeq.Insert(0.9f, DOTween.To(() => this.mainLight.intensity, delegate(float x)
 		{
 			this.mainLight.intensity = x;
-		}, this.mainLightDefaultValue, 0.7f), 1));
-		TweenSettingsExtensions.Insert(this.lightFadeSeq, 0.9f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.ambLight.intensity, delegate(float x)
+		}, this.mainLightDefaultValue, 0.7f).SetEase(Ease.Linear));
+		this.lightFadeSeq.Insert(0.9f, DOTween.To(() => this.ambLight.intensity, delegate(float x)
 		{
 			this.ambLight.intensity = x;
-		}, this.ambLightDefaultValue, 0.7f), 1));
-		TweenExtensions.Play<Sequence>(this.lightFadeSeq);
+		}, this.ambLightDefaultValue, 0.7f).SetEase(Ease.Linear));
+		this.lightFadeSeq.Play<Sequence>();
 		this.setFadeLightTime();
 	}
 

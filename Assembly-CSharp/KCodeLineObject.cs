@@ -21,16 +21,16 @@ public class KCodeLineObject : MonoBehaviour
 		this.codeHighlight.color = this.codeHighlightColor;
 		this.activeColor = this.codeHighlightColor;
 		this.amActiveSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.amActiveSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<Color, Color, ColorOptions>>(DOTween.To(() => this.codeHighlight.color, delegate(Color x)
+		this.amActiveSeq.Insert(0f, DOTween.To(() => this.codeHighlight.color, delegate(Color x)
 		{
 			this.codeHighlight.color = x;
-		}, new Color(this.activeColor.r, this.activeColor.g, this.activeColor.b, 0.1f), 1f), 1));
-		TweenSettingsExtensions.Insert(this.amActiveSeq, 1f, TweenSettingsExtensions.SetEase<TweenerCore<Color, Color, ColorOptions>>(DOTween.To(() => this.codeHighlight.color, delegate(Color x)
+		}, new Color(this.activeColor.r, this.activeColor.g, this.activeColor.b, 0.1f), 1f).SetEase(Ease.Linear));
+		this.amActiveSeq.Insert(1f, DOTween.To(() => this.codeHighlight.color, delegate(Color x)
 		{
 			this.codeHighlight.color = x;
-		}, new Color(this.activeColor.r, this.activeColor.g, this.activeColor.b, 1f), 1f), 1));
-		TweenSettingsExtensions.SetLoops<Sequence>(this.amActiveSeq, -1);
-		TweenExtensions.Play<Sequence>(this.amActiveSeq);
+		}, new Color(this.activeColor.r, this.activeColor.g, this.activeColor.b, 1f), 1f).SetEase(Ease.Linear));
+		this.amActiveSeq.SetLoops(-1);
+		this.amActiveSeq.Play<Sequence>();
 	}
 
 	public void InvalidInput()
@@ -47,11 +47,11 @@ public class KCodeLineObject : MonoBehaviour
 		this.codeLine.color = this.boxHighlightColor;
 		this.boxHighlight.color = new Color(this.invalidCodeHighlightColor.r, this.invalidCodeHighlightColor.g, this.invalidCodeHighlightColor.b, 1f);
 		this.vSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.vSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<Color, Color, ColorOptions>>(DOTween.To(() => this.boxHighlight.color, delegate(Color x)
+		this.vSeq.Insert(0f, DOTween.To(() => this.boxHighlight.color, delegate(Color x)
 		{
 			this.boxHighlight.color = x;
-		}, new Color(this.invalidCodeHighlightColor.r, this.invalidCodeHighlightColor.g, this.invalidCodeHighlightColor.b, 0f), 0.25f), 1));
-		TweenExtensions.Play<Sequence>(this.vSeq);
+		}, new Color(this.invalidCodeHighlightColor.r, this.invalidCodeHighlightColor.g, this.invalidCodeHighlightColor.b, 0f), 0.25f).SetEase(Ease.Linear));
+		this.vSeq.Play<Sequence>();
 	}
 
 	public void ValidInput()
@@ -65,18 +65,18 @@ public class KCodeLineObject : MonoBehaviour
 			GameManager.AudioSlinger.DealSound(AudioHubs.COMPUTER, AudioLayer.HACKINGSFX, this.myKAttack.ValidInputSound, 1f, false);
 		}
 		this.boxHighlight.color = this.validCodeHighlightColor;
-		TweenExtensions.Kill(this.amActiveSeq, false);
+		this.amActiveSeq.Kill(false);
 		this.codeHighlight.color = new Color(this.codeHighlightColor.r, this.codeHighlightColor.g, this.codeHighlightColor.b, 0f);
 		this.lineNumber.gameObject.SetActive(false);
 		this.checkMark.gameObject.SetActive(true);
-		this.codeLine.fontStyle = 2;
+		this.codeLine.fontStyle = FontStyle.Italic;
 		this.codeLine.color = new Color(this.codeLine.color.r, this.codeLine.color.g, this.codeLine.color.b, 0.3f);
 		this.showMeSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.showMeSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<Color, Color, ColorOptions>>(DOTween.To(() => this.boxHighlight.color, delegate(Color x)
+		this.showMeSeq.Insert(0f, DOTween.To(() => this.boxHighlight.color, delegate(Color x)
 		{
 			this.boxHighlight.color = x;
-		}, new Color(this.validCodeHighlightColor.r, this.validCodeHighlightColor.g, this.validCodeHighlightColor.b, 0f), 0.25f), 1));
-		TweenExtensions.Play<Sequence>(this.showMeSeq);
+		}, new Color(this.validCodeHighlightColor.r, this.validCodeHighlightColor.g, this.validCodeHighlightColor.b, 0f), 0.25f).SetEase(Ease.Linear));
+		this.showMeSeq.Play<Sequence>();
 	}
 
 	public void hotCheck(string compareString = "")
@@ -115,11 +115,11 @@ public class KCodeLineObject : MonoBehaviour
 		this.lineNumber.text = this.myCodeNumber;
 		this.codeLine.text = this.myCodeLine;
 		this.showMeSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.showMeSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<Color, Color, ColorOptions>>(DOTween.To(() => this.boxHighlight.color, delegate(Color x)
+		this.showMeSeq.Insert(0f, DOTween.To(() => this.boxHighlight.color, delegate(Color x)
 		{
 			this.boxHighlight.color = x;
-		}, new Color(this.boxHighlightColor.r, this.boxHighlightColor.g, this.boxHighlightColor.b, 0f), 0.3f), 1));
-		TweenExtensions.Play<Sequence>(this.showMeSeq);
+		}, new Color(this.boxHighlightColor.r, this.boxHighlightColor.g, this.boxHighlightColor.b, 0f), 0.3f).SetEase(Ease.Linear));
+		this.showMeSeq.Play<Sequence>();
 	}
 
 	public KAttack myKAttack;

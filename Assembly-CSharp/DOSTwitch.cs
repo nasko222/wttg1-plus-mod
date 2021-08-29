@@ -24,10 +24,10 @@ public class DOSTwitch : MonoBehaviour
 
 	public void DismissTwitchHacker()
 	{
-		TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.TwitchHackerDisplayGroup.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		DOTween.To(() => this.TwitchHackerDisplayGroup.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.TwitchHackerDisplayGroup.GetComponent<CanvasGroup>().alpha = x;
-		}, 0f, 0.35f), 2);
+		}, 0f, 0.35f).SetEase(Ease.InSine);
 	}
 
 	public void setPollInactive()
@@ -157,42 +157,42 @@ public class DOSTwitch : MonoBehaviour
 
 	private void generateHackerPollWindow()
 	{
-		this.hackerPollTimeWindow = Random.Range(this.hackerPollMinWindow, this.hackerPollMaxWindow);
+		this.hackerPollTimeWindow = UnityEngine.Random.Range(this.hackerPollMinWindow, this.hackerPollMaxWindow);
 		this.hackerPollTimeStamp = Time.time;
 		this.hackerPollWindowActive = true;
 	}
 
 	private void generateKeyPollWindow()
 	{
-		this.keyPollTimeWindow = Random.Range(this.keyPollMinWindow, this.keyPollMaxWindow);
+		this.keyPollTimeWindow = UnityEngine.Random.Range(this.keyPollMinWindow, this.keyPollMaxWindow);
 		this.keyPollTimeStamp = Time.time;
 		this.keyPollWindowActive = true;
 	}
 
 	private void generateSpeedPollWindow()
 	{
-		this.speedPollTimeWindow = Random.Range(this.speedPollMinWindow, this.speedPollMaxWindow);
+		this.speedPollTimeWindow = UnityEngine.Random.Range(this.speedPollMinWindow, this.speedPollMaxWindow);
 		this.speedPollTimeStamp = Time.time;
 		this.speedPollWindowActive = true;
 	}
 
 	private void generateKeyQuePollWindow()
 	{
-		this.keyQuePollTimeWindow = Random.Range(this.keyQueMinWindow, this.keyQueMaxWindow);
+		this.keyQuePollTimeWindow = UnityEngine.Random.Range(this.keyQueMinWindow, this.keyQueMaxWindow);
 		this.keyQuePollTimeStamp = Time.time;
 		this.keyQuePollWindowActive = true;
 	}
 
 	private void generateModemTimePollWindow()
 	{
-		this.modemTimePollWindow = Random.Range(this.modemTimePollMinWindow, this.modemTimePollMaxWindow);
+		this.modemTimePollWindow = UnityEngine.Random.Range(this.modemTimePollMinWindow, this.modemTimePollMaxWindow);
 		this.modemTimePollTimeStamp = Time.time;
 		this.modemTimePollWindowActive = true;
 	}
 
 	private void generateSpookPoolWindow()
 	{
-		this.spookPollWindow = Random.Range(this.spookPollMinWindow, this.spookPollMaxWindow);
+		this.spookPollWindow = UnityEngine.Random.Range(this.spookPollMinWindow, this.spookPollMaxWindow);
 		this.spookPollTimeStamp = Time.time;
 		this.spookPollWindowActive = true;
 	}
@@ -207,7 +207,7 @@ public class DOSTwitch : MonoBehaviour
 		}
 		else
 		{
-			GameManager.TimeSlinger.FireTimer(Random.Range(45f, 128f), new Action(this.triggerHackPoll), "WTTGTwitchHPRR");
+			GameManager.TimeSlinger.FireTimer(UnityEngine.Random.Range(45f, 128f), new Action(this.triggerHackPoll), "WTTGTwitchHPRR");
 		}
 	}
 
@@ -221,7 +221,7 @@ public class DOSTwitch : MonoBehaviour
 		}
 		else
 		{
-			GameManager.TimeSlinger.FireTimer(Random.Range(12f, 350f), new Action(this.triggerKeyPoll));
+			GameManager.TimeSlinger.FireTimer(UnityEngine.Random.Range(12f, 350f), new Action(this.triggerKeyPoll));
 		}
 	}
 
@@ -235,7 +235,7 @@ public class DOSTwitch : MonoBehaviour
 		}
 		else
 		{
-			GameManager.TimeSlinger.FireTimer(Random.Range(45f, 300f), new Action(this.triggerSpeedPoll), "WTTGTwitchSPRR");
+			GameManager.TimeSlinger.FireTimer(UnityEngine.Random.Range(45f, 300f), new Action(this.triggerSpeedPoll), "WTTGTwitchSPRR");
 		}
 	}
 
@@ -249,7 +249,7 @@ public class DOSTwitch : MonoBehaviour
 		}
 		else
 		{
-			GameManager.TimeSlinger.FireTimer(Random.Range(50f, 500f), new Action(this.triggerKeyQuePoll), "WTTGTwitchKQPRR");
+			GameManager.TimeSlinger.FireTimer(UnityEngine.Random.Range(50f, 500f), new Action(this.triggerKeyQuePoll), "WTTGTwitchKQPRR");
 		}
 	}
 
@@ -263,7 +263,7 @@ public class DOSTwitch : MonoBehaviour
 		}
 		else
 		{
-			GameManager.TimeSlinger.FireTimer(Random.Range(35f, 75f), new Action(this.triggerModemTimePoll), "WTTGTwitchMTPRR");
+			GameManager.TimeSlinger.FireTimer(UnityEngine.Random.Range(35f, 75f), new Action(this.triggerModemTimePoll), "WTTGTwitchMTPRR");
 		}
 	}
 
@@ -277,16 +277,16 @@ public class DOSTwitch : MonoBehaviour
 		}
 		else
 		{
-			GameManager.TimeSlinger.FireTimer(Random.Range(18f, 120f), new Action(this.triggerSpookPool), "WTTGTwitchSPRR");
+			GameManager.TimeSlinger.FireTimer(UnityEngine.Random.Range(18f, 120f), new Action(this.triggerSpookPool), "WTTGTwitchSPRR");
 		}
 	}
 
 	private void animateDisplayTwitchHacker()
 	{
-		TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.TwitchHackerDisplayGroup.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		DOTween.To(() => this.TwitchHackerDisplayGroup.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.TwitchHackerDisplayGroup.GetComponent<CanvasGroup>().alpha = x;
-		}, 1f, 0.5f), 3);
+		}, 1f, 0.5f).SetEase(Ease.OutSine);
 	}
 
 	private void Awake()

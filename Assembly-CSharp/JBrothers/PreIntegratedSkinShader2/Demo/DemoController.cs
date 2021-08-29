@@ -56,16 +56,16 @@ namespace JBrothers.PreIntegratedSkinShader2.Demo
 			{
 				foreach (DemoController.SkyboxSphere skyboxSphere in this.skyboxSpheres)
 				{
-					Object.Destroy(skyboxSphere.cube);
+					UnityEngine.Object.Destroy(skyboxSphere.cube);
 				}
 			}
 			if (this.skyboxSphereMaterial)
 			{
-				Object.Destroy(this.skyboxSphereMaterial);
+				UnityEngine.Object.Destroy(this.skyboxSphereMaterial);
 			}
 			if (this.materialCopy)
 			{
-				Object.Destroy(this.materialCopy);
+				UnityEngine.Object.Destroy(this.materialCopy);
 			}
 		}
 
@@ -83,12 +83,12 @@ namespace JBrothers.PreIntegratedSkinShader2.Demo
 		private void OnGUI()
 		{
 			GUIStyle guistyle = new GUIStyle("label");
-			guistyle.alignment = 4;
-			guistyle.fontStyle = 1;
+			guistyle.alignment = TextAnchor.MiddleCenter;
+			guistyle.fontStyle = FontStyle.Bold;
 			GUIStyle guistyle2 = new GUIStyle("label");
-			guistyle2.alignment = 0;
-			guistyle2.fontStyle = 0;
-			int controlID = GUIUtility.GetControlID(2);
+			guistyle2.alignment = TextAnchor.UpperLeft;
+			guistyle2.fontStyle = FontStyle.Normal;
+			int controlID = GUIUtility.GetControlID(FocusType.Passive);
 			GUILayout.BeginVertical(GUI.skin.box, new GUILayoutOption[0]);
 			GUILayout.BeginHorizontal(new GUILayoutOption[]
 			{
@@ -100,8 +100,7 @@ namespace JBrothers.PreIntegratedSkinShader2.Demo
 				{
 					GUILayout.ExpandWidth(false)
 				});
-				Rect rect2;
-				rect2..ctor(rect.x, (float)Screen.height - rect.y - rect.height, rect.width, rect.height);
+				Rect rect2 = new Rect(rect.x, (float)Screen.height - rect.y - rect.height, rect.width, rect.height);
 				bool flag = false;
 				if (rect2.Contains(Input.mousePosition))
 				{
@@ -109,13 +108,13 @@ namespace JBrothers.PreIntegratedSkinShader2.Demo
 					float sqrMagnitude = (Input.mousePosition - rect2.center).sqrMagnitude;
 					flag = (sqrMagnitude < num);
 				}
-				if (Event.current.type == 7)
+				if (Event.current.type == EventType.Repaint)
 				{
-					float num2 = Mathf.Repeat(Time.time / 10f, 1f);
+					float value = Mathf.Repeat(Time.time / 10f, 1f);
 					this.skyboxSphereMaterial.SetFloat("_Alpha", (!flag) ? 0.5f : 1f);
 					this.skyboxSphereMaterial.SetFloat("_Radius", (!flag) ? 0.4f : 0.5f);
 					this.skyboxSphereMaterial.SetTexture("_Cube", skyboxSphere.cube);
-					this.skyboxSphereMaterial.SetFloat("_Rotation", num2);
+					this.skyboxSphereMaterial.SetFloat("_Rotation", value);
 					Graphics.DrawTexture(rect, Texture2D.whiteTexture, this.skyboxSphereMaterial);
 				}
 				if (flag)
@@ -138,21 +137,20 @@ namespace JBrothers.PreIntegratedSkinShader2.Demo
 				{
 					GUILayout.ExpandWidth(false)
 				});
-				Rect rect4;
-				rect4..ctor(rect3.x, (float)Screen.height - rect3.y - rect3.height, rect3.width, rect3.height);
+				Rect rect4 = new Rect(rect3.x, (float)Screen.height - rect3.y - rect3.height, rect3.width, rect3.height);
 				bool flag2 = false;
 				if (rect4.Contains(Input.mousePosition))
 				{
-					float num3 = rect3.width * rect3.height / 4f;
+					float num2 = rect3.width * rect3.height / 4f;
 					float sqrMagnitude2 = (Input.mousePosition - rect4.center).sqrMagnitude;
-					flag2 = (sqrMagnitude2 < num3);
+					flag2 = (sqrMagnitude2 < num2);
 				}
-				if (Event.current.type.Equals(7))
+				if (Event.current.type.Equals(EventType.Repaint))
 				{
-					float num4 = Mathf.Repeat(Time.time / 10f, 1f);
+					float value2 = Mathf.Repeat(Time.time / 10f, 1f);
 					this.profileSphereMaterial.SetFloat("_Alpha", (!flag2) ? 0.5f : 1f);
 					this.profileSphereMaterial.SetFloat("_Radius", (!flag2) ? 0.4f : 0.5f);
-					this.profileSphereMaterial.SetFloat("_Rotation", num4);
+					this.profileSphereMaterial.SetFloat("_Rotation", value2);
 					preIntegratedSkinProfile.ApplyProfile(this.profileSphereMaterial);
 					Graphics.DrawTexture(rect3, Texture2D.whiteTexture, this.profileSphereMaterial);
 				}
@@ -192,27 +190,27 @@ namespace JBrothers.PreIntegratedSkinShader2.Demo
 			Rect lastRect = GUILayoutUtility.GetLastRect();
 			switch (Event.current.GetTypeForControl(controlID))
 			{
-			case 0:
+			case EventType.MouseDown:
 				if (lastRect.Contains(Event.current.mousePosition))
 				{
 					GUIUtility.hotControl = controlID;
 					Event.current.Use();
 				}
 				break;
-			case 1:
+			case EventType.MouseUp:
 				if (GUIUtility.hotControl == controlID)
 				{
 					GUIUtility.hotControl = 0;
 					Event.current.Use();
 				}
 				break;
-			case 3:
+			case EventType.MouseDrag:
 				if (GUIUtility.hotControl == controlID)
 				{
 					Event.current.Use();
 				}
 				break;
-			case 6:
+			case EventType.ScrollWheel:
 				if (lastRect.Contains(Event.current.mousePosition))
 				{
 					Event.current.Use();
@@ -252,11 +250,11 @@ namespace JBrothers.PreIntegratedSkinShader2.Demo
 				gameObject.SetActive(false);
 				Skybox skybox2 = gameObject.AddComponent<Skybox>();
 				skybox2.material = skybox;
-				Cubemap cubemap = new Cubemap(size, 3, false);
+				Cubemap cubemap = new Cubemap(size, TextureFormat.RGB24, false);
 				Camera camera = gameObject.AddComponent<Camera>();
 				camera.enabled = false;
-				camera.clearFlags = 1;
-				camera.renderingPath = 1;
+				camera.clearFlags = CameraClearFlags.Skybox;
+				camera.renderingPath = RenderingPath.Forward;
 				camera.cullingMask = 0;
 				camera.RenderToCubemap(cubemap);
 				cubemap.Apply(false, true);
@@ -264,7 +262,7 @@ namespace JBrothers.PreIntegratedSkinShader2.Demo
 			}
 			finally
 			{
-				Object.Destroy(gameObject);
+				UnityEngine.Object.Destroy(gameObject);
 			}
 			return result;
 		}

@@ -39,21 +39,21 @@ public class ResLink : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
 
 	private float getStrWidth(string theString)
 	{
-		TextGenerationSettings textGenerationSettings = default(TextGenerationSettings);
+		TextGenerationSettings settings = default(TextGenerationSettings);
 		TextGenerator textGenerator = new TextGenerator();
-		textGenerationSettings.textAnchor = 0;
-		textGenerationSettings.generateOutOfBounds = true;
-		textGenerationSettings.generationExtents = new Vector2(125f, 36f);
-		textGenerationSettings.pivot = Vector2.zero;
-		textGenerationSettings.richText = false;
-		textGenerationSettings.font = this.resFont;
-		textGenerationSettings.fontSize = 32;
-		textGenerationSettings.fontStyle = 0;
-		textGenerationSettings.lineSpacing = 1f;
-		textGenerationSettings.scaleFactor = 1f;
-		textGenerationSettings.verticalOverflow = 1;
-		textGenerationSettings.horizontalOverflow = 0;
-		return textGenerator.GetPreferredWidth(theString, textGenerationSettings) + 5f;
+		settings.textAnchor = TextAnchor.UpperLeft;
+		settings.generateOutOfBounds = true;
+		settings.generationExtents = new Vector2(125f, 36f);
+		settings.pivot = Vector2.zero;
+		settings.richText = false;
+		settings.font = this.resFont;
+		settings.fontSize = 32;
+		settings.fontStyle = FontStyle.Normal;
+		settings.lineSpacing = 1f;
+		settings.scaleFactor = 1f;
+		settings.verticalOverflow = VerticalWrapMode.Overflow;
+		settings.horizontalOverflow = HorizontalWrapMode.Wrap;
+		return textGenerator.GetPreferredWidth(theString, settings) + 5f;
 	}
 
 	private void Update()

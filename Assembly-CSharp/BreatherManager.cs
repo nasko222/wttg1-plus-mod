@@ -68,10 +68,10 @@ public class BreatherManager : MonoBehaviour
 		if (clipTriggerName == "doorAppEnd")
 		{
 			this.myMicManager.triggerPlayerListen();
-			TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.BreatherObject.transform.localPosition, delegate(Vector3 x)
+			DOTween.To(() => this.BreatherObject.transform.localPosition, delegate(Vector3 x)
 			{
 				this.BreatherObject.transform.localPosition = x;
-			}, this.doorPOS, 0.5f), 1);
+			}, this.doorPOS, 0.5f).SetEase(Ease.Linear);
 		}
 		else if (clipTriggerName == "seenEnterAgrMode")
 		{
@@ -128,7 +128,7 @@ public class BreatherManager : MonoBehaviour
 
 	private void setCallWindow()
 	{
-		this.callTimeWindow = Random.Range(this.callWindowOpen, this.callWindowClose) * 60f;
+		this.callTimeWindow = UnityEngine.Random.Range(this.callWindowOpen, this.callWindowClose) * 60f;
 		this.callTimeStamp = Time.time;
 		this.callWindowActive = true;
 	}
@@ -142,7 +142,7 @@ public class BreatherManager : MonoBehaviour
 
 	private void setBreatherWindow()
 	{
-		this.breatherTimeWindow = Random.Range(this.breatherWindowOpen, this.breatherWindowClose) * 60f;
+		this.breatherTimeWindow = UnityEngine.Random.Range(this.breatherWindowOpen, this.breatherWindowClose) * 60f;
 		this.breatherTimeStamp = Time.time;
 		this.breatherWindowActive = true;
 	}
@@ -158,18 +158,18 @@ public class BreatherManager : MonoBehaviour
 	{
 		if (GameManager.GetTheCloud().getRedRoomKeyVistCount() >= (int)this.creepCallCount && GameManager.GetTheCloud().getRedRoomKeyVistCount() < (int)this.threatCallCount)
 		{
-			GameManager.GetThePhoneManager().setIncomingCall(this.creepAudioClips[Random.Range(0, this.creepAudioClips.Count)]);
+			GameManager.GetThePhoneManager().setIncomingCall(this.creepAudioClips[UnityEngine.Random.Range(0, this.creepAudioClips.Count)]);
 		}
 		else if (GameManager.GetTheCloud().getRedRoomKeyVistCount() >= (int)this.threatCallCount && GameManager.GetTheCloud().getRedRoomKeyVistCount() < (int)this.triggerCallCount)
 		{
-			GameManager.GetThePhoneManager().setIncomingCall(this.threatAudioClips[Random.Range(0, this.threatAudioClips.Count)]);
+			GameManager.GetThePhoneManager().setIncomingCall(this.threatAudioClips[UnityEngine.Random.Range(0, this.threatAudioClips.Count)]);
 		}
 		this.triggerBreatherCount(GameManager.GetTheCloud().getRedRoomKeyVistCount());
 	}
 
 	private void triggerBreatherReact()
 	{
-		GameManager.AudioSlinger.DealSound(AudioHubs.FRONT, AudioLayer.SFX, this.soundCues[Random.Range(0, this.soundCues.Count)], 0.25f, false);
+		GameManager.AudioSlinger.DealSound(AudioHubs.FRONT, AudioLayer.SFX, this.soundCues[UnityEngine.Random.Range(0, this.soundCues.Count)], 0.25f, false);
 		this.setReactionWindowTime = this.breatherReactionWindow;
 		this.inBreatherAction = true;
 		this.breatherReactionTimeStamp = Time.time;
@@ -178,13 +178,13 @@ public class BreatherManager : MonoBehaviour
 
 	private void setDoorKnobAttempts()
 	{
-		this.currentKnobAttemptIndex = (short)Random.Range((int)this.knobAttemptsMin, (int)this.knobAttemptsMax);
+		this.currentKnobAttemptIndex = (short)UnityEngine.Random.Range((int)this.knobAttemptsMin, (int)this.knobAttemptsMax);
 		this.fireDoorKnobAttempt();
 	}
 
 	private void setBreachAttempts()
 	{
-		short num = (short)Random.Range((int)this.breachAttemptsMin, (int)this.breachAttemptsMax);
+		short num = (short)UnityEngine.Random.Range((int)this.breachAttemptsMin, (int)this.breachAttemptsMax);
 		this.currentBreachAttemptIndex = num;
 		this.inBreachMode = true;
 		this.countClicks = true;
@@ -194,7 +194,7 @@ public class BreatherManager : MonoBehaviour
 
 	private void stagePeaks()
 	{
-		short num = (short)Random.Range(1, 4);
+		short num = (short)UnityEngine.Random.Range(1, 4);
 		for (short num2 = 0; num2 < num; num2 += 1)
 		{
 			GameManager.TimeSlinger.FireTimer((float)(num2 + 1) * 5f, new Action(this.firePeakAttempt), "breatherPeak" + num2);
@@ -223,14 +223,14 @@ public class BreatherManager : MonoBehaviour
 	{
 		if (this.currentKnobAttemptIndex > 0)
 		{
-			this.knobWindowTime = Random.Range(this.knobWindowMin, this.knobWindowMax);
+			this.knobWindowTime = UnityEngine.Random.Range(this.knobWindowMin, this.knobWindowMax);
 			GameManager.AudioSlinger.DealSound(AudioHubs.FRONT, AudioLayer.SFX, this.DoorKnob1, 0.15f, false);
 			GameManager.TimeSlinger.FireTimer(1.5f, new Action(this.SetMicroTime));
 			this.BreatherAC.SetTrigger("breatherTryKnob");
-			TweenSettingsExtensions.SetRelative<TweenerCore<Quaternion, Vector3, QuaternionOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<Quaternion, Vector3, QuaternionOptions>>(DOTween.To(() => this.TheDoorKnob.transform.localRotation, delegate(Quaternion x)
+			DOTween.To(() => this.TheDoorKnob.transform.localRotation, delegate(Quaternion x)
 			{
 				this.TheDoorKnob.transform.localRotation = x;
-			}, new Vector3(90f, 0f, 0f), 1.4f), 1), true);
+			}, new Vector3(90f, 0f, 0f), 1.4f).SetEase(Ease.Linear).SetRelative(true);
 			this.doorKnobTimeStamp = Time.time;
 			this.doorKnobAction = true;
 			this.currentKnobAttemptIndex -= 1;
@@ -249,17 +249,17 @@ public class BreatherManager : MonoBehaviour
 		{
 			if (this.currentBreachAttemptIndex > 0)
 			{
-				GameManager.AudioSlinger.DealSound(AudioHubs.BREATHER, AudioLayer.VOICE, this.gruntClips[Random.Range(0, this.gruntClips.Count)], 0.25f, false);
+				GameManager.AudioSlinger.DealSound(AudioHubs.BREATHER, AudioLayer.VOICE, this.gruntClips[UnityEngine.Random.Range(0, this.gruntClips.Count)], 0.25f, false);
 				GameManager.AudioSlinger.DealSound(AudioHubs.FRONT, AudioLayer.SFX, this.BangDoor, 1f, false, 0.2f);
 				GameManager.GetTheMainController().triggerBraceKnock();
-				TweenSettingsExtensions.SetDelay<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetRelative<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.TheDoor.transform.localPosition, delegate(Vector3 x)
+				DOTween.To(() => this.TheDoor.transform.localPosition, delegate(Vector3 x)
 				{
 					this.TheDoor.transform.localPosition = x;
-				}, new Vector3(-0.02f, 0f, 0f), 0.1f), 1), true), 0.2f);
-				TweenSettingsExtensions.SetDelay<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetRelative<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.TheDoor.transform.localPosition, delegate(Vector3 x)
+				}, new Vector3(-0.02f, 0f, 0f), 0.1f).SetEase(Ease.Linear).SetRelative(true).SetDelay(0.2f);
+				DOTween.To(() => this.TheDoor.transform.localPosition, delegate(Vector3 x)
 				{
 					this.TheDoor.transform.localPosition = x;
-				}, new Vector3(0.02f, 0f, 0f), 0.25f), 5), true), 0.4f);
+				}, new Vector3(0.02f, 0f, 0f), 0.25f).SetEase(Ease.InQuad).SetRelative(true).SetDelay(0.4f);
 				this.currentClickCount = 0;
 				this.microTimpStamp = Time.time;
 				this.countClicks = true;
@@ -298,10 +298,10 @@ public class BreatherManager : MonoBehaviour
 		GameManager.AudioSlinger.DealSound(AudioHubs.BREATHER, AudioLayer.OUTSIDE, this.OutsideFootStep3, 0.2f, false, 1.5f);
 		GameManager.AudioSlinger.DealSound(AudioHubs.BREATHER, AudioLayer.OUTSIDE, this.OutsideFootStep2, 0.1725f, false, 2.06f);
 		GameManager.AudioSlinger.DealSound(AudioHubs.BREATHER, AudioLayer.OUTSIDE, this.OutsideFootStep1, 0.15f, false, 2.7f);
-		TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.BreatherObject.transform.localPosition, delegate(Vector3 x)
+		DOTween.To(() => this.BreatherObject.transform.localPosition, delegate(Vector3 x)
 		{
 			this.BreatherObject.transform.localPosition = x;
-		}, this.preDoorPOS, 0.25f), 1);
+		}, this.preDoorPOS, 0.25f).SetEase(Ease.Linear);
 		this.BreatherAC.SetTrigger("breatherWalkAway");
 	}
 
@@ -369,10 +369,10 @@ public class BreatherManager : MonoBehaviour
 		GameManager.AudioSlinger.DealSound(AudioHubs.PLAYER, AudioLayer.SFX, this.KnifeStab1, 0.25f, false, 5.8f);
 		this.BreatherAC.SetTrigger("breatherKickDoor");
 		GameManager.GetTheMainController().triggerDoorKnockedDownAni();
-		TweenSettingsExtensions.SetDelay<Tweener>(TweenSettingsExtensions.SetOptions(TweenSettingsExtensions.SetEase<TweenerCore<Quaternion, Vector3, QuaternionOptions>>(DOTween.To(() => this.TheDoor.transform.localRotation, delegate(Quaternion x)
+		DOTween.To(() => this.TheDoor.transform.localRotation, delegate(Quaternion x)
 		{
 			this.TheDoor.transform.localRotation = x;
-		}, new Vector3(0f, -271f, 0f), 0.165f), 1), true), 0.35f);
+		}, new Vector3(0f, -271f, 0f), 0.165f).SetEase(Ease.Linear).SetOptions(true).SetDelay(0.35f);
 		GameManager.TimeSlinger.FireTimer(6.4f, new Action(this.triggerGameOver));
 	}
 
@@ -485,13 +485,20 @@ public class BreatherManager : MonoBehaviour
 				{
 					if (!GameManager.GetTheSceneManager().isInDoorAction())
 					{
-						if (!GameManager.GetTheMainController().isMovingAround)
+						if (!GameManager.GetTheHackerManager().myTimeManager.freezeTime)
 						{
-							this.triggerBreatherReact();
+							if (!GameManager.GetTheMainController().isMovingAround)
+							{
+								this.triggerBreatherReact();
+							}
+							else
+							{
+								this.setBreatherWindow(15f);
+							}
 						}
 						else
 						{
-							this.setBreatherWindow(15f);
+							this.setBreatherWindow(45f);
 						}
 					}
 					else
@@ -525,23 +532,22 @@ public class BreatherManager : MonoBehaviour
 					{
 						if (this.playerIsHoldingKnob)
 						{
-							TweenSettingsExtensions.SetRelative<TweenerCore<Quaternion, Vector3, QuaternionOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<Quaternion, Vector3, QuaternionOptions>>(DOTween.To(() => this.TheDoorKnob.transform.localRotation, delegate(Quaternion x)
+							DOTween.To(() => this.TheDoorKnob.transform.localRotation, delegate(Quaternion x)
 							{
 								this.TheDoorKnob.transform.localRotation = x;
-							}, new Vector3(60f, 0f, 0f), 0.2f), 3), true);
-							TweenSettingsExtensions.SetDelay<TweenerCore<Quaternion, Vector3, QuaternionOptions>>(TweenSettingsExtensions.SetRelative<TweenerCore<Quaternion, Vector3, QuaternionOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<Quaternion, Vector3, QuaternionOptions>>(DOTween.To(() => this.TheDoorKnob.transform.localRotation, delegate(Quaternion x)
+							}, new Vector3(60f, 0f, 0f), 0.2f).SetEase(Ease.OutSine).SetRelative(true);
+							DOTween.To(() => this.TheDoorKnob.transform.localRotation, delegate(Quaternion x)
 							{
 								this.TheDoorKnob.transform.localRotation = x;
-							}, new Vector3(-60f, 0f, 0f), 0.2f), 2), true), 0.2f);
+							}, new Vector3(-60f, 0f, 0f), 0.2f).SetEase(Ease.InSine).SetRelative(true).SetDelay(0.2f);
 							GameManager.AudioSlinger.DealSound(AudioHubs.FRONT, AudioLayer.SFX, this.DoorKnob2, 0.1f, false);
 							this.microTimpStamp = Time.time;
+							return;
 						}
-						else
-						{
-							GameManager.AudioSlinger.DealSound(AudioHubs.FRONT, AudioLayer.SFX, this.DoorKnob3, 0.2f, false);
-							this.doorKnobAction = false;
-							this.triggerKnobDoom();
-						}
+						GameManager.AudioSlinger.DealSound(AudioHubs.FRONT, AudioLayer.SFX, this.DoorKnob3, 0.2f, false);
+						this.doorKnobAction = false;
+						this.triggerKnobDoom();
+						return;
 					}
 				}
 				else if (this.inBreachMode)
@@ -553,6 +559,7 @@ public class BreatherManager : MonoBehaviour
 					if (this.checkMicroTime && Time.time - this.microTimpStamp >= this.breachCoolTime)
 					{
 						this.fireBreachAttempt();
+						return;
 					}
 				}
 				else if (!this.doomIsActive && this.checkToBeSeen)

@@ -33,46 +33,46 @@ public class RedRoomManager : MonoBehaviour
 	private void fadeStatsIn()
 	{
 		this.statFaderSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.statFaderSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.StatHolder.alpha, delegate(float x)
+		this.statFaderSeq.Insert(0f, DOTween.To(() => this.StatHolder.alpha, delegate(float x)
 		{
 			this.StatHolder.alpha = x;
-		}, 1f, 1f), 1));
-		TweenExtensions.Play<Sequence>(this.statFaderSeq);
+		}, 1f, 1f).SetEase(Ease.Linear));
+		this.statFaderSeq.Play<Sequence>();
 	}
 
 	private void fadeScreenIn()
 	{
 		this.screenFadeSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.screenFadeSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.ScreenFadeHolder.alpha, delegate(float x)
+		this.screenFadeSeq.Insert(0f, DOTween.To(() => this.ScreenFadeHolder.alpha, delegate(float x)
 		{
 			this.ScreenFadeHolder.alpha = x;
-		}, 0f, this.screenFadeTime), 1));
-		TweenExtensions.Play<Sequence>(this.screenFadeSeq);
+		}, 0f, this.screenFadeTime).SetEase(Ease.Linear));
+		this.screenFadeSeq.Play<Sequence>();
 	}
 
 	private void fadeScreenOut()
 	{
 		this.screenFadeSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.screenFadeSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.ScreenFadeHolder.alpha, delegate(float x)
+		this.screenFadeSeq.Insert(0f, DOTween.To(() => this.ScreenFadeHolder.alpha, delegate(float x)
 		{
 			this.ScreenFadeHolder.alpha = x;
-		}, 1f, this.screenFadeTime), 1));
-		TweenExtensions.Play<Sequence>(this.screenFadeSeq);
+		}, 1f, this.screenFadeTime).SetEase(Ease.Linear));
+		this.screenFadeSeq.Play<Sequence>();
 	}
 
 	private void aniRec()
 	{
 		this.recSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.recSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<Color, Color, ColorOptions>>(DOTween.To(() => this.recLiveImage.color, delegate(Color x)
+		this.recSeq.Insert(0f, DOTween.To(() => this.recLiveImage.color, delegate(Color x)
 		{
 			this.recLiveImage.color = x;
-		}, new Color(1f, 1f, 1f, 0.2f), 1f), 1));
-		TweenSettingsExtensions.Insert(this.recSeq, 1f, TweenSettingsExtensions.SetEase<TweenerCore<Color, Color, ColorOptions>>(DOTween.To(() => this.recLiveImage.color, delegate(Color x)
+		}, new Color(1f, 1f, 1f, 0.2f), 1f).SetEase(Ease.Linear));
+		this.recSeq.Insert(1f, DOTween.To(() => this.recLiveImage.color, delegate(Color x)
 		{
 			this.recLiveImage.color = x;
-		}, new Color(1f, 1f, 1f, 1f), 1f), 1));
-		TweenSettingsExtensions.SetLoops<Sequence>(this.recSeq, -1);
-		TweenExtensions.Play<Sequence>(this.recSeq);
+		}, new Color(1f, 1f, 1f, 1f), 1f).SetEase(Ease.Linear));
+		this.recSeq.SetLoops(-1);
+		this.recSeq.Play<Sequence>();
 	}
 
 	private void startStatInfo()
@@ -90,10 +90,10 @@ public class RedRoomManager : MonoBehaviour
 		else
 		{
 			this.viewerCountText.text = this.viewerCount.ToString("N0");
-			this.viewerCountWindow = Random.Range(1f, 5f);
+			this.viewerCountWindow = UnityEngine.Random.Range(1f, 5f);
 			this.viewerCountTimeStamp = Time.time;
 			this.viewerCountActive = true;
-			this.viewerCount += Random.Range(4, 25);
+			this.viewerCount += UnityEngine.Random.Range(4, 25);
 		}
 	}
 
@@ -113,16 +113,16 @@ public class RedRoomManager : MonoBehaviour
 		this.ScreenFadeHolder.alpha = 1f;
 		this.BufferHolder.alpha = 1f;
 		this.bufferSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.bufferSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.BufferHolder.alpha, delegate(float x)
+		this.bufferSeq.Insert(0f, DOTween.To(() => this.BufferHolder.alpha, delegate(float x)
 		{
 			this.BufferHolder.alpha = x;
-		}, 0.1f, 0.5f), 1));
-		TweenSettingsExtensions.Insert(this.bufferSeq, 0.5f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.BufferHolder.alpha, delegate(float x)
+		}, 0.1f, 0.5f).SetEase(Ease.Linear));
+		this.bufferSeq.Insert(0.5f, DOTween.To(() => this.BufferHolder.alpha, delegate(float x)
 		{
 			this.BufferHolder.alpha = x;
-		}, 1f, 0.5f), 1));
-		TweenSettingsExtensions.SetLoops<Sequence>(this.bufferSeq, -1);
-		TweenExtensions.Play<Sequence>(this.bufferSeq);
+		}, 1f, 0.5f).SetEase(Ease.Linear));
+		this.bufferSeq.SetLoops(-1);
+		this.bufferSeq.Play<Sequence>();
 		GameManager.TimeSlinger.FireTimer(this.setBufferTime, new Action(this.hideBuffer));
 	}
 
@@ -130,7 +130,7 @@ public class RedRoomManager : MonoBehaviour
 	{
 		GameManager.AudioSlinger.UnMuffleGlobalVolume(AudioLayer.MUSIC);
 		GameManager.AudioSlinger.UnMuffleAudioHub(AudioHubs.RRBG);
-		TweenExtensions.Kill(this.bufferSeq, false);
+		this.bufferSeq.Kill(false);
 		this.StatHolder.alpha = 1f;
 		this.BufferHolder.alpha = 0f;
 		this.ScreenFadeHolder.alpha = 0f;
@@ -147,12 +147,12 @@ public class RedRoomManager : MonoBehaviour
 		GameManager.TimeSlinger.FireTimer(35.51f, new Action(this.endAniPart2));
 		this.whistleSource.Play();
 		this.trolley.GetComponent<AudioSource>().Play();
-		this.trolleySeq = TweenSettingsExtensions.OnComplete<Sequence>(DOTween.Sequence(), new TweenCallback(this.endAniPart1));
-		TweenSettingsExtensions.Insert(this.trolleySeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.trolley.transform.localPosition, delegate(Vector3 x)
+		this.trolleySeq = DOTween.Sequence().OnComplete(new TweenCallback(this.endAniPart1));
+		this.trolleySeq.Insert(0f, DOTween.To(() => this.trolley.transform.localPosition, delegate(Vector3 x)
 		{
 			this.trolley.transform.localPosition = x;
-		}, this.trolleyStartPoint, 1f), 1));
-		TweenExtensions.Play<Sequence>(this.trolleySeq);
+		}, this.trolleyStartPoint, 1f).SetEase(Ease.Linear));
+		this.trolleySeq.Play<Sequence>();
 	}
 
 	private void startRedEndAni()
@@ -167,35 +167,35 @@ public class RedRoomManager : MonoBehaviour
 		GameManager.TimeSlinger.FireTimer(21f, new Action(this.redLookAtDoor));
 		GameManager.TimeSlinger.FireTimer(28.6f, new Action(this.redPresentBreakFree));
 		this.slapSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.slapSeq, 10.3f, TweenSettingsExtensions.SetOptions(TweenSettingsExtensions.SetEase<TweenerCore<Quaternion, Vector3, QuaternionOptions>>(DOTween.To(() => this.redCamera.transform.localRotation, delegate(Quaternion x)
+		this.slapSeq.Insert(10.3f, DOTween.To(() => this.redCamera.transform.localRotation, delegate(Quaternion x)
 		{
 			this.redCamera.transform.localRotation = x;
-		}, new Vector3(47.528f, -33.733f, -33.493f), 0.55f), 8), true));
-		TweenSettingsExtensions.Insert(this.slapSeq, 10.85f, TweenSettingsExtensions.SetOptions(TweenSettingsExtensions.SetEase<TweenerCore<Quaternion, Vector3, QuaternionOptions>>(DOTween.To(() => this.redCamera.transform.localRotation, delegate(Quaternion x)
+		}, new Vector3(47.528f, -33.733f, -33.493f), 0.55f).SetEase(Ease.InCubic).SetOptions(true));
+		this.slapSeq.Insert(10.85f, DOTween.To(() => this.redCamera.transform.localRotation, delegate(Quaternion x)
 		{
 			this.redCamera.transform.localRotation = x;
-		}, new Vector3(65.02f, 0f, -0f), 0.8f), 8), true));
-		TweenExtensions.Play<Sequence>(this.slapSeq);
+		}, new Vector3(65.02f, 0f, -0f), 0.8f).SetEase(Ease.InCubic).SetOptions(true));
+		this.slapSeq.Play<Sequence>();
 		this.whistleSource.Play();
 		this.trolley.GetComponent<AudioSource>().Play();
-		this.trolleySeq = TweenSettingsExtensions.OnComplete<Sequence>(DOTween.Sequence(), new TweenCallback(this.redEndAniPart1));
-		TweenSettingsExtensions.Insert(this.trolleySeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.trolley.transform.localPosition, delegate(Vector3 x)
+		this.trolleySeq = DOTween.Sequence().OnComplete(new TweenCallback(this.redEndAniPart1));
+		this.trolleySeq.Insert(0f, DOTween.To(() => this.trolley.transform.localPosition, delegate(Vector3 x)
 		{
 			this.trolley.transform.localPosition = x;
-		}, this.trolleyStartPoint, 1f), 1));
-		TweenExtensions.Play<Sequence>(this.trolleySeq);
+		}, this.trolleyStartPoint, 1f).SetEase(Ease.Linear));
+		this.trolleySeq.Play<Sequence>();
 	}
 
 	private void redLookUpAfterSlap()
 	{
-		TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.redCamera.transform.localPosition, delegate(Vector3 x)
+		DOTween.To(() => this.redCamera.transform.localPosition, delegate(Vector3 x)
 		{
 			this.redCamera.transform.localPosition = x;
-		}, new Vector3(-0.043f, 1.053f, 0.25f), 2.6f), 8);
-		TweenSettingsExtensions.SetEase<Tweener>(TweenSettingsExtensions.SetOptions(DOTween.To(() => this.redCamera.transform.localRotation, delegate(Quaternion x)
+		}, new Vector3(-0.043f, 1.053f, 0.25f), 2.6f).SetEase(Ease.InCubic);
+		DOTween.To(() => this.redCamera.transform.localRotation, delegate(Quaternion x)
 		{
 			this.redCamera.transform.localRotation = x;
-		}, new Vector3(-5.594f, 0f, 0f), 2.6f), true), 8);
+		}, new Vector3(-5.594f, 0f, 0f), 2.6f).SetOptions(true).SetEase(Ease.InCubic);
 	}
 
 	private void endAniPart1()
@@ -203,11 +203,11 @@ public class RedRoomManager : MonoBehaviour
 		this.exeAC.SetTrigger("startEnd1");
 		this.vicAC.SetTrigger("triggerEnd1");
 		this.trolleySeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.trolleySeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.trolley.transform.localPosition, delegate(Vector3 x)
+		this.trolleySeq.Insert(0f, DOTween.To(() => this.trolley.transform.localPosition, delegate(Vector3 x)
 		{
 			this.trolley.transform.localPosition = x;
-		}, this.trolleyEndPoint, 6.85f), 3));
-		TweenExtensions.Play<Sequence>(this.trolleySeq);
+		}, this.trolleyEndPoint, 6.85f).SetEase(Ease.OutSine));
+		this.trolleySeq.Play<Sequence>();
 	}
 
 	private void redEndAniPart1()
@@ -215,11 +215,11 @@ public class RedRoomManager : MonoBehaviour
 		this.exeAC.SetTrigger("startRedEnd1");
 		this.vicAC.SetTrigger("triggerRedEnd1");
 		this.trolleySeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.trolleySeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.trolley.transform.localPosition, delegate(Vector3 x)
+		this.trolleySeq.Insert(0f, DOTween.To(() => this.trolley.transform.localPosition, delegate(Vector3 x)
 		{
 			this.trolley.transform.localPosition = x;
-		}, this.trolleyEndPoint, 6.85f), 3));
-		TweenExtensions.Play<Sequence>(this.trolleySeq);
+		}, this.trolleyEndPoint, 6.85f).SetEase(Ease.OutSine));
+		this.trolleySeq.Play<Sequence>();
 	}
 
 	private void endAniPart2()
@@ -295,23 +295,23 @@ public class RedRoomManager : MonoBehaviour
 		this.ScreenFadeHolder.alpha = 1f;
 		this.TheRedRoom.SetActive(false);
 		this.titleSeq = DOTween.Sequence();
-		TweenSettingsExtensions.SetEase<Sequence>(TweenSettingsExtensions.Insert(this.titleSeq, 3.1f, DOTween.To(() => this.TitleHolder.alpha, delegate(float x)
+		this.titleSeq.Insert(3.1f, DOTween.To(() => this.TitleHolder.alpha, delegate(float x)
 		{
 			this.TitleHolder.alpha = x;
-		}, 1f, 1f)), 1);
-		TweenSettingsExtensions.SetRelative<Sequence>(TweenSettingsExtensions.SetEase<Sequence>(TweenSettingsExtensions.Insert(this.titleSeq, 14.8f, DOTween.To(() => this.TitleHolder.transform.localPosition, delegate(Vector3 x)
+		}, 1f, 1f)).SetEase(Ease.Linear);
+		this.titleSeq.Insert(14.8f, DOTween.To(() => this.TitleHolder.transform.localPosition, delegate(Vector3 x)
 		{
 			this.TitleHolder.transform.localPosition = x;
-		}, new Vector3(0f, (float)Screen.height / 2f - 105f, 0f), 5f)), 1), true);
-		TweenSettingsExtensions.SetEase<Sequence>(TweenSettingsExtensions.Insert(this.titleSeq, 18.8f, DOTween.To(() => this.CreditsHolder.alpha, delegate(float x)
+		}, new Vector3(0f, (float)Screen.height / 2f - 105f, 0f), 5f)).SetEase(Ease.Linear).SetRelative(true);
+		this.titleSeq.Insert(18.8f, DOTween.To(() => this.CreditsHolder.alpha, delegate(float x)
 		{
 			this.CreditsHolder.alpha = x;
-		}, 1f, 3f)), 1);
-		TweenSettingsExtensions.SetEase<Sequence>(TweenSettingsExtensions.Insert(this.titleSeq, 26.8f, DOTween.To(() => this.QuitHolder.alpha, delegate(float x)
+		}, 1f, 3f)).SetEase(Ease.Linear);
+		this.titleSeq.Insert(26.8f, DOTween.To(() => this.QuitHolder.alpha, delegate(float x)
 		{
 			this.QuitHolder.alpha = x;
-		}, 1f, 1f)), 1);
-		TweenExtensions.Play<Sequence>(this.titleSeq);
+		}, 1f, 1f)).SetEase(Ease.Linear);
+		this.titleSeq.Play<Sequence>();
 	}
 
 	private void enableQuit()
@@ -326,65 +326,65 @@ public class RedRoomManager : MonoBehaviour
 
 	private void redSeeStraight()
 	{
-		TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.cameraDV.Amount, delegate(float x)
+		DOTween.To(() => this.cameraDV.Amount, delegate(float x)
 		{
 			this.cameraDV.Amount = x;
-		}, 0f, 5f), 1);
+		}, 0f, 5f).SetEase(Ease.Linear);
 	}
 
 	private void redLookAtDoor()
 	{
-		TweenSettingsExtensions.SetEase<Tweener>(TweenSettingsExtensions.SetOptions(DOTween.To(() => this.redCamera.transform.localRotation, delegate(Quaternion x)
+		DOTween.To(() => this.redCamera.transform.localRotation, delegate(Quaternion x)
 		{
 			this.redCamera.transform.localRotation = x;
-		}, new Vector3(-1.781f, -48.215f, 3.419f), 1f), true), 3);
-		TweenSettingsExtensions.SetDelay<Tweener>(TweenSettingsExtensions.SetEase<Tweener>(TweenSettingsExtensions.SetOptions(DOTween.To(() => this.redCamera.transform.localRotation, delegate(Quaternion x)
+		}, new Vector3(-1.781f, -48.215f, 3.419f), 1f).SetOptions(true).SetEase(Ease.OutSine);
+		DOTween.To(() => this.redCamera.transform.localRotation, delegate(Quaternion x)
 		{
 			this.redCamera.transform.localRotation = x;
-		}, new Vector3(-5.549f, 0f, 0f), 1f), true), 2), 1.25f);
-		TweenSettingsExtensions.SetDelay<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.redCamera.transform.localPosition, delegate(Vector3 x)
+		}, new Vector3(-5.549f, 0f, 0f), 1f).SetOptions(true).SetEase(Ease.InSine).SetDelay(1.25f);
+		DOTween.To(() => this.redCamera.transform.localPosition, delegate(Vector3 x)
 		{
 			this.redCamera.transform.localPosition = x;
-		}, new Vector3(-0.043f, 0.876f, 0.395f), 0.75f), 3), 2.85f);
-		TweenSettingsExtensions.SetDelay<TweenerCore<Quaternion, Vector3, QuaternionOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<Quaternion, Vector3, QuaternionOptions>>(DOTween.To(() => this.redCamera.transform.localRotation, delegate(Quaternion x)
+		}, new Vector3(-0.043f, 0.876f, 0.395f), 0.75f).SetEase(Ease.OutSine).SetDelay(2.85f);
+		DOTween.To(() => this.redCamera.transform.localRotation, delegate(Quaternion x)
 		{
 			this.redCamera.transform.localRotation = x;
-		}, new Vector3(50.585f, 0f, 0f), 0.75f), 3), 2.85f);
-		TweenSettingsExtensions.SetDelay<Tweener>(TweenSettingsExtensions.SetEase<Tweener>(TweenSettingsExtensions.SetOptions(DOTween.To(() => this.redCamera.transform.localRotation, delegate(Quaternion x)
+		}, new Vector3(50.585f, 0f, 0f), 0.75f).SetEase(Ease.OutSine).SetDelay(2.85f);
+		DOTween.To(() => this.redCamera.transform.localRotation, delegate(Quaternion x)
 		{
 			this.redCamera.transform.localRotation = x;
-		}, new Vector3(47.886f, -27.142f, -20.499f), 0.75f), true), 1), 4f);
-		TweenSettingsExtensions.SetDelay<Tweener>(TweenSettingsExtensions.SetEase<Tweener>(TweenSettingsExtensions.SetOptions(DOTween.To(() => this.redCamera.transform.localRotation, delegate(Quaternion x)
+		}, new Vector3(47.886f, -27.142f, -20.499f), 0.75f).SetOptions(true).SetEase(Ease.Linear).SetDelay(4f);
+		DOTween.To(() => this.redCamera.transform.localRotation, delegate(Quaternion x)
 		{
 			this.redCamera.transform.localRotation = x;
-		}, new Vector3(48.668f, 20.567f, 15.641f), 0.75f), true), 1), 5f);
-		TweenSettingsExtensions.SetDelay<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.redCamera.transform.localPosition, delegate(Vector3 x)
+		}, new Vector3(48.668f, 20.567f, 15.641f), 0.75f).SetOptions(true).SetEase(Ease.Linear).SetDelay(5f);
+		DOTween.To(() => this.redCamera.transform.localPosition, delegate(Vector3 x)
 		{
 			this.redCamera.transform.localPosition = x;
-		}, new Vector3(-0.043f, 1.053f, 0.25f), 1.2f), 1), 6f);
-		TweenSettingsExtensions.SetDelay<Tweener>(TweenSettingsExtensions.SetEase<Tweener>(TweenSettingsExtensions.SetOptions(DOTween.To(() => this.redCamera.transform.localRotation, delegate(Quaternion x)
+		}, new Vector3(-0.043f, 1.053f, 0.25f), 1.2f).SetEase(Ease.Linear).SetDelay(6f);
+		DOTween.To(() => this.redCamera.transform.localRotation, delegate(Quaternion x)
 		{
 			this.redCamera.transform.localRotation = x;
-		}, new Vector3(-5.594f, 0f, 0f), 1.2f), true), 1), 6f);
+		}, new Vector3(-5.594f, 0f, 0f), 1.2f).SetOptions(true).SetEase(Ease.Linear).SetDelay(6f);
 	}
 
 	private void redPresentBreakFree()
 	{
-		TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.breakFreeHolder.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		DOTween.To(() => this.breakFreeHolder.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.breakFreeHolder.GetComponent<CanvasGroup>().alpha = x;
-		}, 1f, 0.75f), 1);
+		}, 1f, 0.75f).SetEase(Ease.Linear);
 		this.breakSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.breakSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.leftClickIMG.gameObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		this.breakSeq.Insert(0f, DOTween.To(() => this.leftClickIMG.gameObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.leftClickIMG.gameObject.GetComponent<CanvasGroup>().alpha = x;
-		}, 1f, 0.2f), 1));
-		TweenSettingsExtensions.Insert(this.breakSeq, 0.2f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.leftClickIMG.gameObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		}, 1f, 0.2f).SetEase(Ease.Linear));
+		this.breakSeq.Insert(0.2f, DOTween.To(() => this.leftClickIMG.gameObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.leftClickIMG.gameObject.GetComponent<CanvasGroup>().alpha = x;
-		}, 0f, 0.2f), 1));
-		TweenSettingsExtensions.SetLoops<Sequence>(this.breakSeq, -1);
-		TweenExtensions.Play<Sequence>(this.breakSeq);
+		}, 0f, 0.2f).SetEase(Ease.Linear));
+		this.breakSeq.SetLoops(-1);
+		this.breakSeq.Play<Sequence>();
 		this.redCheckClickCountTimeStamp = Time.time;
 		this.redTotalClickCheckTimeStamp = Time.time;
 		this.currentClickCount = 0;
@@ -397,16 +397,16 @@ public class RedRoomManager : MonoBehaviour
 	{
 		if (this.attemptBreakSeq != null)
 		{
-			TweenExtensions.Kill(this.attemptBreakSeq, true);
+			this.attemptBreakSeq.Kill(true);
 		}
 		if (this.breakSeq != null)
 		{
-			TweenExtensions.Kill(this.breakSeq, false);
+			this.breakSeq.Kill(false);
 		}
-		TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.breakFreeHolder.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		DOTween.To(() => this.breakFreeHolder.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.breakFreeHolder.GetComponent<CanvasGroup>().alpha = x;
-		}, 0f, 0.25f), 1);
+		}, 0f, 0.25f).SetEase(Ease.Linear);
 		if (this.totalClickCount >= 100)
 		{
 			GameManager.TimeSlinger.FireTimer(0.5f, new Action(this.redTriggerBreakFree));
@@ -420,24 +420,24 @@ public class RedRoomManager : MonoBehaviour
 	private void redTriggerAttemptBreakAni()
 	{
 		this.attemptBreakSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.attemptBreakSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetRelative<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.redCamera.transform.localPosition, delegate(Vector3 x)
+		this.attemptBreakSeq.Insert(0f, DOTween.To(() => this.redCamera.transform.localPosition, delegate(Vector3 x)
 		{
 			this.redCamera.transform.localPosition = x;
-		}, new Vector3(0f, -0.12f, 0f), 0.2f), true), 31));
-		TweenSettingsExtensions.Insert(this.attemptBreakSeq, 0.2f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetRelative<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.redCamera.transform.localPosition, delegate(Vector3 x)
+		}, new Vector3(0f, -0.12f, 0f), 0.2f).SetRelative(true).SetEase(Ease.InOutBounce));
+		this.attemptBreakSeq.Insert(0.2f, DOTween.To(() => this.redCamera.transform.localPosition, delegate(Vector3 x)
 		{
 			this.redCamera.transform.localPosition = x;
-		}, new Vector3(0f, 0.12f, 0f), 0.2f), true), 31));
-		TweenSettingsExtensions.Insert(this.attemptBreakSeq, 0.1f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetRelative<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.redCamera.transform.localPosition, delegate(Vector3 x)
+		}, new Vector3(0f, 0.12f, 0f), 0.2f).SetRelative(true).SetEase(Ease.InOutBounce));
+		this.attemptBreakSeq.Insert(0.1f, DOTween.To(() => this.redCamera.transform.localPosition, delegate(Vector3 x)
 		{
 			this.redCamera.transform.localPosition = x;
-		}, new Vector3(-0.02f, 0f, 0f), 0.2f), true), 1));
-		TweenSettingsExtensions.Insert(this.attemptBreakSeq, 0.3f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetRelative<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.redCamera.transform.localPosition, delegate(Vector3 x)
+		}, new Vector3(-0.02f, 0f, 0f), 0.2f).SetRelative(true).SetEase(Ease.Linear));
+		this.attemptBreakSeq.Insert(0.3f, DOTween.To(() => this.redCamera.transform.localPosition, delegate(Vector3 x)
 		{
 			this.redCamera.transform.localPosition = x;
-		}, new Vector3(0.02f, 0f, 0f), 0.2f), true), 1));
-		TweenSettingsExtensions.SetLoops<Sequence>(this.attemptBreakSeq, -1);
-		TweenExtensions.Play<Sequence>(this.attemptBreakSeq);
+		}, new Vector3(0.02f, 0f, 0f), 0.2f).SetRelative(true).SetEase(Ease.Linear));
+		this.attemptBreakSeq.SetLoops(-1);
+		this.attemptBreakSeq.Play<Sequence>();
 	}
 
 	private void redTriggerBreakFree()
@@ -457,83 +457,83 @@ public class RedRoomManager : MonoBehaviour
 		GameManager.TimeSlinger.FireTimer(7.2f, new Action(this.fadeScreenOut));
 		GameManager.TimeSlinger.FireTimer(9.5f, new Action(this.redGotoRWSEnding));
 		this.breakFreeSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.breakFreeSeq, 0f, TweenSettingsExtensions.SetOptions(TweenSettingsExtensions.SetEase<TweenerCore<Quaternion, Vector3, QuaternionOptions>>(DOTween.To(() => this.redCamera.transform.localRotation, delegate(Quaternion x)
+		this.breakFreeSeq.Insert(0f, DOTween.To(() => this.redCamera.transform.localRotation, delegate(Quaternion x)
 		{
 			this.redCamera.transform.localRotation = x;
-		}, new Vector3(21.903f, -18.819f, -4.422f), 0.65f), 3), true));
-		TweenSettingsExtensions.Insert(this.breakFreeSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.redCamera.transform.localPosition, delegate(Vector3 x)
+		}, new Vector3(21.903f, -18.819f, -4.422f), 0.65f).SetEase(Ease.OutSine).SetOptions(true));
+		this.breakFreeSeq.Insert(0f, DOTween.To(() => this.redCamera.transform.localPosition, delegate(Vector3 x)
 		{
 			this.redCamera.transform.localPosition = x;
-		}, new Vector3(0.199f, 1.223f, -0.425f), 1.6f), 27));
-		TweenSettingsExtensions.Insert(this.breakFreeSeq, 1.7f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.redCamera.transform.localPosition, delegate(Vector3 x)
+		}, new Vector3(0.199f, 1.223f, -0.425f), 1.6f).SetEase(Ease.OutBack));
+		this.breakFreeSeq.Insert(1.7f, DOTween.To(() => this.redCamera.transform.localPosition, delegate(Vector3 x)
 		{
 			this.redCamera.transform.localPosition = x;
-		}, new Vector3(-0.043f, 1.053f, 0.25f), 0.6f), 2));
-		TweenSettingsExtensions.Insert(this.breakFreeSeq, 1.7f, TweenSettingsExtensions.SetEase<Tweener>(TweenSettingsExtensions.SetOptions(DOTween.To(() => this.redCamera.transform.localRotation, delegate(Quaternion x)
+		}, new Vector3(-0.043f, 1.053f, 0.25f), 0.6f).SetEase(Ease.InSine));
+		this.breakFreeSeq.Insert(1.7f, DOTween.To(() => this.redCamera.transform.localRotation, delegate(Quaternion x)
 		{
 			this.redCamera.transform.localRotation = x;
-		}, new Vector3(-5.594f, 0f, 0f), 0.6f), true), 2));
-		TweenSettingsExtensions.Insert(this.breakFreeSeq, 2.3f, TweenSettingsExtensions.SetOptions(TweenSettingsExtensions.SetEase<TweenerCore<Quaternion, Vector3, QuaternionOptions>>(DOTween.To(() => this.redCamera.transform.localRotation, delegate(Quaternion x)
+		}, new Vector3(-5.594f, 0f, 0f), 0.6f).SetOptions(true).SetEase(Ease.InSine));
+		this.breakFreeSeq.Insert(2.3f, DOTween.To(() => this.redCamera.transform.localRotation, delegate(Quaternion x)
 		{
 			this.redCamera.transform.localRotation = x;
-		}, new Vector3(21.686f, 32.111f, -0.791f), 0.65f), 3), true));
-		TweenSettingsExtensions.Insert(this.breakFreeSeq, 2.3f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.redCamera.transform.localPosition, delegate(Vector3 x)
+		}, new Vector3(21.686f, 32.111f, -0.791f), 0.65f).SetEase(Ease.OutSine).SetOptions(true));
+		this.breakFreeSeq.Insert(2.3f, DOTween.To(() => this.redCamera.transform.localPosition, delegate(Vector3 x)
 		{
 			this.redCamera.transform.localPosition = x;
-		}, new Vector3(-0.226f, 1.184f, -0.105f), 1.6f), 27));
-		TweenSettingsExtensions.Insert(this.breakFreeSeq, 4f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.redCamera.transform.localPosition, delegate(Vector3 x)
+		}, new Vector3(-0.226f, 1.184f, -0.105f), 1.6f).SetEase(Ease.OutBack));
+		this.breakFreeSeq.Insert(4f, DOTween.To(() => this.redCamera.transform.localPosition, delegate(Vector3 x)
 		{
 			this.redCamera.transform.localPosition = x;
-		}, new Vector3(-0.043f, 1.053f, 0.25f), 0.6f), 2));
-		TweenSettingsExtensions.Insert(this.breakFreeSeq, 4f, TweenSettingsExtensions.SetEase<Tweener>(TweenSettingsExtensions.SetOptions(DOTween.To(() => this.redCamera.transform.localRotation, delegate(Quaternion x)
+		}, new Vector3(-0.043f, 1.053f, 0.25f), 0.6f).SetEase(Ease.InSine));
+		this.breakFreeSeq.Insert(4f, DOTween.To(() => this.redCamera.transform.localRotation, delegate(Quaternion x)
 		{
 			this.redCamera.transform.localRotation = x;
-		}, new Vector3(-5.594f, 0f, 0f), 0.6f), true), 2));
-		TweenSettingsExtensions.Insert(this.breakFreeSeq, 4.6f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.redCamera.transform.localPosition, delegate(Vector3 x)
+		}, new Vector3(-5.594f, 0f, 0f), 0.6f).SetOptions(true).SetEase(Ease.InSine));
+		this.breakFreeSeq.Insert(4.6f, DOTween.To(() => this.redCamera.transform.localPosition, delegate(Vector3 x)
 		{
 			this.redCamera.transform.localPosition = x;
-		}, new Vector3(0f, 1f, 0f), 0.6f), 4));
-		TweenSettingsExtensions.Insert(this.breakFreeSeq, 4.6f, TweenSettingsExtensions.SetEase<Tweener>(TweenSettingsExtensions.SetOptions(DOTween.To(() => this.redCamera.transform.localRotation, delegate(Quaternion x)
+		}, new Vector3(0f, 1f, 0f), 0.6f).SetEase(Ease.InOutSine));
+		this.breakFreeSeq.Insert(4.6f, DOTween.To(() => this.redCamera.transform.localRotation, delegate(Quaternion x)
 		{
 			this.redCamera.transform.localRotation = x;
-		}, Vector3.zero, 0.6f), true), 4));
-		TweenSettingsExtensions.Insert(this.breakFreeSeq, 4.6f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.redController.transform.localPosition, delegate(Vector3 x)
+		}, Vector3.zero, 0.6f).SetOptions(true).SetEase(Ease.InOutSine));
+		this.breakFreeSeq.Insert(4.6f, DOTween.To(() => this.redController.transform.localPosition, delegate(Vector3 x)
 		{
 			this.redController.transform.localPosition = x;
-		}, new Vector3(3.585f, 3.008f, 3.726f), 0.75f), 28));
-		TweenSettingsExtensions.Insert(this.breakFreeSeq, 5.35f, TweenSettingsExtensions.SetOptions(TweenSettingsExtensions.SetEase<TweenerCore<Quaternion, Vector3, QuaternionOptions>>(DOTween.To(() => this.redController.transform.localRotation, delegate(Quaternion x)
+		}, new Vector3(3.585f, 3.008f, 3.726f), 0.75f).SetEase(Ease.InOutBack));
+		this.breakFreeSeq.Insert(5.35f, DOTween.To(() => this.redController.transform.localRotation, delegate(Quaternion x)
 		{
 			this.redController.transform.localRotation = x;
-		}, new Vector3(0f, 2.954f, 0f), 0.3f), 2), true));
-		TweenSettingsExtensions.Insert(this.breakFreeSeq, 5.85f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.redController.transform.localPosition, delegate(Vector3 x)
+		}, new Vector3(0f, 2.954f, 0f), 0.3f).SetEase(Ease.InSine).SetOptions(true));
+		this.breakFreeSeq.Insert(5.85f, DOTween.To(() => this.redController.transform.localPosition, delegate(Vector3 x)
 		{
 			this.redController.transform.localPosition = x;
-		}, new Vector3(2.846f, 3.008f, 20.431f), 1.5f), 1));
-		TweenSettingsExtensions.Insert(this.breakFreeSeq, 5.85f, TweenSettingsExtensions.SetRelative<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.redCamera.transform.localPosition, delegate(Vector3 x)
+		}, new Vector3(2.846f, 3.008f, 20.431f), 1.5f).SetEase(Ease.Linear));
+		this.breakFreeSeq.Insert(5.85f, DOTween.To(() => this.redCamera.transform.localPosition, delegate(Vector3 x)
 		{
 			this.redCamera.transform.localPosition = x;
-		}, new Vector3(0f, -0.45f, 0f), 0.25f), 1), true));
-		TweenSettingsExtensions.Insert(this.breakFreeSeq, 6.1f, TweenSettingsExtensions.SetRelative<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.redCamera.transform.localPosition, delegate(Vector3 x)
+		}, new Vector3(0f, -0.45f, 0f), 0.25f).SetEase(Ease.Linear).SetRelative(true));
+		this.breakFreeSeq.Insert(6.1f, DOTween.To(() => this.redCamera.transform.localPosition, delegate(Vector3 x)
 		{
 			this.redCamera.transform.localPosition = x;
-		}, new Vector3(0f, 0.45f, 0f), 0.25f), 1), true));
-		TweenSettingsExtensions.Insert(this.breakFreeSeq, 6.35f, TweenSettingsExtensions.SetRelative<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.redCamera.transform.localPosition, delegate(Vector3 x)
+		}, new Vector3(0f, 0.45f, 0f), 0.25f).SetEase(Ease.Linear).SetRelative(true));
+		this.breakFreeSeq.Insert(6.35f, DOTween.To(() => this.redCamera.transform.localPosition, delegate(Vector3 x)
 		{
 			this.redCamera.transform.localPosition = x;
-		}, new Vector3(0f, -0.45f, 0f), 0.25f), 1), true));
-		TweenSettingsExtensions.Insert(this.breakFreeSeq, 6.6f, TweenSettingsExtensions.SetRelative<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.redCamera.transform.localPosition, delegate(Vector3 x)
+		}, new Vector3(0f, -0.45f, 0f), 0.25f).SetEase(Ease.Linear).SetRelative(true));
+		this.breakFreeSeq.Insert(6.6f, DOTween.To(() => this.redCamera.transform.localPosition, delegate(Vector3 x)
 		{
 			this.redCamera.transform.localPosition = x;
-		}, new Vector3(0f, 0.45f, 0f), 0.25f), 1), true));
-		TweenSettingsExtensions.Insert(this.breakFreeSeq, 6.85f, TweenSettingsExtensions.SetRelative<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.redCamera.transform.localPosition, delegate(Vector3 x)
+		}, new Vector3(0f, 0.45f, 0f), 0.25f).SetEase(Ease.Linear).SetRelative(true));
+		this.breakFreeSeq.Insert(6.85f, DOTween.To(() => this.redCamera.transform.localPosition, delegate(Vector3 x)
 		{
 			this.redCamera.transform.localPosition = x;
-		}, new Vector3(0f, -0.45f, 0f), 0.25f), 1), true));
-		TweenSettingsExtensions.Insert(this.breakFreeSeq, 7.1f, TweenSettingsExtensions.SetRelative<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.redCamera.transform.localPosition, delegate(Vector3 x)
+		}, new Vector3(0f, -0.45f, 0f), 0.25f).SetEase(Ease.Linear).SetRelative(true));
+		this.breakFreeSeq.Insert(7.1f, DOTween.To(() => this.redCamera.transform.localPosition, delegate(Vector3 x)
 		{
 			this.redCamera.transform.localPosition = x;
-		}, new Vector3(0f, 0.45f, 0f), 0.25f), 1), true));
-		TweenExtensions.Play<Sequence>(this.breakFreeSeq);
+		}, new Vector3(0f, 0.45f, 0f), 0.25f).SetEase(Ease.Linear).SetRelative(true));
+		this.breakFreeSeq.Play<Sequence>();
 	}
 
 	private void redTriggerGameOver()
@@ -631,7 +631,7 @@ public class RedRoomManager : MonoBehaviour
 
 	private void Start()
 	{
-		Cursor.lockState = 1;
+		Cursor.lockState = CursorLockMode.Locked;
 		Cursor.visible = false;
 		this.prepRoom();
 		this.cameraGlitch = this.mainCamera.GetComponent<Glitch>();
@@ -650,7 +650,7 @@ public class RedRoomManager : MonoBehaviour
 			this.startRedRoomAni = false;
 			this.startEndAni();
 		}
-		if (this.canQuitToMainMenu && Input.GetKeyDown(32))
+		if (this.canQuitToMainMenu && Input.GetKeyDown(KeyCode.Space))
 		{
 			SceneManager.LoadScene(0);
 		}
@@ -668,16 +668,16 @@ public class RedRoomManager : MonoBehaviour
 					{
 						this.redTriggerAttemptBreakAni();
 					}
-					else if (!TweenExtensions.IsPlaying(this.attemptBreakSeq))
+					else if (!this.attemptBreakSeq.IsPlaying())
 					{
 						this.redTriggerAttemptBreakAni();
 					}
-					GameManager.AudioSlinger.DealSound(AudioHubs.PLAYER, AudioLayer.SFX, this.leatherSFXS[Random.Range(0, this.leatherSFXS.Count)], 0.1f, false);
+					GameManager.AudioSlinger.DealSound(AudioHubs.PLAYER, AudioLayer.SFX, this.leatherSFXS[UnityEngine.Random.Range(0, this.leatherSFXS.Count)], 0.1f, false);
 					this.totalClickCount += this.currentClickCount;
 				}
 				else if (this.attemptBreakSeq != null)
 				{
-					TweenExtensions.Kill(this.attemptBreakSeq, true);
+					this.attemptBreakSeq.Kill(true);
 				}
 				this.currentClickCount = 0;
 				this.redCheckClickCountTimeStamp = Time.time;

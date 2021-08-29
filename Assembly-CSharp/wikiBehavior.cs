@@ -28,7 +28,7 @@ public class wikiBehavior : MonoBehaviour
 		}
 		foreach (KeyValuePair<string, string> keyValuePair in this.wikiList)
 		{
-			GameObject gameObject = Object.Instantiate<GameObject>(this.wikiLinkObject);
+			GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(this.wikiLinkObject);
 			gameObject.transform.SetParent(base.transform);
 			gameObject.GetComponent<WikiLink>().buildMe(this.myUIManager, this.myAB, this, keyValuePair.Key, keyValuePair.Value, setX, num);
 			this.wikiLinks.Add(gameObject);
@@ -43,7 +43,7 @@ public class wikiBehavior : MonoBehaviour
 		{
 			for (int i = 0; i < this.wikiLinks.Count; i++)
 			{
-				Object.Destroy(this.wikiLinks[i]);
+				UnityEngine.Object.Destroy(this.wikiLinks[i]);
 			}
 			this.wikiLinks.Clear();
 		}

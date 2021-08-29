@@ -29,11 +29,11 @@ public class comeFindMeSite : MonoBehaviour
 	private void triggerShowAnswer()
 	{
 		this.showAnswerSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.showAnswerSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.theAnswer.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		this.showAnswerSeq.Insert(0f, DOTween.To(() => this.theAnswer.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.theAnswer.GetComponent<CanvasGroup>().alpha = x;
-		}, 1f, 0.5f), 1));
-		TweenExtensions.Play<Sequence>(this.showAnswerSeq);
+		}, 1f, 0.5f).SetEase(Ease.Linear));
+		this.showAnswerSeq.Play<Sequence>();
 	}
 
 	private void OnEnable()

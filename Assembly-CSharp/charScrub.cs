@@ -6,7 +6,7 @@ public class charScrub : MonoBehaviour
 	public void activateMoveChair()
 	{
 		this.moveTimeStamp = Time.time;
-		this.moveTimeWindow = Random.Range(this.moveOpenWindow, this.moveCloseWindow);
+		this.moveTimeWindow = UnityEngine.Random.Range(this.moveOpenWindow, this.moveCloseWindow);
 		this.moveisActive = true;
 	}
 

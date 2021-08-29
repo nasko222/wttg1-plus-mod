@@ -183,7 +183,7 @@ public class TheCloud : MonoBehaviour
 	public string getRandomKey()
 	{
 		string empty = string.Empty;
-		int num = Random.Range(0, this.redRoomKeys.Count);
+		int num = UnityEngine.Random.Range(0, this.redRoomKeys.Count);
 		return (num + 1).ToString() + " - " + this.redRoomKeys[num];
 	}
 
@@ -202,9 +202,9 @@ public class TheCloud : MonoBehaviour
 
 	public void addTxtDoc(string txtDocTitle = "", string txtDocText = "")
 	{
-		float setX = Random.Range(150f, (float)Screen.width - 106f);
-		float setY = -Random.Range(60f, (float)Screen.height - 180f);
-		GameObject gameObject = Object.Instantiate<GameObject>(this.txtIconObject);
+		float setX = UnityEngine.Random.Range(150f, (float)Screen.width - 106f);
+		float setY = -UnityEngine.Random.Range(60f, (float)Screen.height - 180f);
+		GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(this.txtIconObject);
 		gameObject.transform.SetParent(this.iconHolder);
 		gameObject.GetComponent<txtIconBehavior>().mainController = this.mainController;
 		gameObject.GetComponent<txtIconBehavior>().windowHolderRT = this.windowHolder;
@@ -340,7 +340,7 @@ public class TheCloud : MonoBehaviour
 				{
 					if (!this.webSites[k].siteDefinition.isStatic)
 					{
-						this.webSites[k].siteDefinition.PageURL = GameManager.MagicSlinger.md5It(this.webSites[k].siteDefinition.PageTitle + Random.Range(0, 9999).ToString());
+						this.webSites[k].siteDefinition.PageURL = GameManager.MagicSlinger.md5It(this.webSites[k].siteDefinition.PageTitle + UnityEngine.Random.Range(0, 9999).ToString());
 						this.webSiteLookup.Add(this.webSites[k].siteDefinition.PageURL, k);
 						GameManager.FileSlinger.saveData.siteDataAlpha.Add(this.webSites[k].myKey, this.webSites[k].siteDefinition.PageURL);
 					}
@@ -352,7 +352,7 @@ public class TheCloud : MonoBehaviour
 				}
 				for (int l = 0; l < this.fakeSites.Count; l++)
 				{
-					this.fakeSites[l].fakeDefinition.PageURL = GameManager.MagicSlinger.md5It(this.fakeSites[l].fakeDefinition.PageTitle + Random.Range(0, 9999).ToString());
+					this.fakeSites[l].fakeDefinition.PageURL = GameManager.MagicSlinger.md5It(this.fakeSites[l].fakeDefinition.PageTitle + UnityEngine.Random.Range(0, 9999).ToString());
 					GameManager.FileSlinger.saveData.siteDataBeta.Add(this.fakeSites[l].myKey, this.fakeSites[l].fakeDefinition.PageURL);
 				}
 				GameManager.FileSlinger.saveFile("wttg2.gd");
@@ -433,7 +433,7 @@ public class TheCloud : MonoBehaviour
 					}
 					while (l < this.realLinksPerWiki)
 					{
-						int index = Random.Range(0, this.webSites.Count);
+						int index = UnityEngine.Random.Range(0, this.webSites.Count);
 						if (!dictionary.ContainsKey(this.webSites[index].siteDefinition.PageTitle) && !this.webSites[index].siteDefinition.onFirstWiki && !this.webSites[index].siteDefinition.onSecondWiki && !this.webSites[index].siteDefinition.onThirdWiki && !this.webSites[index].siteDefinition.isStatic)
 						{
 							this.webSites[index].siteDefinition.iWasPicked = true;
@@ -445,7 +445,7 @@ public class TheCloud : MonoBehaviour
 					}
 					while (k < this.linksPerWiki)
 					{
-						int index2 = Random.Range(0, this.fakeSites.Count);
+						int index2 = UnityEngine.Random.Range(0, this.fakeSites.Count);
 						if (!dictionary.ContainsKey(this.fakeSites[index2].fakeDefinition.PageTitle))
 						{
 							dictionary2.Add(this.fakeSites[index2].fakeDefinition.PageTitle, this.fakeSites[index2].fakeDefinition.PageURL);
@@ -502,7 +502,7 @@ public class TheCloud : MonoBehaviour
 			int num2 = 0;
 			int num3 = 0;
 			int num4 = 0;
-			string text = GameManager.MagicSlinger.md5It("welcomeT0TheGame" + Random.Range(0, 99999).ToString() + "lol" + Random.Range(0, 9999).ToString());
+			string text = GameManager.MagicSlinger.md5It("welcomeT0TheGame" + UnityEngine.Random.Range(0, 99999).ToString() + "lol" + UnityEngine.Random.Range(0, 9999).ToString());
 			List<string> list = new List<string>();
 			Dictionary<string, int> dictionary = new Dictionary<string, int>();
 			bool flag = false;
@@ -518,7 +518,7 @@ public class TheCloud : MonoBehaviour
 				{
 					list2.Add(keyValuePair.Value);
 				}
-				int index = Random.Range(0, list2.Count);
+				int index = UnityEngine.Random.Range(0, list2.Count);
 				if (this.CheckIfRealSite(list2[index]))
 				{
 					TheCloud.SiteData siteData = this.webSites[this.webSiteLookup[list2[index]]];
@@ -536,7 +536,7 @@ public class TheCloud : MonoBehaviour
 				}
 				if (num3 > 2)
 				{
-					num3 = Random.Range(0, 3);
+					num3 = UnityEngine.Random.Range(0, 3);
 				}
 				if (num2 > 6)
 				{
@@ -576,17 +576,17 @@ public class TheCloud : MonoBehaviour
 			List<TheCloud.txtDocData> txtDocs = GameManager.FileSlinger.saveData.txtDocs;
 			for (int i = 0; i < txtDocs.Count; i++)
 			{
-				GameObject gameObject = Object.Instantiate<GameObject>(this.txtIconObject);
+				GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(this.txtIconObject);
 				if (txtDocs[i].myX > (float)Screen.width)
 				{
 					TheCloud.txtDocData value = txtDocs[i];
-					value.myX = Random.Range(150f, (float)Screen.width - 106f);
+					value.myX = UnityEngine.Random.Range(150f, (float)Screen.width - 106f);
 					txtDocs[i] = value;
 				}
 				if (Mathf.Abs(txtDocs[i].myY) > (float)Screen.height)
 				{
 					TheCloud.txtDocData value2 = txtDocs[i];
-					value2.myY = -Random.Range(60f, (float)Screen.height - 180f);
+					value2.myY = -UnityEngine.Random.Range(60f, (float)Screen.height - 180f);
 					txtDocs[i] = value2;
 				}
 				gameObject.transform.SetParent(this.iconHolder);

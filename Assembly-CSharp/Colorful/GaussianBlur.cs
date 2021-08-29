@@ -56,23 +56,21 @@ namespace Colorful
 		{
 			int num = Mathf.FloorToInt((float)source.width / this.Downscaling);
 			int num2 = Mathf.FloorToInt((float)source.height / this.Downscaling);
-			Vector2 vector;
-			vector..ctor(1f / (float)num, 0f);
-			Vector2 vector2;
-			vector2..ctor(0f, 1f / (float)num2);
+			Vector2 v = new Vector2(1f / (float)num, 0f);
+			Vector2 v2 = new Vector2(0f, 1f / (float)num2);
 			RenderTexture temporary = RenderTexture.GetTemporary(num, num2, 0, source.format);
 			RenderTexture temporary2 = RenderTexture.GetTemporary(num, num2, 0, source.format);
-			base.Material.SetVector("_Direction", vector);
+			base.Material.SetVector("_Direction", v);
 			Graphics.Blit(source, temporary, base.Material, 0);
-			base.Material.SetVector("_Direction", vector2);
+			base.Material.SetVector("_Direction", v2);
 			Graphics.Blit(temporary, temporary2, base.Material, 0);
 			temporary.DiscardContents();
 			for (int i = 1; i < this.Passes; i++)
 			{
-				base.Material.SetVector("_Direction", vector);
+				base.Material.SetVector("_Direction", v);
 				Graphics.Blit(temporary2, temporary, base.Material, 0);
 				temporary2.DiscardContents();
-				base.Material.SetVector("_Direction", vector2);
+				base.Material.SetVector("_Direction", v2);
 				Graphics.Blit(temporary, temporary2, base.Material, 0);
 				temporary.DiscardContents();
 			}

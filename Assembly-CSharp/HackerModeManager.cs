@@ -79,7 +79,7 @@ public class HackerModeManager : MonoBehaviour
 		{
 			flag2 = false;
 		}
-		else if (TweenExtensions.IsPlaying(this.presentBonusPointsSeq))
+		else if (this.presentBonusPointsSeq.IsPlaying())
 		{
 			flag2 = true;
 		}
@@ -97,74 +97,74 @@ public class HackerModeManager : MonoBehaviour
 			GameManager.AudioSlinger.DealSound(AudioHubs.HACKERMODE, AudioLayer.HACKINGSFX, this.bonusPointSlideSFX, 0.35f, false, 0.3f);
 			GameManager.AudioSlinger.DealSound(AudioHubs.HACKERMODE, AudioLayer.HACKINGSFX, this.bonusPointSlideSFX, 0.35f, false, 0.6f);
 			GameManager.AudioSlinger.DealSound(AudioHubs.HACKERMODE, AudioLayer.HACKINGSFX, this.totalPointSlideSFX, 0.35f, false, 0.9f);
-			this.presentBonusPointsSeq = TweenSettingsExtensions.OnComplete<Sequence>(DOTween.Sequence(), new TweenCallback(this.resetPresentGamePoints));
-			TweenSettingsExtensions.Insert(this.presentBonusPointsSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.completeBonusObject.transform.localPosition, delegate(Vector3 x)
+			this.presentBonusPointsSeq = DOTween.Sequence().OnComplete(new TweenCallback(this.resetPresentGamePoints));
+			this.presentBonusPointsSeq.Insert(0f, DOTween.To(() => this.completeBonusObject.transform.localPosition, delegate(Vector3 x)
 			{
 				this.completeBonusObject.transform.localPosition = x;
-			}, new Vector3(0f, this.completeBonusObject.transform.localPosition.y, this.completeBonusObject.transform.localPosition.z), 0.4f), 3));
-			TweenSettingsExtensions.Insert(this.presentBonusPointsSeq, 0.3f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.timeBonusObject.transform.localPosition, delegate(Vector3 x)
+			}, new Vector3(0f, this.completeBonusObject.transform.localPosition.y, this.completeBonusObject.transform.localPosition.z), 0.4f).SetEase(Ease.OutSine));
+			this.presentBonusPointsSeq.Insert(0.3f, DOTween.To(() => this.timeBonusObject.transform.localPosition, delegate(Vector3 x)
 			{
 				this.timeBonusObject.transform.localPosition = x;
-			}, new Vector3(0f, this.timeBonusObject.transform.localPosition.y, this.timeBonusObject.transform.localPosition.z), 0.4f), 3));
-			TweenSettingsExtensions.Insert(this.presentBonusPointsSeq, 0.6f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.skillBonusObject.transform.localPosition, delegate(Vector3 x)
+			}, new Vector3(0f, this.timeBonusObject.transform.localPosition.y, this.timeBonusObject.transform.localPosition.z), 0.4f).SetEase(Ease.OutSine));
+			this.presentBonusPointsSeq.Insert(0.6f, DOTween.To(() => this.skillBonusObject.transform.localPosition, delegate(Vector3 x)
 			{
 				this.skillBonusObject.transform.localPosition = x;
-			}, new Vector3(0f, this.skillBonusObject.transform.localPosition.y, this.skillBonusObject.transform.localPosition.z), 0.4f), 3));
-			TweenSettingsExtensions.Insert(this.presentBonusPointsSeq, 0.9f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.totalPointsObject.transform.localPosition, delegate(Vector3 x)
+			}, new Vector3(0f, this.skillBonusObject.transform.localPosition.y, this.skillBonusObject.transform.localPosition.z), 0.4f).SetEase(Ease.OutSine));
+			this.presentBonusPointsSeq.Insert(0.9f, DOTween.To(() => this.totalPointsObject.transform.localPosition, delegate(Vector3 x)
 			{
 				this.totalPointsObject.transform.localPosition = x;
-			}, new Vector3(0f, this.totalPointsObject.transform.localPosition.y, this.totalPointsObject.transform.localPosition.z), 0.4f), 3));
+			}, new Vector3(0f, this.totalPointsObject.transform.localPosition.y, this.totalPointsObject.transform.localPosition.z), 0.4f).SetEase(Ease.OutSine));
 			if (flag)
 			{
-				TweenSettingsExtensions.Insert(this.presentBonusPointsSeq, 1.3f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.multiplierValue.transform.localScale, delegate(Vector3 x)
+				this.presentBonusPointsSeq.Insert(1.3f, DOTween.To(() => this.multiplierValue.transform.localScale, delegate(Vector3 x)
 				{
 					this.multiplierValue.transform.localScale = x;
-				}, new Vector3(0.1f, 0.1f, 0.1f), 0.75f), 2));
-				TweenSettingsExtensions.Insert(this.presentBonusPointsSeq, 1.3f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.multiplierValueShadow.transform.localScale, delegate(Vector3 x)
+				}, new Vector3(0.1f, 0.1f, 0.1f), 0.75f).SetEase(Ease.InSine));
+				this.presentBonusPointsSeq.Insert(1.3f, DOTween.To(() => this.multiplierValueShadow.transform.localScale, delegate(Vector3 x)
 				{
 					this.multiplierValueShadow.transform.localScale = x;
-				}, new Vector3(0.1f, 0.1f, 0.1f), 0.75f), 2));
-				TweenSettingsExtensions.Insert(this.presentBonusPointsSeq, 1.3f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.multiplierHolderObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
+				}, new Vector3(0.1f, 0.1f, 0.1f), 0.75f).SetEase(Ease.InSine));
+				this.presentBonusPointsSeq.Insert(1.3f, DOTween.To(() => this.multiplierHolderObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
 				{
 					this.multiplierHolderObject.GetComponent<CanvasGroup>().alpha = x;
-				}, 0f, 0.75f), 3));
-				TweenSettingsExtensions.Insert(this.presentBonusPointsSeq, 3.5f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.completeBonusObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
+				}, 0f, 0.75f).SetEase(Ease.OutSine));
+				this.presentBonusPointsSeq.Insert(3.5f, DOTween.To(() => this.completeBonusObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
 				{
 					this.completeBonusObject.GetComponent<CanvasGroup>().alpha = x;
-				}, 0f, 0.4f), 1));
-				TweenSettingsExtensions.Insert(this.presentBonusPointsSeq, 3.5f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.timeBonusObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
+				}, 0f, 0.4f).SetEase(Ease.Linear));
+				this.presentBonusPointsSeq.Insert(3.5f, DOTween.To(() => this.timeBonusObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
 				{
 					this.timeBonusObject.GetComponent<CanvasGroup>().alpha = x;
-				}, 0f, 0.4f), 1));
-				TweenSettingsExtensions.Insert(this.presentBonusPointsSeq, 3.5f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.skillBonusObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
+				}, 0f, 0.4f).SetEase(Ease.Linear));
+				this.presentBonusPointsSeq.Insert(3.5f, DOTween.To(() => this.skillBonusObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
 				{
 					this.skillBonusObject.GetComponent<CanvasGroup>().alpha = x;
-				}, 0f, 0.4f), 1));
-				TweenSettingsExtensions.Insert(this.presentBonusPointsSeq, 3.5f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.totalPointsObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
+				}, 0f, 0.4f).SetEase(Ease.Linear));
+				this.presentBonusPointsSeq.Insert(3.5f, DOTween.To(() => this.totalPointsObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
 				{
 					this.totalPointsObject.GetComponent<CanvasGroup>().alpha = x;
-				}, 0f, 0.4f), 1));
+				}, 0f, 0.4f).SetEase(Ease.Linear));
 			}
 			else
 			{
-				TweenSettingsExtensions.Insert(this.presentBonusPointsSeq, 2.9f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.completeBonusObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
+				this.presentBonusPointsSeq.Insert(2.9f, DOTween.To(() => this.completeBonusObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
 				{
 					this.completeBonusObject.GetComponent<CanvasGroup>().alpha = x;
-				}, 0f, 0.4f), 1));
-				TweenSettingsExtensions.Insert(this.presentBonusPointsSeq, 2.9f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.timeBonusObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
+				}, 0f, 0.4f).SetEase(Ease.Linear));
+				this.presentBonusPointsSeq.Insert(2.9f, DOTween.To(() => this.timeBonusObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
 				{
 					this.timeBonusObject.GetComponent<CanvasGroup>().alpha = x;
-				}, 0f, 0.4f), 1));
-				TweenSettingsExtensions.Insert(this.presentBonusPointsSeq, 2.9f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.skillBonusObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
+				}, 0f, 0.4f).SetEase(Ease.Linear));
+				this.presentBonusPointsSeq.Insert(2.9f, DOTween.To(() => this.skillBonusObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
 				{
 					this.skillBonusObject.GetComponent<CanvasGroup>().alpha = x;
-				}, 0f, 0.4f), 1));
-				TweenSettingsExtensions.Insert(this.presentBonusPointsSeq, 2.9f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.totalPointsObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
+				}, 0f, 0.4f).SetEase(Ease.Linear));
+				this.presentBonusPointsSeq.Insert(2.9f, DOTween.To(() => this.totalPointsObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
 				{
 					this.totalPointsObject.GetComponent<CanvasGroup>().alpha = x;
-				}, 0f, 0.4f), 1));
+				}, 0f, 0.4f).SetEase(Ease.Linear));
 			}
-			TweenExtensions.Play<Sequence>(this.presentBonusPointsSeq);
+			this.presentBonusPointsSeq.Play<Sequence>();
 		}
 		this.addGamePoints(num2 + num);
 	}
@@ -183,20 +183,20 @@ public class HackerModeManager : MonoBehaviour
 		this.FlashObject.GetComponent<CanvasGroup>().alpha = 1f;
 		this.GameOverObject.SetActive(true);
 		this.scoreHeaderObject.transform.localPosition = new Vector3(0f, 51f, 0f);
-		TweenSettingsExtensions.SetRelative<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.upgradesFooterObject.transform.localPosition, delegate(Vector3 x)
+		DOTween.To(() => this.upgradesFooterObject.transform.localPosition, delegate(Vector3 x)
 		{
 			this.upgradesFooterObject.transform.localPosition = x;
-		}, new Vector3(0f, -44f, 0f), 0.1f), 1), true);
-		this.gameOverSeq = TweenSettingsExtensions.OnComplete<Sequence>(DOTween.Sequence(), new TweenCallback(this.showFinalPoints));
-		TweenSettingsExtensions.Insert(this.gameOverSeq, 0.2f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.FlashObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		}, new Vector3(0f, -44f, 0f), 0.1f).SetEase(Ease.Linear).SetRelative(true);
+		this.gameOverSeq = DOTween.Sequence().OnComplete(new TweenCallback(this.showFinalPoints));
+		this.gameOverSeq.Insert(0.2f, DOTween.To(() => this.FlashObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.FlashObject.GetComponent<CanvasGroup>().alpha = x;
-		}, 0f, 0.75f), 1));
-		TweenSettingsExtensions.Insert(this.gameOverSeq, 0.5f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.GameOverObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		}, 0f, 0.75f).SetEase(Ease.Linear));
+		this.gameOverSeq.Insert(0.5f, DOTween.To(() => this.GameOverObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.GameOverObject.GetComponent<CanvasGroup>().alpha = x;
-		}, 1f, 0.75f), 3));
-		TweenExtensions.Play<Sequence>(this.gameOverSeq);
+		}, 1f, 0.75f).SetEase(Ease.OutSine));
+		this.gameOverSeq.Play<Sequence>();
 	}
 
 	public void resetDOSAttack()
@@ -236,32 +236,32 @@ public class HackerModeManager : MonoBehaviour
 	public void hideMenus()
 	{
 		GameManager.AudioSlinger.DealSound(AudioHubs.MENU, AudioLayer.HACKINGSFX, this.menuHideSFX2, 1f, false, 0f);
-		this.menuHideAniSeq = TweenSettingsExtensions.OnComplete<Sequence>(DOTween.Sequence(), new TweenCallback(this.clearMenusSoft));
+		this.menuHideAniSeq = DOTween.Sequence().OnComplete(new TweenCallback(this.clearMenusSoft));
 		for (int i = 0; i < this.currentMenuObjects.Count; i++)
 		{
 			this.currentMenuObjects[i].GetComponent<HMMenuObject>().hideMe();
 		}
-		TweenSettingsExtensions.Insert(this.menuHideAniSeq, 0.5f, TweenSettingsExtensions.SetRelative<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.locTopScoresObject.transform.localPosition, delegate(Vector3 x)
+		this.menuHideAniSeq.Insert(0.5f, DOTween.To(() => this.locTopScoresObject.transform.localPosition, delegate(Vector3 x)
 		{
 			this.locTopScoresObject.transform.localPosition = x;
-		}, new Vector3(-184f, 0f, 0f), 0.5f), 2), true));
-		TweenSettingsExtensions.Insert(this.menuHideAniSeq, 0.5f, TweenSettingsExtensions.SetRelative<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.varObject.transform.localPosition, delegate(Vector3 x)
+		}, new Vector3(-184f, 0f, 0f), 0.5f).SetEase(Ease.InSine).SetRelative(true));
+		this.menuHideAniSeq.Insert(0.5f, DOTween.To(() => this.varObject.transform.localPosition, delegate(Vector3 x)
 		{
 			this.varObject.transform.localPosition = x;
-		}, new Vector3(-184f, 0f, 0f), 0.5f), 2), true));
-		TweenSettingsExtensions.Insert(this.menuHideAniSeq, 0.5f, TweenSettingsExtensions.SetRelative<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.heapObject.transform.localPosition, delegate(Vector3 x)
+		}, new Vector3(-184f, 0f, 0f), 0.5f).SetEase(Ease.InSine).SetRelative(true));
+		this.menuHideAniSeq.Insert(0.5f, DOTween.To(() => this.heapObject.transform.localPosition, delegate(Vector3 x)
 		{
 			this.heapObject.transform.localPosition = x;
-		}, new Vector3(184f, 0f, 0f), 0.5f), 2), true));
-		TweenSettingsExtensions.Insert(this.menuHideAniSeq, 0.5f, TweenSettingsExtensions.SetRelative<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.binObject.transform.localPosition, delegate(Vector3 x)
+		}, new Vector3(184f, 0f, 0f), 0.5f).SetEase(Ease.InSine).SetRelative(true));
+		this.menuHideAniSeq.Insert(0.5f, DOTween.To(() => this.binObject.transform.localPosition, delegate(Vector3 x)
 		{
 			this.binObject.transform.localPosition = x;
-		}, new Vector3(184f, 0f, 0f), 0.5f), 2), true));
-		TweenSettingsExtensions.Insert(this.menuHideAniSeq, 0.5f, TweenSettingsExtensions.SetRelative<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.clearDataText.transform.localPosition, delegate(Vector3 x)
+		}, new Vector3(184f, 0f, 0f), 0.5f).SetEase(Ease.InSine).SetRelative(true));
+		this.menuHideAniSeq.Insert(0.5f, DOTween.To(() => this.clearDataText.transform.localPosition, delegate(Vector3 x)
 		{
 			this.clearDataText.transform.localPosition = x;
-		}, new Vector3(0f, -40f, 0f), 1f), 3), true));
-		TweenExtensions.Play<Sequence>(this.menuHideAniSeq);
+		}, new Vector3(0f, -40f, 0f), 1f).SetEase(Ease.OutSine).SetRelative(true));
+		this.menuHideAniSeq.Play<Sequence>();
 	}
 
 	public void showMenus()
@@ -275,27 +275,27 @@ public class HackerModeManager : MonoBehaviour
 		{
 			this.currentMenuObjects[i].GetComponent<HMMenuObject>().showMe(0f);
 		}
-		TweenSettingsExtensions.Insert(this.menuAniSeq, 2f, TweenSettingsExtensions.SetRelative<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.locTopScoresObject.transform.localPosition, delegate(Vector3 x)
+		this.menuAniSeq.Insert(2f, DOTween.To(() => this.locTopScoresObject.transform.localPosition, delegate(Vector3 x)
 		{
 			this.locTopScoresObject.transform.localPosition = x;
-		}, new Vector3(184f, 0f, 0f), 1f), 3), true));
-		TweenSettingsExtensions.Insert(this.menuAniSeq, 2f, TweenSettingsExtensions.SetRelative<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.varObject.transform.localPosition, delegate(Vector3 x)
+		}, new Vector3(184f, 0f, 0f), 1f).SetEase(Ease.OutSine).SetRelative(true));
+		this.menuAniSeq.Insert(2f, DOTween.To(() => this.varObject.transform.localPosition, delegate(Vector3 x)
 		{
 			this.varObject.transform.localPosition = x;
-		}, new Vector3(184f, 0f, 0f), 1f), 3), true));
-		TweenSettingsExtensions.Insert(this.menuAniSeq, 2f, TweenSettingsExtensions.SetRelative<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.heapObject.transform.localPosition, delegate(Vector3 x)
+		}, new Vector3(184f, 0f, 0f), 1f).SetEase(Ease.OutSine).SetRelative(true));
+		this.menuAniSeq.Insert(2f, DOTween.To(() => this.heapObject.transform.localPosition, delegate(Vector3 x)
 		{
 			this.heapObject.transform.localPosition = x;
-		}, new Vector3(-184f, 0f, 0f), 1f), 3), true));
-		TweenSettingsExtensions.Insert(this.menuAniSeq, 2f, TweenSettingsExtensions.SetRelative<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.binObject.transform.localPosition, delegate(Vector3 x)
+		}, new Vector3(-184f, 0f, 0f), 1f).SetEase(Ease.OutSine).SetRelative(true));
+		this.menuAniSeq.Insert(2f, DOTween.To(() => this.binObject.transform.localPosition, delegate(Vector3 x)
 		{
 			this.binObject.transform.localPosition = x;
-		}, new Vector3(-184f, 0f, 0f), 1f), 3), true));
-		TweenSettingsExtensions.Insert(this.menuAniSeq, 2f, TweenSettingsExtensions.SetRelative<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.clearDataText.transform.localPosition, delegate(Vector3 x)
+		}, new Vector3(-184f, 0f, 0f), 1f).SetEase(Ease.OutSine).SetRelative(true));
+		this.menuAniSeq.Insert(2f, DOTween.To(() => this.clearDataText.transform.localPosition, delegate(Vector3 x)
 		{
 			this.clearDataText.transform.localPosition = x;
-		}, new Vector3(0f, 40f, 0f), 1f), 3), true));
-		TweenExtensions.Play<Sequence>(this.menuAniSeq);
+		}, new Vector3(0f, 40f, 0f), 1f).SetEase(Ease.OutSine).SetRelative(true));
+		this.menuAniSeq.Play<Sequence>();
 	}
 
 	public void lockMenus()
@@ -362,22 +362,22 @@ public class HackerModeManager : MonoBehaviour
 			this.mainCamera.GetComponent<PixelMatrix>().enabled = true;
 			this.SkullCG.alpha = 1f;
 			this.skullLaughSeq = DOTween.Sequence();
-			TweenSettingsExtensions.Insert(this.skullLaughSeq, 0f, TweenSettingsExtensions.SetRelative<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.skullBottom.transform.localPosition, delegate(Vector3 x)
+			this.skullLaughSeq.Insert(0f, DOTween.To(() => this.skullBottom.transform.localPosition, delegate(Vector3 x)
 			{
 				this.skullBottom.transform.localPosition = x;
-			}, new Vector3(0f, -30f, 0f), 0.15f), 1), true));
-			TweenSettingsExtensions.Insert(this.skullLaughSeq, 0.15f, TweenSettingsExtensions.SetRelative<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.skullBottom.transform.localPosition, delegate(Vector3 x)
+			}, new Vector3(0f, -30f, 0f), 0.15f).SetEase(Ease.Linear).SetRelative(true));
+			this.skullLaughSeq.Insert(0.15f, DOTween.To(() => this.skullBottom.transform.localPosition, delegate(Vector3 x)
 			{
 				this.skullBottom.transform.localPosition = x;
-			}, new Vector3(0f, 30f, 0f), 0.15f), 1), true));
-			TweenSettingsExtensions.SetLoops<Sequence>(this.skullLaughSeq, -1);
-			TweenExtensions.Play<Sequence>(this.skullLaughSeq);
+			}, new Vector3(0f, 30f, 0f), 0.15f).SetEase(Ease.Linear).SetRelative(true));
+			this.skullLaughSeq.SetLoops(-1);
+			this.skullLaughSeq.Play<Sequence>();
 			this.presentGameModeSeq = DOTween.Sequence();
-			TweenSettingsExtensions.Insert(this.presentGameModeSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.SkullCG.alpha, delegate(float x)
+			this.presentGameModeSeq.Insert(0f, DOTween.To(() => this.SkullCG.alpha, delegate(float x)
 			{
 				this.SkullCG.alpha = x;
-			}, 0f, 1.8f), 1));
-			TweenExtensions.Play<Sequence>(this.presentGameModeSeq);
+			}, 0f, 1.8f).SetEase(Ease.Linear));
+			this.presentGameModeSeq.Play<Sequence>();
 			GameManager.TimeSlinger.FireTimer(2f, new Action(this.clearUpgradeEFXS));
 			GameManager.AudioSlinger.FireSound(AudioHubs.HACKERMODE, AudioLayer.HACKINGSFX, this.FireShellSFX, 1f, false);
 			this.myGameData.currentShells = this.myGameData.currentShells - 1;
@@ -396,7 +396,7 @@ public class HackerModeManager : MonoBehaviour
 	private void prepAssets()
 	{
 		Cursor.visible = false;
-		Cursor.lockState = 0;
+		Cursor.lockState = CursorLockMode.None;
 		if (this.myGameData.musicIsOn)
 		{
 			this.MusicONOFFBTN.GetComponent<HMBTNLink>().setMyBool(true);
@@ -495,7 +495,7 @@ public class HackerModeManager : MonoBehaviour
 		for (int i = 0; i < this.hackerMenus.Count; i++)
 		{
 			HackerModeManager.menuVectors menuVectors = new HackerModeManager.menuVectors((short)this.hackerMenus[i].MenuOptions.Count);
-			GameObject gameObject = Object.Instantiate<GameObject>(this.HMMenuObject);
+			GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(this.HMMenuObject);
 			gameObject.transform.SetParent(this.MenuHolder.transform);
 			gameObject.GetComponent<HMMenuObject>().buildMe(menuVectors.targetWidthFull, menuVectors.targetHeightFull, this.hackerMenus[i].MenuName);
 			this.currentMenuObjects.Add(gameObject);
@@ -521,63 +521,63 @@ public class HackerModeManager : MonoBehaviour
 		GameManager.TimeSlinger.FireTimer(3f, new Action(this.aniShowMenuItems));
 		this.WTTGHeaderObject.SetActive(true);
 		this.menuAniSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.menuAniSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.menuPrompt1.fillAmount, delegate(float x)
+		this.menuAniSeq.Insert(0f, DOTween.To(() => this.menuPrompt1.fillAmount, delegate(float x)
 		{
 			this.menuPrompt1.fillAmount = x;
-		}, 1f, 0.2f), 1));
-		TweenSettingsExtensions.Insert(this.menuAniSeq, 0.6f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.menuPrompt2.fillAmount, delegate(float x)
+		}, 1f, 0.2f).SetEase(Ease.Linear));
+		this.menuAniSeq.Insert(0.6f, DOTween.To(() => this.menuPrompt2.fillAmount, delegate(float x)
 		{
 			this.menuPrompt2.fillAmount = x;
-		}, 1f, 0.2f), 1));
-		TweenSettingsExtensions.Insert(this.menuAniSeq, 1.4f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.menuPrompt3.fillAmount, delegate(float x)
+		}, 1f, 0.2f).SetEase(Ease.Linear));
+		this.menuAniSeq.Insert(1.4f, DOTween.To(() => this.menuPrompt3.fillAmount, delegate(float x)
 		{
 			this.menuPrompt3.fillAmount = x;
-		}, 1f, 0.2f), 1));
-		TweenSettingsExtensions.Insert(this.menuAniSeq, 2.8f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.WTTGHeaderObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		}, 1f, 0.2f).SetEase(Ease.Linear));
+		this.menuAniSeq.Insert(2.8f, DOTween.To(() => this.WTTGHeaderObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.WTTGHeaderObject.GetComponent<CanvasGroup>().alpha = x;
-		}, 1f, 1f), 3));
-		TweenSettingsExtensions.Insert(this.menuAniSeq, 2.6f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.menuPrompt1.fillAmount, delegate(float x)
+		}, 1f, 1f).SetEase(Ease.OutSine));
+		this.menuAniSeq.Insert(2.6f, DOTween.To(() => this.menuPrompt1.fillAmount, delegate(float x)
 		{
 			this.menuPrompt1.fillAmount = x;
-		}, 0f, 0.2f), 1));
-		TweenSettingsExtensions.Insert(this.menuAniSeq, 2.6f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.menuPrompt2.fillAmount, delegate(float x)
+		}, 0f, 0.2f).SetEase(Ease.Linear));
+		this.menuAniSeq.Insert(2.6f, DOTween.To(() => this.menuPrompt2.fillAmount, delegate(float x)
 		{
 			this.menuPrompt2.fillAmount = x;
-		}, 0f, 0.2f), 1));
-		TweenSettingsExtensions.Insert(this.menuAniSeq, 2.6f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.menuPrompt3.fillAmount, delegate(float x)
+		}, 0f, 0.2f).SetEase(Ease.Linear));
+		this.menuAniSeq.Insert(2.6f, DOTween.To(() => this.menuPrompt3.fillAmount, delegate(float x)
 		{
 			this.menuPrompt3.fillAmount = x;
-		}, 0f, 0.2f), 1));
-		TweenSettingsExtensions.Insert(this.menuAniSeq, 2.8f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.blackBG.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		}, 0f, 0.2f).SetEase(Ease.Linear));
+		this.menuAniSeq.Insert(2.8f, DOTween.To(() => this.blackBG.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.blackBG.GetComponent<CanvasGroup>().alpha = x;
-		}, 0f, 0.2f), 1));
+		}, 0f, 0.2f).SetEase(Ease.Linear));
 		for (int i = 0; i < this.currentMenuObjects.Count; i++)
 		{
 			this.currentMenuObjects[i].GetComponent<HMMenuObject>().showMe(2f);
 		}
-		TweenSettingsExtensions.Insert(this.menuAniSeq, 3f, TweenSettingsExtensions.SetRelative<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.locTopScoresObject.transform.localPosition, delegate(Vector3 x)
+		this.menuAniSeq.Insert(3f, DOTween.To(() => this.locTopScoresObject.transform.localPosition, delegate(Vector3 x)
 		{
 			this.locTopScoresObject.transform.localPosition = x;
-		}, new Vector3(184f, 0f, 0f), 1f), 3), true));
-		TweenSettingsExtensions.Insert(this.menuAniSeq, 3f, TweenSettingsExtensions.SetRelative<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.varObject.transform.localPosition, delegate(Vector3 x)
+		}, new Vector3(184f, 0f, 0f), 1f).SetEase(Ease.OutSine).SetRelative(true));
+		this.menuAniSeq.Insert(3f, DOTween.To(() => this.varObject.transform.localPosition, delegate(Vector3 x)
 		{
 			this.varObject.transform.localPosition = x;
-		}, new Vector3(184f, 0f, 0f), 1f), 3), true));
-		TweenSettingsExtensions.Insert(this.menuAniSeq, 3f, TweenSettingsExtensions.SetRelative<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.heapObject.transform.localPosition, delegate(Vector3 x)
+		}, new Vector3(184f, 0f, 0f), 1f).SetEase(Ease.OutSine).SetRelative(true));
+		this.menuAniSeq.Insert(3f, DOTween.To(() => this.heapObject.transform.localPosition, delegate(Vector3 x)
 		{
 			this.heapObject.transform.localPosition = x;
-		}, new Vector3(-184f, 0f, 0f), 1f), 3), true));
-		TweenSettingsExtensions.Insert(this.menuAniSeq, 3f, TweenSettingsExtensions.SetRelative<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.binObject.transform.localPosition, delegate(Vector3 x)
+		}, new Vector3(-184f, 0f, 0f), 1f).SetEase(Ease.OutSine).SetRelative(true));
+		this.menuAniSeq.Insert(3f, DOTween.To(() => this.binObject.transform.localPosition, delegate(Vector3 x)
 		{
 			this.binObject.transform.localPosition = x;
-		}, new Vector3(-184f, 0f, 0f), 1f), 3), true));
-		TweenSettingsExtensions.Insert(this.menuAniSeq, 3f, TweenSettingsExtensions.SetRelative<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.clearDataText.transform.localPosition, delegate(Vector3 x)
+		}, new Vector3(-184f, 0f, 0f), 1f).SetEase(Ease.OutSine).SetRelative(true));
+		this.menuAniSeq.Insert(3f, DOTween.To(() => this.clearDataText.transform.localPosition, delegate(Vector3 x)
 		{
 			this.clearDataText.transform.localPosition = x;
-		}, new Vector3(0f, 40f, 0f), 1f), 3), true));
-		TweenExtensions.Play<Sequence>(this.menuAniSeq);
+		}, new Vector3(0f, 40f, 0f), 1f).SetEase(Ease.OutSine).SetRelative(true));
+		this.menuAniSeq.Play<Sequence>();
 	}
 
 	private void aniShowMenuItems()
@@ -591,7 +591,7 @@ public class HackerModeManager : MonoBehaviour
 		{
 			for (int j = 0; j < this.hackerMenus[i].MenuOptions.Count; j++)
 			{
-				GameObject gameObject = Object.Instantiate<GameObject>(this.HMMenuItemObject);
+				GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(this.HMMenuItemObject);
 				gameObject.transform.SetParent(this.currentMenuObjects[i].GetComponent<HMMenuObject>().MenuLineHolder.transform);
 				gameObject.GetComponent<HMMenuItemObject>().buildMe(this, menuVectors.targetWidthFull, j, this.hackerMenus[i].MenuOptions[j], this.hackerMenus[i].MenuActions[j], 0f, num, num2);
 				this.currentMenuItemObjects.Add(gameObject);
@@ -608,36 +608,36 @@ public class HackerModeManager : MonoBehaviour
 	{
 		GameManager.AudioSlinger.DealSound(AudioHubs.MENU, AudioLayer.HACKINGSFX, this.menuHideSFX, 0.9f, false);
 		GameManager.TimeSlinger.FireTimer(2f, new Action(this.clearMenus));
-		this.menuHideAniSeq = TweenSettingsExtensions.OnComplete<Sequence>(DOTween.Sequence(), new TweenCallback(this.presentGameMode));
-		TweenSettingsExtensions.Insert(this.menuHideAniSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.WTTGHeaderObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		this.menuHideAniSeq = DOTween.Sequence().OnComplete(new TweenCallback(this.presentGameMode));
+		this.menuHideAniSeq.Insert(0f, DOTween.To(() => this.WTTGHeaderObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.WTTGHeaderObject.GetComponent<CanvasGroup>().alpha = x;
-		}, 0f, 0.65f), 2));
+		}, 0f, 0.65f).SetEase(Ease.InSine));
 		for (int i = 0; i < this.currentMenuObjects.Count; i++)
 		{
 			this.currentMenuObjects[i].GetComponent<HMMenuObject>().hideMe();
 		}
-		TweenSettingsExtensions.Insert(this.menuHideAniSeq, 0.5f, TweenSettingsExtensions.SetRelative<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.locTopScoresObject.transform.localPosition, delegate(Vector3 x)
+		this.menuHideAniSeq.Insert(0.5f, DOTween.To(() => this.locTopScoresObject.transform.localPosition, delegate(Vector3 x)
 		{
 			this.locTopScoresObject.transform.localPosition = x;
-		}, new Vector3(-184f, 0f, 0f), 0.5f), 2), true));
-		TweenSettingsExtensions.Insert(this.menuHideAniSeq, 0.5f, TweenSettingsExtensions.SetRelative<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.varObject.transform.localPosition, delegate(Vector3 x)
+		}, new Vector3(-184f, 0f, 0f), 0.5f).SetEase(Ease.InSine).SetRelative(true));
+		this.menuHideAniSeq.Insert(0.5f, DOTween.To(() => this.varObject.transform.localPosition, delegate(Vector3 x)
 		{
 			this.varObject.transform.localPosition = x;
-		}, new Vector3(-184f, 0f, 0f), 0.5f), 2), true));
-		TweenSettingsExtensions.Insert(this.menuHideAniSeq, 0.5f, TweenSettingsExtensions.SetRelative<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.heapObject.transform.localPosition, delegate(Vector3 x)
+		}, new Vector3(-184f, 0f, 0f), 0.5f).SetEase(Ease.InSine).SetRelative(true));
+		this.menuHideAniSeq.Insert(0.5f, DOTween.To(() => this.heapObject.transform.localPosition, delegate(Vector3 x)
 		{
 			this.heapObject.transform.localPosition = x;
-		}, new Vector3(184f, 0f, 0f), 0.5f), 2), true));
-		TweenSettingsExtensions.Insert(this.menuHideAniSeq, 0.5f, TweenSettingsExtensions.SetRelative<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.binObject.transform.localPosition, delegate(Vector3 x)
+		}, new Vector3(184f, 0f, 0f), 0.5f).SetEase(Ease.InSine).SetRelative(true));
+		this.menuHideAniSeq.Insert(0.5f, DOTween.To(() => this.binObject.transform.localPosition, delegate(Vector3 x)
 		{
 			this.binObject.transform.localPosition = x;
-		}, new Vector3(184f, 0f, 0f), 0.5f), 2), true));
-		TweenSettingsExtensions.Insert(this.menuHideAniSeq, 0.5f, TweenSettingsExtensions.SetRelative<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.clearDataText.transform.localPosition, delegate(Vector3 x)
+		}, new Vector3(184f, 0f, 0f), 0.5f).SetEase(Ease.InSine).SetRelative(true));
+		this.menuHideAniSeq.Insert(0.5f, DOTween.To(() => this.clearDataText.transform.localPosition, delegate(Vector3 x)
 		{
 			this.clearDataText.transform.localPosition = x;
-		}, new Vector3(0f, -40f, 0f), 0.5f), 3), true));
-		TweenExtensions.Play<Sequence>(this.menuHideAniSeq);
+		}, new Vector3(0f, -40f, 0f), 0.5f).SetEase(Ease.OutSine).SetRelative(true));
+		this.menuHideAniSeq.Play<Sequence>();
 	}
 
 	private void aniHideMenusNoGameMode()
@@ -645,49 +645,49 @@ public class HackerModeManager : MonoBehaviour
 		GameManager.AudioSlinger.DealSound(AudioHubs.MENU, AudioLayer.HACKINGSFX, this.menuHideSFX2, 0.9f, false);
 		GameManager.TimeSlinger.FireTimer(2f, new Action(this.clearMenus));
 		this.menuHideAniSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.menuHideAniSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.WTTGHeaderObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		this.menuHideAniSeq.Insert(0f, DOTween.To(() => this.WTTGHeaderObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.WTTGHeaderObject.GetComponent<CanvasGroup>().alpha = x;
-		}, 0f, 0.65f), 2));
+		}, 0f, 0.65f).SetEase(Ease.InSine));
 		for (int i = 0; i < this.currentMenuObjects.Count; i++)
 		{
 			this.currentMenuObjects[i].GetComponent<HMMenuObject>().hideMe();
 		}
-		TweenSettingsExtensions.Insert(this.menuHideAniSeq, 0.5f, TweenSettingsExtensions.SetRelative<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.locTopScoresObject.transform.localPosition, delegate(Vector3 x)
+		this.menuHideAniSeq.Insert(0.5f, DOTween.To(() => this.locTopScoresObject.transform.localPosition, delegate(Vector3 x)
 		{
 			this.locTopScoresObject.transform.localPosition = x;
-		}, new Vector3(-184f, 0f, 0f), 0.5f), 2), true));
-		TweenSettingsExtensions.Insert(this.menuHideAniSeq, 0.5f, TweenSettingsExtensions.SetRelative<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.varObject.transform.localPosition, delegate(Vector3 x)
+		}, new Vector3(-184f, 0f, 0f), 0.5f).SetEase(Ease.InSine).SetRelative(true));
+		this.menuHideAniSeq.Insert(0.5f, DOTween.To(() => this.varObject.transform.localPosition, delegate(Vector3 x)
 		{
 			this.varObject.transform.localPosition = x;
-		}, new Vector3(-184f, 0f, 0f), 0.5f), 2), true));
-		TweenSettingsExtensions.Insert(this.menuHideAniSeq, 0.5f, TweenSettingsExtensions.SetRelative<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.heapObject.transform.localPosition, delegate(Vector3 x)
+		}, new Vector3(-184f, 0f, 0f), 0.5f).SetEase(Ease.InSine).SetRelative(true));
+		this.menuHideAniSeq.Insert(0.5f, DOTween.To(() => this.heapObject.transform.localPosition, delegate(Vector3 x)
 		{
 			this.heapObject.transform.localPosition = x;
-		}, new Vector3(184f, 0f, 0f), 0.5f), 2), true));
-		TweenSettingsExtensions.Insert(this.menuHideAniSeq, 0.5f, TweenSettingsExtensions.SetRelative<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.binObject.transform.localPosition, delegate(Vector3 x)
+		}, new Vector3(184f, 0f, 0f), 0.5f).SetEase(Ease.InSine).SetRelative(true));
+		this.menuHideAniSeq.Insert(0.5f, DOTween.To(() => this.binObject.transform.localPosition, delegate(Vector3 x)
 		{
 			this.binObject.transform.localPosition = x;
-		}, new Vector3(184f, 0f, 0f), 0.5f), 2), true));
-		TweenSettingsExtensions.Insert(this.menuHideAniSeq, 0.5f, TweenSettingsExtensions.SetRelative<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.clearDataText.transform.localPosition, delegate(Vector3 x)
+		}, new Vector3(184f, 0f, 0f), 0.5f).SetEase(Ease.InSine).SetRelative(true));
+		this.menuHideAniSeq.Insert(0.5f, DOTween.To(() => this.clearDataText.transform.localPosition, delegate(Vector3 x)
 		{
 			this.clearDataText.transform.localPosition = x;
-		}, new Vector3(0f, -40f, 0f), 0.5f), 3), true));
-		TweenExtensions.Play<Sequence>(this.menuHideAniSeq);
+		}, new Vector3(0f, -40f, 0f), 0.5f).SetEase(Ease.OutSine).SetRelative(true));
+		this.menuHideAniSeq.Play<Sequence>();
 	}
 
 	private void clearMenus()
 	{
-		TweenExtensions.Kill(this.headerAniSeq, false);
+		this.headerAniSeq.Kill(false);
 		this.WTTGGlowImage.GetComponent<CanvasGroup>().alpha = 1f;
 		this.WTTGHeaderObject.SetActive(false);
 		for (int i = 0; i < this.currentMenuItemObjects.Count; i++)
 		{
-			Object.Destroy(this.currentMenuItemObjects[i].gameObject);
+			UnityEngine.Object.Destroy(this.currentMenuItemObjects[i].gameObject);
 		}
 		for (int j = 0; j < this.currentMenuObjects.Count; j++)
 		{
-			Object.Destroy(this.currentMenuObjects[j].gameObject);
+			UnityEngine.Object.Destroy(this.currentMenuObjects[j].gameObject);
 		}
 		this.currentMenuItemObjects.Clear();
 		this.currentMenuObjects.Clear();
@@ -697,11 +697,11 @@ public class HackerModeManager : MonoBehaviour
 	{
 		for (int i = 0; i < this.currentMenuItemObjects.Count; i++)
 		{
-			Object.Destroy(this.currentMenuItemObjects[i].gameObject);
+			UnityEngine.Object.Destroy(this.currentMenuItemObjects[i].gameObject);
 		}
 		for (int j = 0; j < this.currentMenuObjects.Count; j++)
 		{
-			Object.Destroy(this.currentMenuObjects[j].gameObject);
+			UnityEngine.Object.Destroy(this.currentMenuObjects[j].gameObject);
 		}
 		this.currentMenuItemObjects.Clear();
 		this.currentMenuObjects.Clear();
@@ -719,52 +719,52 @@ public class HackerModeManager : MonoBehaviour
 		this.FlashObject.SetActive(true);
 		this.FlashObject.GetComponent<CanvasGroup>().alpha = 1f;
 		this.skullLaughSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.skullLaughSeq, 0f, TweenSettingsExtensions.SetRelative<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.skullBottom.transform.localPosition, delegate(Vector3 x)
+		this.skullLaughSeq.Insert(0f, DOTween.To(() => this.skullBottom.transform.localPosition, delegate(Vector3 x)
 		{
 			this.skullBottom.transform.localPosition = x;
-		}, new Vector3(0f, -30f, 0f), 0.15f), 1), true));
-		TweenSettingsExtensions.Insert(this.skullLaughSeq, 0.15f, TweenSettingsExtensions.SetRelative<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.skullBottom.transform.localPosition, delegate(Vector3 x)
+		}, new Vector3(0f, -30f, 0f), 0.15f).SetEase(Ease.Linear).SetRelative(true));
+		this.skullLaughSeq.Insert(0.15f, DOTween.To(() => this.skullBottom.transform.localPosition, delegate(Vector3 x)
 		{
 			this.skullBottom.transform.localPosition = x;
-		}, new Vector3(0f, 30f, 0f), 0.15f), 1), true));
-		TweenSettingsExtensions.SetLoops<Sequence>(this.skullLaughSeq, -1);
-		TweenExtensions.Play<Sequence>(this.skullLaughSeq);
+		}, new Vector3(0f, 30f, 0f), 0.15f).SetEase(Ease.Linear).SetRelative(true));
+		this.skullLaughSeq.SetLoops(-1);
+		this.skullLaughSeq.Play<Sequence>();
 		this.presentGameModeSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.presentGameModeSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.FlashObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		this.presentGameModeSeq.Insert(0f, DOTween.To(() => this.FlashObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.FlashObject.GetComponent<CanvasGroup>().alpha = x;
-		}, 0f, 0.4f), 1));
-		TweenSettingsExtensions.Insert(this.presentGameModeSeq, 0.2f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.SkullCG.alpha, delegate(float x)
+		}, 0f, 0.4f).SetEase(Ease.Linear));
+		this.presentGameModeSeq.Insert(0.2f, DOTween.To(() => this.SkullCG.alpha, delegate(float x)
 		{
 			this.SkullCG.alpha = x;
-		}, 0f, 0.45f), 1));
-		TweenSettingsExtensions.Insert(this.presentGameModeSeq, 0.2f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.GameModeTextCG.alpha, delegate(float x)
+		}, 0f, 0.45f).SetEase(Ease.Linear));
+		this.presentGameModeSeq.Insert(0.2f, DOTween.To(() => this.GameModeTextCG.alpha, delegate(float x)
 		{
 			this.GameModeTextCG.alpha = x;
-		}, 0f, 0.6f), 1));
-		TweenSettingsExtensions.Insert(this.presentGameModeSeq, 0.2f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.GameModeText.transform.localScale, delegate(Vector3 x)
+		}, 0f, 0.6f).SetEase(Ease.Linear));
+		this.presentGameModeSeq.Insert(0.2f, DOTween.To(() => this.GameModeText.transform.localScale, delegate(Vector3 x)
 		{
 			this.GameModeText.transform.localScale = x;
-		}, new Vector3(0.1f, 0.1f, 0.1f), 0.6f), 1));
-		TweenSettingsExtensions.Insert(this.presentGameModeSeq, 0.8f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.scoreHeaderObject.transform.localPosition, delegate(Vector3 x)
+		}, new Vector3(0.1f, 0.1f, 0.1f), 0.6f).SetEase(Ease.Linear));
+		this.presentGameModeSeq.Insert(0.8f, DOTween.To(() => this.scoreHeaderObject.transform.localPosition, delegate(Vector3 x)
 		{
 			this.scoreHeaderObject.transform.localPosition = x;
-		}, Vector3.zero, 0.8f), 3));
-		TweenSettingsExtensions.Insert(this.presentGameModeSeq, 0.8f, TweenSettingsExtensions.SetRelative<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.upgradesFooterObject.transform.localPosition, delegate(Vector3 x)
+		}, Vector3.zero, 0.8f).SetEase(Ease.OutSine));
+		this.presentGameModeSeq.Insert(0.8f, DOTween.To(() => this.upgradesFooterObject.transform.localPosition, delegate(Vector3 x)
 		{
 			this.upgradesFooterObject.transform.localPosition = x;
-		}, new Vector3(0f, 44f, 0f), 0.8f), 3), true));
-		TweenExtensions.Play<Sequence>(this.presentGameModeSeq);
+		}, new Vector3(0f, 44f, 0f), 0.8f).SetEase(Ease.OutSine).SetRelative(true));
+		this.presentGameModeSeq.Play<Sequence>();
 	}
 
 	private void resetGameMode()
 	{
-		TweenExtensions.Kill(this.skullLaughSeq, true);
+		this.skullLaughSeq.Kill(true);
 		float num = Mathf.Abs(this.skullBottom.transform.localPosition.y) - (float)Screen.height / 2f;
-		TweenSettingsExtensions.SetRelative<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.skullBottom.transform.localPosition, delegate(Vector3 x)
+		DOTween.To(() => this.skullBottom.transform.localPosition, delegate(Vector3 x)
 		{
 			this.skullBottom.transform.localPosition = x;
-		}, new Vector3(0f, num - 65f, 0f), 0.1f), 1), true);
+		}, new Vector3(0f, num - 65f, 0f), 0.1f).SetEase(Ease.Linear).SetRelative(true);
 		this.mainCamera.GetComponent<Glitch>().enabled = false;
 		this.FlashObject.SetActive(false);
 		this.FlashObject.GetComponent<CanvasGroup>().alpha = 1f;
@@ -810,18 +810,18 @@ public class HackerModeManager : MonoBehaviour
 
 	private void presentDOSAttack()
 	{
-		TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.DOSNodeHolder.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		DOTween.To(() => this.DOSNodeHolder.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.DOSNodeHolder.GetComponent<CanvasGroup>().alpha = x;
-		}, 1f, 0.4f), 3);
+		}, 1f, 0.4f).SetEase(Ease.OutSine);
 	}
 
 	private void presentKAttack()
 	{
-		TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.KAttackHolder.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		DOTween.To(() => this.KAttackHolder.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.KAttackHolder.GetComponent<CanvasGroup>().alpha = x;
-		}, 1f, 0.4f), 3);
+		}, 1f, 0.4f).SetEase(Ease.OutSine);
 	}
 
 	private void presentCLOUDAttack()
@@ -922,39 +922,39 @@ public class HackerModeManager : MonoBehaviour
 		GameManager.AudioSlinger.DealSound(AudioHubs.HACKERMODE, AudioLayer.HACKINGSFX, this.finalPointsImpactSFX, 0.9f, false, 3f);
 		GameManager.AudioSlinger.DealSound(AudioHubs.HACKERMODE, AudioLayer.HACKINGSFX, this.timeShowSFX, 0.6f, false, 8.3f);
 		this.finalPointsSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.finalPointsSeq, 1.5f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.chainLevelFinalObject.transform.localScale, delegate(Vector3 x)
+		this.finalPointsSeq.Insert(1.5f, DOTween.To(() => this.chainLevelFinalObject.transform.localScale, delegate(Vector3 x)
 		{
 			this.chainLevelFinalObject.transform.localScale = x;
-		}, new Vector3(1f, 1f, 1f), 0.75f), 3));
-		TweenSettingsExtensions.Insert(this.finalPointsSeq, 1.5f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.chainLevelFinalObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		}, new Vector3(1f, 1f, 1f), 0.75f).SetEase(Ease.OutSine));
+		this.finalPointsSeq.Insert(1.5f, DOTween.To(() => this.chainLevelFinalObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.chainLevelFinalObject.GetComponent<CanvasGroup>().alpha = x;
-		}, 1f, 0.75f), 3));
-		TweenSettingsExtensions.Insert(this.finalPointsSeq, 2.25f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.chainCountFinalObject.transform.localScale, delegate(Vector3 x)
+		}, 1f, 0.75f).SetEase(Ease.OutSine));
+		this.finalPointsSeq.Insert(2.25f, DOTween.To(() => this.chainCountFinalObject.transform.localScale, delegate(Vector3 x)
 		{
 			this.chainCountFinalObject.transform.localScale = x;
-		}, new Vector3(1f, 1f, 1f), 0.75f), 3));
-		TweenSettingsExtensions.Insert(this.finalPointsSeq, 2.25f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.chainCountFinalObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		}, new Vector3(1f, 1f, 1f), 0.75f).SetEase(Ease.OutSine));
+		this.finalPointsSeq.Insert(2.25f, DOTween.To(() => this.chainCountFinalObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.chainCountFinalObject.GetComponent<CanvasGroup>().alpha = x;
-		}, 1f, 0.75f), 3));
-		TweenSettingsExtensions.Insert(this.finalPointsSeq, 3f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.finalScoreObject.transform.localScale, delegate(Vector3 x)
+		}, 1f, 0.75f).SetEase(Ease.OutSine));
+		this.finalPointsSeq.Insert(3f, DOTween.To(() => this.finalScoreObject.transform.localScale, delegate(Vector3 x)
 		{
 			this.finalScoreObject.transform.localScale = x;
-		}, new Vector3(1f, 1f, 1f), 0.75f), 3));
-		TweenSettingsExtensions.Insert(this.finalPointsSeq, 3f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.finalScoreObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		}, new Vector3(1f, 1f, 1f), 0.75f).SetEase(Ease.OutSine));
+		this.finalPointsSeq.Insert(3f, DOTween.To(() => this.finalScoreObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.finalScoreObject.GetComponent<CanvasGroup>().alpha = x;
-		}, 1f, 0.75f), 3));
-		TweenSettingsExtensions.Insert(this.finalPointsSeq, 8.3f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.finalTimeObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		}, 1f, 0.75f).SetEase(Ease.OutSine));
+		this.finalPointsSeq.Insert(8.3f, DOTween.To(() => this.finalTimeObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.finalTimeObject.GetComponent<CanvasGroup>().alpha = x;
-		}, 1f, 0.75f), 1));
-		TweenSettingsExtensions.Insert(this.finalPointsSeq, 9.3f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.gameOverMainMenuBTN.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		}, 1f, 0.75f).SetEase(Ease.Linear));
+		this.finalPointsSeq.Insert(9.3f, DOTween.To(() => this.gameOverMainMenuBTN.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.gameOverMainMenuBTN.GetComponent<CanvasGroup>().alpha = x;
-		}, 1f, 0.75f), 3));
-		TweenExtensions.Play<Sequence>(this.finalPointsSeq);
+		}, 1f, 0.75f).SetEase(Ease.OutSine));
+		this.finalPointsSeq.Play<Sequence>();
 	}
 
 	private void prepMainMenu()
@@ -968,18 +968,18 @@ public class HackerModeManager : MonoBehaviour
 	{
 		GameManager.TimeSlinger.FireTimer(0.5f, new Action(this.aniMainMenu));
 		GameManager.TimeSlinger.FireTimer(0.7f, new Action(this.clearGameOver));
-		TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.GameOverObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		DOTween.To(() => this.GameOverObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.GameOverObject.GetComponent<CanvasGroup>().alpha = x;
-		}, 0f, 0.4f), 1);
-		TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.newHighScoreText.gameObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		}, 0f, 0.4f).SetEase(Ease.Linear);
+		DOTween.To(() => this.newHighScoreText.gameObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.newHighScoreText.gameObject.GetComponent<CanvasGroup>().alpha = x;
-		}, 0f, 0.5f), 1);
-		TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.gameOverMainMenuBTN.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		}, 0f, 0.5f).SetEase(Ease.Linear);
+		DOTween.To(() => this.gameOverMainMenuBTN.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.gameOverMainMenuBTN.GetComponent<CanvasGroup>().alpha = x;
-		}, 0f, 0.4f), 1);
+		}, 0f, 0.4f).SetEase(Ease.Linear);
 	}
 
 	private void clearGameOver()
@@ -1103,68 +1103,68 @@ public class HackerModeManager : MonoBehaviour
 	{
 		GameManager.AudioSlinger.DealSound(AudioHubs.HACKERMODE, AudioLayer.HACKINGSFX, this.newHighScoreSFX, 0.95f, false);
 		this.newHighScoreText.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
-		TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.newHighScoreText.gameObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		DOTween.To(() => this.newHighScoreText.gameObject.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.newHighScoreText.gameObject.GetComponent<CanvasGroup>().alpha = x;
-		}, 1f, 0.6f), 3);
-		TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.newHighScoreText.transform.localScale, delegate(Vector3 x)
+		}, 1f, 0.6f).SetEase(Ease.OutSine);
+		DOTween.To(() => this.newHighScoreText.transform.localScale, delegate(Vector3 x)
 		{
 			this.newHighScoreText.transform.localScale = x;
-		}, new Vector3(1f, 1f, 1f), 0.6f), 3);
+		}, new Vector3(1f, 1f, 1f), 0.6f).SetEase(Ease.OutSine);
 	}
 
 	private void aniStaticBG()
 	{
 		this.staticAniSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.staticAniSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.staticBG1.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		this.staticAniSeq.Insert(0f, DOTween.To(() => this.staticBG1.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.staticBG1.GetComponent<CanvasGroup>().alpha = x;
-		}, 0f, 0.1f), 1));
-		TweenSettingsExtensions.Insert(this.staticAniSeq, 0.1f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.staticBG2.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		}, 0f, 0.1f).SetEase(Ease.Linear));
+		this.staticAniSeq.Insert(0.1f, DOTween.To(() => this.staticBG2.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.staticBG2.GetComponent<CanvasGroup>().alpha = x;
-		}, 0f, 0.1f), 1));
-		TweenSettingsExtensions.Insert(this.staticAniSeq, 0.2f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.staticBG3.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		}, 0f, 0.1f).SetEase(Ease.Linear));
+		this.staticAniSeq.Insert(0.2f, DOTween.To(() => this.staticBG3.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.staticBG3.GetComponent<CanvasGroup>().alpha = x;
-		}, 0f, 0.1f), 1));
-		TweenSettingsExtensions.Insert(this.staticAniSeq, 0.3f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.staticBG4.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		}, 0f, 0.1f).SetEase(Ease.Linear));
+		this.staticAniSeq.Insert(0.3f, DOTween.To(() => this.staticBG4.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.staticBG4.GetComponent<CanvasGroup>().alpha = x;
-		}, 0f, 0.1f), 1));
-		TweenSettingsExtensions.Insert(this.staticAniSeq, 0.4f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.staticBG4.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		}, 0f, 0.1f).SetEase(Ease.Linear));
+		this.staticAniSeq.Insert(0.4f, DOTween.To(() => this.staticBG4.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.staticBG1.GetComponent<CanvasGroup>().alpha = x;
-		}, 1f, 0f), 1));
-		TweenSettingsExtensions.Insert(this.staticAniSeq, 0.4f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.staticBG3.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		}, 1f, 0f).SetEase(Ease.Linear));
+		this.staticAniSeq.Insert(0.4f, DOTween.To(() => this.staticBG3.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.staticBG2.GetComponent<CanvasGroup>().alpha = x;
-		}, 1f, 0f), 1));
-		TweenSettingsExtensions.Insert(this.staticAniSeq, 0.4f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.staticBG2.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		}, 1f, 0f).SetEase(Ease.Linear));
+		this.staticAniSeq.Insert(0.4f, DOTween.To(() => this.staticBG2.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.staticBG3.GetComponent<CanvasGroup>().alpha = x;
-		}, 1f, 0f), 1));
-		TweenSettingsExtensions.Insert(this.staticAniSeq, 0.4f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.staticBG1.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		}, 1f, 0f).SetEase(Ease.Linear));
+		this.staticAniSeq.Insert(0.4f, DOTween.To(() => this.staticBG1.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.staticBG4.GetComponent<CanvasGroup>().alpha = x;
-		}, 1f, 0f), 1));
-		TweenSettingsExtensions.SetLoops<Sequence>(this.staticAniSeq, -1);
-		TweenExtensions.Play<Sequence>(this.staticAniSeq);
+		}, 1f, 0f).SetEase(Ease.Linear));
+		this.staticAniSeq.SetLoops(-1);
+		this.staticAniSeq.Play<Sequence>();
 	}
 
 	private void aniHeader()
 	{
 		this.headerAniSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.headerAniSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.WTTGGlowImage.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		this.headerAniSeq.Insert(0f, DOTween.To(() => this.WTTGGlowImage.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.WTTGGlowImage.GetComponent<CanvasGroup>().alpha = x;
-		}, 0f, 2f), 1));
-		TweenSettingsExtensions.Insert(this.headerAniSeq, 2f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.WTTGGlowImage.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		}, 0f, 2f).SetEase(Ease.Linear));
+		this.headerAniSeq.Insert(2f, DOTween.To(() => this.WTTGGlowImage.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.WTTGGlowImage.GetComponent<CanvasGroup>().alpha = x;
-		}, 1f, 2f), 1));
-		TweenSettingsExtensions.SetLoops<Sequence>(this.headerAniSeq, -1);
-		TweenExtensions.Play<Sequence>(this.headerAniSeq);
+		}, 1f, 2f).SetEase(Ease.Linear));
+		this.headerAniSeq.SetLoops(-1);
+		this.headerAniSeq.Play<Sequence>();
 	}
 
 	private void clearUpgradeEFXS()
@@ -1173,12 +1173,12 @@ public class HackerModeManager : MonoBehaviour
 		this.mainCamera.GetComponent<Glitch>().enabled = false;
 		this.mainCamera.GetComponent<AnalogTV>().enabled = false;
 		this.mainCamera.GetComponent<PixelMatrix>().enabled = false;
-		TweenExtensions.Kill(this.skullLaughSeq, true);
+		this.skullLaughSeq.Kill(true);
 		float num = Mathf.Abs(this.skullBottom.transform.localPosition.y) - (float)Screen.height / 2f;
-		TweenSettingsExtensions.SetRelative<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.skullBottom.transform.localPosition, delegate(Vector3 x)
+		DOTween.To(() => this.skullBottom.transform.localPosition, delegate(Vector3 x)
 		{
 			this.skullBottom.transform.localPosition = x;
-		}, new Vector3(0f, num - 65f, 0f), 0.1f), 1), true);
+		}, new Vector3(0f, num - 65f, 0f), 0.1f).SetEase(Ease.Linear).SetRelative(true);
 	}
 
 	private void loadMainMenu()
@@ -1249,7 +1249,7 @@ public class HackerModeManager : MonoBehaviour
 		if (hasFocus)
 		{
 			Cursor.visible = false;
-			Cursor.lockState = 0;
+			Cursor.lockState = CursorLockMode.None;
 		}
 	}
 

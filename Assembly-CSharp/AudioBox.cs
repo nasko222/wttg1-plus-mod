@@ -33,14 +33,14 @@ public class AudioBox : MonoBehaviour
 
 	private void prepMagicFire()
 	{
-		this.magicTimeWindow = Random.Range(this.magicWindowMin, this.magicWindowMax);
+		this.magicTimeWindow = UnityEngine.Random.Range(this.magicWindowMin, this.magicWindowMax);
 		this.magicTimeStamp = Time.time;
 		this.magicFireActive = true;
 	}
 
 	private void fireMagic()
 	{
-		int index = Random.Range(0, this.AudioBeats.Count);
+		int index = UnityEngine.Random.Range(0, this.AudioBeats.Count);
 		GameManager.AudioSlinger.DealSound(this.AudioHub, this.AudioBeats[index].audioLayer, this.AudioBeats[index].audioFile, this.AudioBeats[index].audioVolume, this.AudioBeats[index].loop);
 		this.prepMagicFire();
 	}

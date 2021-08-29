@@ -13,12 +13,12 @@ namespace Colorful
 			float num = (float)source.width;
 			float num2 = (float)source.height;
 			float num3 = num / num2;
-			int num4 = 0;
+			int pass = 0;
 			base.Material.SetColor("_FillColor", this.FillColor);
-			float num5;
+			float num4;
 			if (num3 < this.Aspect)
 			{
-				num5 = (num2 - num / this.Aspect) * 0.5f / num2;
+				num4 = (num2 - num / this.Aspect) * 0.5f / num2;
 			}
 			else
 			{
@@ -27,11 +27,11 @@ namespace Colorful
 					Graphics.Blit(source, destination);
 					return;
 				}
-				num5 = (num - num2 * this.Aspect) * 0.5f / num;
-				num4 = 1;
+				num4 = (num - num2 * this.Aspect) * 0.5f / num;
+				pass = 1;
 			}
-			base.Material.SetVector("_Offsets", new Vector2(num5, 1f - num5));
-			Graphics.Blit(source, destination, base.Material, num4);
+			base.Material.SetVector("_Offsets", new Vector2(num4, 1f - num4));
+			Graphics.Blit(source, destination, base.Material, pass);
 		}
 
 		protected override string GetShaderName()

@@ -33,15 +33,15 @@ public class HMBTNObject : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 			if (this.buttonText != null)
 			{
 				this.buttonText.text = this.defaultTextValue.ToString();
-				TweenSettingsExtensions.SetEase<TweenerCore<Color, Color, ColorOptions>>(DOTween.To(() => this.buttonText.color, delegate(Color x)
+				DOTween.To(() => this.buttonText.color, delegate(Color x)
 				{
 					this.buttonText.color = x;
-				}, this.defaultStateTextColor, 0.3f), 1);
+				}, this.defaultStateTextColor, 0.3f).SetEase(Ease.Linear);
 			}
-			TweenSettingsExtensions.SetEase<TweenerCore<Color, Color, ColorOptions>>(DOTween.To(() => this.buttonIMG.color, delegate(Color x)
+			DOTween.To(() => this.buttonIMG.color, delegate(Color x)
 			{
 				this.buttonIMG.color = x;
-			}, this.defaultStateBTNColor, 0.3f), 1);
+			}, this.defaultStateBTNColor, 0.3f).SetEase(Ease.Linear);
 			GameManager.TimeSlinger.FireTimer(0.3f, new Action(this.resetFire));
 		}
 	}
@@ -55,7 +55,7 @@ public class HMBTNObject : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 			if (this.buttonText != null)
 			{
 				this.buttonText.color = this.lockStateTextColor;
-				this.buttonText.fontStyle = 2;
+				this.buttonText.fontStyle = FontStyle.Italic;
 			}
 		}
 	}
@@ -69,7 +69,7 @@ public class HMBTNObject : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 			if (this.buttonText != null)
 			{
 				this.buttonText.color = this.defaultStateTextColor;
-				this.buttonText.fontStyle = 0;
+				this.buttonText.fontStyle = FontStyle.Normal;
 			}
 		}
 	}
@@ -96,32 +96,32 @@ public class HMBTNObject : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 				if (!this.iWasFired)
 				{
 					GameManager.AudioSlinger.DealSound(AudioHubs.MENU, AudioLayer.HACKINGSFX, this.hoverSFX, 0.6f, false);
-					TweenSettingsExtensions.SetEase<TweenerCore<Color, Color, ColorOptions>>(DOTween.To(() => this.buttonIMG.color, delegate(Color x)
+					DOTween.To(() => this.buttonIMG.color, delegate(Color x)
 					{
 						this.buttonIMG.color = x;
-					}, this.hoverStateBTNColor, 0.3f), 1);
+					}, this.hoverStateBTNColor, 0.3f).SetEase(Ease.Linear);
 					if (this.buttonText != null)
 					{
-						TweenSettingsExtensions.SetEase<TweenerCore<Color, Color, ColorOptions>>(DOTween.To(() => this.buttonText.color, delegate(Color x)
+						DOTween.To(() => this.buttonText.color, delegate(Color x)
 						{
 							this.buttonText.color = x;
-						}, this.hoverStateTextColor, 0.3f), 1);
+						}, this.hoverStateTextColor, 0.3f).SetEase(Ease.Linear);
 					}
 				}
 			}
 			else
 			{
 				GameManager.AudioSlinger.DealSound(AudioHubs.MENU, AudioLayer.HACKINGSFX, this.hoverSFX, 0.6f, false);
-				TweenSettingsExtensions.SetEase<TweenerCore<Color, Color, ColorOptions>>(DOTween.To(() => this.buttonIMG.color, delegate(Color x)
+				DOTween.To(() => this.buttonIMG.color, delegate(Color x)
 				{
 					this.buttonIMG.color = x;
-				}, this.hoverStateBTNColor, 0.3f), 1);
+				}, this.hoverStateBTNColor, 0.3f).SetEase(Ease.Linear);
 				if (this.buttonText != null)
 				{
-					TweenSettingsExtensions.SetEase<TweenerCore<Color, Color, ColorOptions>>(DOTween.To(() => this.buttonText.color, delegate(Color x)
+					DOTween.To(() => this.buttonText.color, delegate(Color x)
 					{
 						this.buttonText.color = x;
-					}, this.hoverStateTextColor, 0.3f), 1);
+					}, this.hoverStateTextColor, 0.3f).SetEase(Ease.Linear);
 				}
 			}
 		}
@@ -135,31 +135,31 @@ public class HMBTNObject : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 			{
 				if (!this.iWasFired)
 				{
-					TweenSettingsExtensions.SetEase<TweenerCore<Color, Color, ColorOptions>>(DOTween.To(() => this.buttonIMG.color, delegate(Color x)
+					DOTween.To(() => this.buttonIMG.color, delegate(Color x)
 					{
 						this.buttonIMG.color = x;
-					}, this.defaultStateBTNColor, 0.3f), 1);
+					}, this.defaultStateBTNColor, 0.3f).SetEase(Ease.Linear);
 					if (this.buttonText != null)
 					{
-						TweenSettingsExtensions.SetEase<TweenerCore<Color, Color, ColorOptions>>(DOTween.To(() => this.buttonText.color, delegate(Color x)
+						DOTween.To(() => this.buttonText.color, delegate(Color x)
 						{
 							this.buttonText.color = x;
-						}, this.defaultStateTextColor, 0.3f), 1);
+						}, this.defaultStateTextColor, 0.3f).SetEase(Ease.Linear);
 					}
 				}
 			}
 			else
 			{
-				TweenSettingsExtensions.SetEase<TweenerCore<Color, Color, ColorOptions>>(DOTween.To(() => this.buttonIMG.color, delegate(Color x)
+				DOTween.To(() => this.buttonIMG.color, delegate(Color x)
 				{
 					this.buttonIMG.color = x;
-				}, this.defaultStateBTNColor, 0.3f), 1);
+				}, this.defaultStateBTNColor, 0.3f).SetEase(Ease.Linear);
 				if (this.buttonText != null)
 				{
-					TweenSettingsExtensions.SetEase<TweenerCore<Color, Color, ColorOptions>>(DOTween.To(() => this.buttonText.color, delegate(Color x)
+					DOTween.To(() => this.buttonText.color, delegate(Color x)
 					{
 						this.buttonText.color = x;
-					}, this.defaultStateTextColor, 0.3f), 1);
+					}, this.defaultStateTextColor, 0.3f).SetEase(Ease.Linear);
 				}
 			}
 		}
@@ -173,16 +173,16 @@ public class HMBTNObject : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 			this.myCallBackAction();
 			if (!this.holdAction)
 			{
-				TweenSettingsExtensions.SetEase<TweenerCore<Color, Color, ColorOptions>>(DOTween.To(() => this.buttonIMG.color, delegate(Color x)
+				DOTween.To(() => this.buttonIMG.color, delegate(Color x)
 				{
 					this.buttonIMG.color = x;
-				}, this.defaultStateBTNColor, 0.3f), 1);
+				}, this.defaultStateBTNColor, 0.3f).SetEase(Ease.Linear);
 				if (this.buttonText != null)
 				{
-					TweenSettingsExtensions.SetEase<TweenerCore<Color, Color, ColorOptions>>(DOTween.To(() => this.buttonText.color, delegate(Color x)
+					DOTween.To(() => this.buttonText.color, delegate(Color x)
 					{
 						this.buttonText.color = x;
-					}, this.defaultStateTextColor, 0.3f), 1);
+					}, this.defaultStateTextColor, 0.3f).SetEase(Ease.Linear);
 				}
 				GameManager.TimeSlinger.FireTimer(0.5f, new Action(this.resetFire));
 			}

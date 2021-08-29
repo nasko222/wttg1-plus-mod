@@ -70,7 +70,7 @@ public class VapeNodeObject : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
 	public void clearActiveState()
 	{
-		TweenExtensions.Kill(this.actionSeq, false);
+		this.actionSeq.Kill(false);
 		this.nodeHoverCanvas.alpha = 0f;
 		this.nodeActiveCanvas.alpha = 0f;
 	}
@@ -88,11 +88,11 @@ public class VapeNodeObject : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 		this.nodeActiveImage.sprite = this.goodNodeActiveSprite;
 		this.nodeActiveCanvas.alpha = 1f;
 		this.goodSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.goodSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.nodeActiveCanvas.alpha, delegate(float x)
+		this.goodSeq.Insert(0f, DOTween.To(() => this.nodeActiveCanvas.alpha, delegate(float x)
 		{
 			this.nodeActiveCanvas.alpha = x;
-		}, 0f, 0.25f), 1));
-		TweenExtensions.Play<Sequence>(this.goodSeq);
+		}, 0f, 0.25f).SetEase(Ease.Linear));
+		this.goodSeq.Play<Sequence>();
 		this.updateMyType(vapeNodeType.GOODNODE);
 	}
 
@@ -114,10 +114,10 @@ public class VapeNodeObject : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 						GameManager.AudioSlinger.DealSound(AudioHubs.COMPUTER, AudioLayer.HACKINGSFX, this.myVapeAttack.boxNodeHoverClip, 0.75f, false);
 					}
 				}
-				TweenSettingsExtensions.Insert(this.actionSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.nodeHoverCanvas.alpha, delegate(float x)
+				this.actionSeq.Insert(0f, DOTween.To(() => this.nodeHoverCanvas.alpha, delegate(float x)
 				{
 					this.nodeHoverCanvas.alpha = x;
-				}, 1f, 0.25f), 1));
+				}, 1f, 0.25f).SetEase(Ease.Linear));
 			}
 			else if (this.myVapeNodeData.myType == vapeNodeType.BLANKNODE && this.myVapeAttack.curActiveNodeSet)
 			{
@@ -129,12 +129,12 @@ public class VapeNodeObject : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 				{
 					GameManager.AudioSlinger.DealSound(AudioHubs.COMPUTER, AudioLayer.HACKINGSFX, this.myVapeAttack.blankNodeHoverClip, 1f, false);
 				}
-				TweenSettingsExtensions.Insert(this.actionSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.nodeHoverCanvas.alpha, delegate(float x)
+				this.actionSeq.Insert(0f, DOTween.To(() => this.nodeHoverCanvas.alpha, delegate(float x)
 				{
 					this.nodeHoverCanvas.alpha = x;
-				}, 1f, 0.15f), 1));
+				}, 1f, 0.15f).SetEase(Ease.Linear));
 			}
-			TweenExtensions.Play<Sequence>(this.actionSeq);
+			this.actionSeq.Play<Sequence>();
 		}
 	}
 
@@ -142,23 +142,23 @@ public class VapeNodeObject : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 	{
 		if (this.myVapeAttack.vapeAttackFired)
 		{
-			TweenExtensions.Kill(this.actionSeq, false);
+			this.actionSeq.Kill(false);
 			this.actionSeq = DOTween.Sequence();
 			if (this.myVapeNodeData.myType == vapeNodeType.BOXNODE)
 			{
-				TweenSettingsExtensions.Insert(this.actionSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.nodeHoverCanvas.alpha, delegate(float x)
+				this.actionSeq.Insert(0f, DOTween.To(() => this.nodeHoverCanvas.alpha, delegate(float x)
 				{
 					this.nodeHoverCanvas.alpha = x;
-				}, 0f, 0.25f), 1));
+				}, 0f, 0.25f).SetEase(Ease.Linear));
 			}
 			else if (this.myVapeNodeData.myType == vapeNodeType.BLANKNODE)
 			{
-				TweenSettingsExtensions.Insert(this.actionSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.nodeHoverCanvas.alpha, delegate(float x)
+				this.actionSeq.Insert(0f, DOTween.To(() => this.nodeHoverCanvas.alpha, delegate(float x)
 				{
 					this.nodeHoverCanvas.alpha = x;
-				}, 0f, 0.15f), 1));
+				}, 0f, 0.15f).SetEase(Ease.Linear));
 			}
-			TweenExtensions.Play<Sequence>(this.actionSeq);
+			this.actionSeq.Play<Sequence>();
 		}
 	}
 
@@ -166,7 +166,7 @@ public class VapeNodeObject : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 	{
 		if (this.myVapeAttack.vapeAttackFired)
 		{
-			TweenExtensions.Kill(this.actionSeq, false);
+			this.actionSeq.Kill(false);
 			this.actionSeq = DOTween.Sequence();
 			if (this.myVapeNodeData.myType == vapeNodeType.BOXNODE)
 			{
@@ -180,24 +180,24 @@ public class VapeNodeObject : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 					{
 						GameManager.AudioSlinger.DealSound(AudioHubs.COMPUTER, AudioLayer.HACKINGSFX, this.myVapeAttack.boxNodeActiveClip, 0.75f, false);
 					}
-					TweenSettingsExtensions.Insert(this.actionSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.nodeHoverCanvas.alpha, delegate(float x)
+					this.actionSeq.Insert(0f, DOTween.To(() => this.nodeHoverCanvas.alpha, delegate(float x)
 					{
 						this.nodeHoverCanvas.alpha = x;
-					}, 0f, 0.25f), 1));
-					TweenSettingsExtensions.Insert(this.actionSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.nodeActiveCanvas.alpha, delegate(float x)
+					}, 0f, 0.25f).SetEase(Ease.Linear));
+					this.actionSeq.Insert(0f, DOTween.To(() => this.nodeActiveCanvas.alpha, delegate(float x)
 					{
 						this.nodeActiveCanvas.alpha = x;
-					}, 1f, 0.25f), 1));
+					}, 1f, 0.25f).SetEase(Ease.Linear));
 				}
 			}
 			else if (this.myVapeNodeData.myType == vapeNodeType.BLANKNODE && this.myVapeAttack.curActiveNodeSet)
 			{
-				TweenSettingsExtensions.Insert(this.actionSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.nodeHoverCanvas.alpha, delegate(float x)
+				this.actionSeq.Insert(0f, DOTween.To(() => this.nodeHoverCanvas.alpha, delegate(float x)
 				{
 					this.nodeHoverCanvas.alpha = x;
-				}, 0f, 0.15f), 1));
+				}, 0f, 0.15f).SetEase(Ease.Linear));
 			}
-			TweenExtensions.Play<Sequence>(this.actionSeq);
+			this.actionSeq.Play<Sequence>();
 			this.myVapeAttack.vapeNodeAction(this.myVapeNodeData);
 		}
 	}

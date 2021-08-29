@@ -78,7 +78,7 @@ public class NodeObject : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 		}
 		else if (this.myNodeData.myType == nodeType.WHITENODE && this.trollNode)
 		{
-			switch (Random.Range(1, 5))
+			switch (UnityEngine.Random.Range(1, 5))
 			{
 			case 1:
 				this.nodeImage.sprite = this.myDoSAttack.trollLeftNodeSprite;
@@ -180,22 +180,22 @@ public class NodeObject : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 	private void aniStartNodeArrow()
 	{
 		this.myAniSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.myAniSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.startNodeArr.transform.localPosition, delegate(Vector3 x)
+		this.myAniSeq.Insert(0f, DOTween.To(() => this.startNodeArr.transform.localPosition, delegate(Vector3 x)
 		{
 			this.startNodeArr.transform.localPosition = x;
-		}, new Vector3(this.startNodeArr.transform.localPosition.x, (float)this.myDoSAttack.nodeHeight / 2f + this.startNodeArr.rectTransform.sizeDelta.y / 2f, 0f), 0.6f), 3));
-		TweenSettingsExtensions.Insert(this.myAniSeq, 0.6f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.startNodeArr.transform.localPosition, delegate(Vector3 x)
+		}, new Vector3(this.startNodeArr.transform.localPosition.x, (float)this.myDoSAttack.nodeHeight / 2f + this.startNodeArr.rectTransform.sizeDelta.y / 2f, 0f), 0.6f).SetEase(Ease.OutSine));
+		this.myAniSeq.Insert(0.6f, DOTween.To(() => this.startNodeArr.transform.localPosition, delegate(Vector3 x)
 		{
 			this.startNodeArr.transform.localPosition = x;
-		}, new Vector3(this.startNodeArr.transform.localPosition.x, (float)this.myDoSAttack.nodeHeight, 0f), 0.6f), 3));
-		TweenSettingsExtensions.SetLoops<Sequence>(this.myAniSeq, -1);
-		TweenExtensions.Play<Sequence>(this.myAniSeq);
+		}, new Vector3(this.startNodeArr.transform.localPosition.x, (float)this.myDoSAttack.nodeHeight, 0f), 0.6f).SetEase(Ease.OutSine));
+		this.myAniSeq.SetLoops(-1);
+		this.myAniSeq.Play<Sequence>();
 	}
 
 	private void aniStopNodeArrow()
 	{
-		TweenExtensions.Kill(this.myAniSeq, false);
-		Object.Destroy(this.startNodeArr);
+		this.myAniSeq.Kill(false);
+		UnityEngine.Object.Destroy(this.startNodeArr);
 	}
 
 	private void Start()

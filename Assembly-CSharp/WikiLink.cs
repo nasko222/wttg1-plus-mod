@@ -21,8 +21,8 @@ public class WikiLink : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 		}
 		base.transform.localPosition = new Vector3(this.myX, this.myY, 0f);
 		base.transform.localScale = new Vector3(1f, 1f, 1f);
-		float num = LayoutUtility.GetPreferredWidth(this.siteTitle.rectTransform) + this.siteTitle.rectTransform.localPosition.x;
-		base.GetComponent<RectTransform>().sizeDelta = new Vector2(num, base.GetComponent<RectTransform>().sizeDelta.y);
+		float x = LayoutUtility.GetPreferredWidth(this.siteTitle.rectTransform) + this.siteTitle.rectTransform.localPosition.x;
+		base.GetComponent<RectTransform>().sizeDelta = new Vector2(x, base.GetComponent<RectTransform>().sizeDelta.y);
 	}
 
 	private void Start()
@@ -55,7 +55,7 @@ public class WikiLink : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 		}
 		else
 		{
-			int num = Random.Range(0, 10);
+			int num = UnityEngine.Random.Range(0, 10);
 			if (num == 2)
 			{
 				GameManager.GetTheHackerManager().launchHack();

@@ -6,13 +6,11 @@ public class LODSceneSelection : MonoBehaviour
 {
 	private void OnGUI()
 	{
-		Rect rect;
-		rect..ctor((float)(Screen.width / 2 - this.BoxWidth / 2), 0f, (float)this.BoxWidth, (float)this.BoxHeight);
-		Rect rect2;
-		rect2..ctor(rect.x + (float)this.MarginH, rect.y + (float)this.MarginV, (float)(this.BoxWidth - this.MarginH * 2), (float)(this.BoxHeight - this.MarginV * 2));
-		GUI.Box(rect, string.Empty);
-		GUI.Box(rect, string.Empty);
-		GUILayout.BeginArea(rect2);
+		Rect position = new Rect((float)(Screen.width / 2 - this.BoxWidth / 2), 0f, (float)this.BoxWidth, (float)this.BoxHeight);
+		Rect screenRect = new Rect(position.x + (float)this.MarginH, position.y + (float)this.MarginV, (float)(this.BoxWidth - this.MarginH * 2), (float)(this.BoxHeight - this.MarginV * 2));
+		GUI.Box(position, string.Empty);
+		GUI.Box(position, string.Empty);
+		GUILayout.BeginArea(screenRect);
 		GUILayout.Label("Scene selection:", new GUILayoutOption[0]);
 		GUILayout.BeginHorizontal(new GUILayoutOption[0]);
 		foreach (LODSceneSelection.SceneOption sceneOption in this.SceneOptions)

@@ -7,11 +7,11 @@ public class GameManagerHook : MonoBehaviour
 	{
 		if (GameManager.Instance.isInited())
 		{
-			Object.DestroyImmediate(base.gameObject);
+			UnityEngine.Object.DestroyImmediate(base.gameObject);
 		}
 		else
 		{
-			Object.DontDestroyOnLoad(base.gameObject);
+			UnityEngine.Object.DontDestroyOnLoad(base.gameObject);
 			GameManager.Instance.Init();
 		}
 	}

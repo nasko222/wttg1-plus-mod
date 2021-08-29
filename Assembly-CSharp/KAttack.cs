@@ -136,7 +136,7 @@ public class KAttack : MonoBehaviour
 		{
 			while (!flag)
 			{
-				int index = Random.Range(0, this.codeLines.Count);
+				int index = UnityEngine.Random.Range(0, this.codeLines.Count);
 				KCodeLineDefinition item = this.codeLines[index];
 				if (!this.currentCodeStack.Contains(item))
 				{
@@ -151,29 +151,29 @@ public class KAttack : MonoBehaviour
 		}
 		float targetWidth = this.TargetWidth;
 		float num2 = (float)this.codeLineCount * this.CodeLineHeight + this.TargetBorderWidth * 2f;
-		float num3 = this.TargetWidth - this.TargetBorderWidth * 2f;
-		float num4 = (float)this.codeLineCount * this.CodeLineHeight;
-		float num5;
+		float x2 = this.TargetWidth - this.TargetBorderWidth * 2f;
+		float y = (float)this.codeLineCount * this.CodeLineHeight;
+		float num3;
 		if (this.inHackerMode)
 		{
-			num5 = 0f;
+			num3 = 0f;
 		}
 		else
 		{
-			num5 = num2 / 2f + this.KTermTitle.GetComponent<RectTransform>().sizeDelta.y / 2f + 3f;
+			num3 = num2 / 2f + this.KTermTitle.GetComponent<RectTransform>().sizeDelta.y / 2f + 3f;
 		}
-		float num6 = num5 + 50f;
-		float num7;
-		float num8;
+		float y2 = num3 + 50f;
+		float num4;
+		float y3;
 		if (this.inHackerMode)
 		{
-			num7 = -((float)Screen.height / 2f) - num2 / 2f - this.KTermInput.GetComponent<RectTransform>().sizeDelta.y / 2f - 3f;
-			num8 = num7 + 50f;
+			num4 = -((float)Screen.height / 2f) - num2 / 2f - this.KTermInput.GetComponent<RectTransform>().sizeDelta.y / 2f - 3f;
+			y3 = num4 + 50f;
 		}
 		else
 		{
-			num7 = -(num2 / 2f + this.KTermInput.GetComponent<RectTransform>().sizeDelta.y / 2f + 3f);
-			num8 = num7 - 50f;
+			num4 = -(num2 / 2f + this.KTermInput.GetComponent<RectTransform>().sizeDelta.y / 2f + 3f);
+			y3 = num4 - 50f;
 		}
 		this.KGroup.SetActive(true);
 		this.KGroup.GetComponent<RectTransform>().sizeDelta = new Vector2(targetWidth, num2);
@@ -183,17 +183,17 @@ public class KAttack : MonoBehaviour
 		this.KCodeLineInput.enabled = false;
 		if (this.inHackerMode)
 		{
-			this.KTermInput.GetComponent<RectTransform>().transform.localPosition = new Vector3((float)Screen.width / 2f, num8, 0f);
+			this.KTermInput.GetComponent<RectTransform>().transform.localPosition = new Vector3((float)Screen.width / 2f, y3, 0f);
 		}
 		else
 		{
-			this.KTermTitle.GetComponent<RectTransform>().transform.localPosition = new Vector3(0f, num6, 0f);
-			this.KTermInput.GetComponent<RectTransform>().transform.localPosition = new Vector3(0f, num8, 0f);
+			this.KTermTitle.GetComponent<RectTransform>().transform.localPosition = new Vector3(0f, y2, 0f);
+			this.KTermInput.GetComponent<RectTransform>().transform.localPosition = new Vector3(0f, y3, 0f);
 		}
 		this.KBase.GetComponent<RectTransform>().sizeDelta = new Vector2(targetWidth, num2);
-		this.KCodeBG.GetComponent<RectTransform>().sizeDelta = new Vector2(num3, num4);
-		this.KCodeNumberLine.GetComponent<RectTransform>().sizeDelta = new Vector2(this.KCodeNumberLine.GetComponent<RectTransform>().sizeDelta.x, num4);
-		this.KCodeLineHolder.GetComponent<RectTransform>().sizeDelta = new Vector2(this.KCodeLineHolder.GetComponent<RectTransform>().sizeDelta.x, num4);
+		this.KCodeBG.GetComponent<RectTransform>().sizeDelta = new Vector2(x2, y);
+		this.KCodeNumberLine.GetComponent<RectTransform>().sizeDelta = new Vector2(this.KCodeNumberLine.GetComponent<RectTransform>().sizeDelta.x, y);
+		this.KCodeLineHolder.GetComponent<RectTransform>().sizeDelta = new Vector2(this.KCodeLineHolder.GetComponent<RectTransform>().sizeDelta.x, y);
 		this.KCodeLineHolder.GetComponent<CanvasGroup>().alpha = 1f;
 		if (this.inHackerMode)
 		{
@@ -203,42 +203,42 @@ public class KAttack : MonoBehaviour
 		{
 			GameManager.AudioSlinger.DealSound(AudioHubs.COMPUTER, AudioLayer.HACKINGSFX, this.PowerMeUp, 1f, false);
 		}
-		this.KAniSeq = TweenSettingsExtensions.OnComplete<Sequence>(DOTween.Sequence(), new TweenCallback(this.engageKAttack));
-		TweenSettingsExtensions.Insert(this.KAniSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.KBase.fillAmount, delegate(float x)
+		this.KAniSeq = DOTween.Sequence().OnComplete(new TweenCallback(this.engageKAttack));
+		this.KAniSeq.Insert(0f, DOTween.To(() => this.KBase.fillAmount, delegate(float x)
 		{
 			this.KBase.fillAmount = x;
-		}, 1f, 1f), 1));
-		TweenSettingsExtensions.Insert(this.KAniSeq, 1f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.KCodeNumberLine.fillAmount, delegate(float x)
+		}, 1f, 1f).SetEase(Ease.Linear));
+		this.KAniSeq.Insert(1f, DOTween.To(() => this.KCodeNumberLine.fillAmount, delegate(float x)
 		{
 			this.KCodeNumberLine.fillAmount = x;
-		}, 1f, 0.5f), 3));
+		}, 1f, 0.5f).SetEase(Ease.OutSine));
 		if (!this.inHackerMode)
 		{
-			TweenSettingsExtensions.Insert(this.KAniSeq, 1f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.KTermTitle.GetComponent<RectTransform>().transform.localPosition, delegate(Vector3 x)
+			this.KAniSeq.Insert(1f, DOTween.To(() => this.KTermTitle.GetComponent<RectTransform>().transform.localPosition, delegate(Vector3 x)
 			{
 				this.KTermTitle.GetComponent<RectTransform>().transform.localPosition = x;
-			}, new Vector3(0f, num5, 0f), 0.5f), 3));
-			TweenSettingsExtensions.Insert(this.KAniSeq, 1f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.KTermTitle.GetComponent<CanvasGroup>().alpha, delegate(float x)
+			}, new Vector3(0f, num3, 0f), 0.5f).SetEase(Ease.OutSine));
+			this.KAniSeq.Insert(1f, DOTween.To(() => this.KTermTitle.GetComponent<CanvasGroup>().alpha, delegate(float x)
 			{
 				this.KTermTitle.GetComponent<CanvasGroup>().alpha = x;
-			}, 1f, 0.5f), 3));
-			TweenSettingsExtensions.Insert(this.KAniSeq, 1f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.KTermInput.GetComponent<RectTransform>().transform.localPosition, delegate(Vector3 x)
+			}, 1f, 0.5f).SetEase(Ease.OutSine));
+			this.KAniSeq.Insert(1f, DOTween.To(() => this.KTermInput.GetComponent<RectTransform>().transform.localPosition, delegate(Vector3 x)
 			{
 				this.KTermInput.GetComponent<RectTransform>().transform.localPosition = x;
-			}, new Vector3(0f, num7, 0f), 0.5f), 3));
+			}, new Vector3(0f, num4, 0f), 0.5f).SetEase(Ease.OutSine));
 		}
 		else
 		{
-			TweenSettingsExtensions.Insert(this.KAniSeq, 1f, TweenSettingsExtensions.SetRelative<TweenerCore<Vector3, Vector3, VectorOptions>>(TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.KTermInput.GetComponent<RectTransform>().transform.localPosition, delegate(Vector3 x)
+			this.KAniSeq.Insert(1f, DOTween.To(() => this.KTermInput.GetComponent<RectTransform>().transform.localPosition, delegate(Vector3 x)
 			{
 				this.KTermInput.GetComponent<RectTransform>().transform.localPosition = x;
-			}, new Vector3(0f, -50f, 0f), 0.5f), 3), true));
+			}, new Vector3(0f, -50f, 0f), 0.5f).SetEase(Ease.OutSine).SetRelative(true));
 		}
-		TweenSettingsExtensions.Insert(this.KAniSeq, 1f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.KTermInput.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		this.KAniSeq.Insert(1f, DOTween.To(() => this.KTermInput.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.KTermInput.GetComponent<CanvasGroup>().alpha = x;
-		}, 1f, 0.5f), 3));
-		TweenExtensions.Play<Sequence>(this.KAniSeq);
+		}, 1f, 0.5f).SetEase(Ease.OutSine));
+		this.KAniSeq.Play<Sequence>();
 	}
 
 	private void engageKAttack()
@@ -247,7 +247,7 @@ public class KAttack : MonoBehaviour
 		this.currentCodeObjects = new List<GameObject>();
 		for (int i = 0; i < this.currentCodeStack.Count; i++)
 		{
-			GameObject gameObject = Object.Instantiate<GameObject>(this.KCLObject);
+			GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(this.KCLObject);
 			gameObject.transform.SetParent(this.KCodeLineHolder.transform);
 			gameObject.GetComponent<KCodeLineObject>().myKAttack = this;
 			gameObject.GetComponent<KCodeLineObject>().buildMe(i, (i + 1).ToString(), this.currentCodeStack[i].theCodeLine, 0f, num);
@@ -260,9 +260,9 @@ public class KAttack : MonoBehaviour
 
 	private void fireKAttack()
 	{
-		Object.Destroy(this.clockText.gameObject);
+		UnityEngine.Object.Destroy(this.clockText.gameObject);
 		GameManager.AudioSlinger.DealSound(AudioHubs.COMPUTER, AudioLayer.HACKINGSFX, this.CountDownTick2, 0.7f, false);
-		this.KClockObject = Object.Instantiate<GameObject>(this.DOSClockObject);
+		this.KClockObject = UnityEngine.Object.Instantiate<GameObject>(this.DOSClockObject);
 		if (this.inHackerMode)
 		{
 			this.KClockObject.transform.SetParent(this.hackerModeManager.scoreHeaderObject.transform);
@@ -282,11 +282,11 @@ public class KAttack : MonoBehaviour
 			this.KClockObject.GetComponent<DOSClock>().DOSClockImage.SetNativeSize();
 		}
 		this.KAttackClockSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.KAttackClockSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.KClockObject.GetComponent<DOSClock>().DOSClockImage.fillAmount, delegate(float x)
+		this.KAttackClockSeq.Insert(0f, DOTween.To(() => this.KClockObject.GetComponent<DOSClock>().DOSClockImage.fillAmount, delegate(float x)
 		{
 			this.KClockObject.GetComponent<DOSClock>().DOSClockImage.fillAmount = x;
-		}, 0f, this.KTime), 1));
-		TweenExtensions.Play<Sequence>(this.KAttackClockSeq);
+		}, 0f, this.KTime).SetEase(Ease.Linear));
+		this.KAttackClockSeq.Play<Sequence>();
 		this.KCodeLineInput.enabled = true;
 		this.KCodeLineInput.ActivateInputField();
 		this.currentCodeObjects[(int)this.currentCodeStackIndex].GetComponent<KCodeLineObject>().IAmActive();
@@ -298,20 +298,20 @@ public class KAttack : MonoBehaviour
 
 	private void fireWarmClock()
 	{
-		TextGenerationSettings textGenerationSettings = default(TextGenerationSettings);
+		TextGenerationSettings settings = default(TextGenerationSettings);
 		TextGenerator textGenerator = new TextGenerator();
-		textGenerationSettings.textAnchor = 1;
-		textGenerationSettings.generateOutOfBounds = true;
-		textGenerationSettings.generationExtents = new Vector2(50f, 20f);
-		textGenerationSettings.pivot = Vector2.zero;
-		textGenerationSettings.richText = true;
-		textGenerationSettings.font = this.clockFont;
-		textGenerationSettings.fontSize = 56;
-		textGenerationSettings.fontStyle = 0;
-		textGenerationSettings.lineSpacing = 1f;
-		textGenerationSettings.scaleFactor = 1f;
-		textGenerationSettings.verticalOverflow = 1;
-		textGenerationSettings.horizontalOverflow = 0;
+		settings.textAnchor = TextAnchor.UpperCenter;
+		settings.generateOutOfBounds = true;
+		settings.generationExtents = new Vector2(50f, 20f);
+		settings.pivot = Vector2.zero;
+		settings.richText = true;
+		settings.font = this.clockFont;
+		settings.fontSize = 56;
+		settings.fontStyle = FontStyle.Normal;
+		settings.lineSpacing = 1f;
+		settings.scaleFactor = 1f;
+		settings.verticalOverflow = VerticalWrapMode.Overflow;
+		settings.horizontalOverflow = HorizontalWrapMode.Wrap;
 		this.clockText = new GameObject("clockText", new Type[]
 		{
 			typeof(Text)
@@ -330,20 +330,20 @@ public class KAttack : MonoBehaviour
 			this.clockText.transform.SetParent(this.KGroup.transform);
 			this.clockText.transform.localPosition = new Vector3(0f, this.KGroup.GetComponent<RectTransform>().sizeDelta.y / 2f + 75f, 0f);
 		}
-		this.clockText.rectTransform.sizeDelta = new Vector2(textGenerator.GetPreferredWidth(this.clockText.text, textGenerationSettings), textGenerator.GetPreferredHeight(this.clockText.text, textGenerationSettings));
+		this.clockText.rectTransform.sizeDelta = new Vector2(textGenerator.GetPreferredWidth(this.clockText.text, settings), textGenerator.GetPreferredHeight(this.clockText.text, settings));
 		this.clockText.transform.localScale = new Vector3(1f, 1f, 1f);
 		this.clockText.transform.localRotation = new Quaternion(0f, 0f, 0f, 0f);
 		this.warmClockSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.warmClockSeq, 0f, DOTween.To(() => this.clockText.transform.localScale, delegate(Vector3 x)
+		this.warmClockSeq.Insert(0f, DOTween.To(() => this.clockText.transform.localScale, delegate(Vector3 x)
 		{
 			this.clockText.transform.localScale = x;
 		}, new Vector3(1f, 1f, 1f), 0f));
-		TweenSettingsExtensions.Insert(this.warmClockSeq, 0.1f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.clockText.transform.localScale, delegate(Vector3 x)
+		this.warmClockSeq.Insert(0.1f, DOTween.To(() => this.clockText.transform.localScale, delegate(Vector3 x)
 		{
 			this.clockText.transform.localScale = x;
-		}, new Vector3(0.33f, 0.33f, 0.33f), 0.9f), 1));
-		TweenSettingsExtensions.SetLoops<Sequence>(this.warmClockSeq, Mathf.RoundToInt(this.warmUpTime));
-		TweenExtensions.Play<Sequence>(this.warmClockSeq);
+		}, new Vector3(0.33f, 0.33f, 0.33f), 0.9f).SetEase(Ease.Linear));
+		this.warmClockSeq.SetLoops(Mathf.RoundToInt(this.warmUpTime));
+		this.warmClockSeq.Play<Sequence>();
 		this.clockTimeStamp = Time.time;
 		this.clockMicroTimeStamp = Time.time;
 		this.clockMicroCount = this.warmUpTime;
@@ -407,7 +407,7 @@ public class KAttack : MonoBehaviour
 				}
 				this.finalCountDownFired = false;
 			}
-			TweenExtensions.Kill(this.KAttackClockSeq, false);
+			this.KAttackClockSeq.Kill(false);
 			this.KAttackClockSeq = DOTween.Sequence();
 			float num = Time.time - this.KGameTimeStamp;
 			float num2 = this.KTime - num;
@@ -421,11 +421,11 @@ public class KAttack : MonoBehaviour
 				fillAmount = num2 / this.KTime;
 			}
 			this.KClockObject.GetComponent<DOSClock>().DOSClockImage.fillAmount = fillAmount;
-			TweenSettingsExtensions.Insert(this.KAttackClockSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.KClockObject.GetComponent<DOSClock>().DOSClockImage.fillAmount, delegate(float x)
+			this.KAttackClockSeq.Insert(0f, DOTween.To(() => this.KClockObject.GetComponent<DOSClock>().DOSClockImage.fillAmount, delegate(float x)
 			{
 				this.KClockObject.GetComponent<DOSClock>().DOSClockImage.fillAmount = x;
-			}, 0f, num2), 1));
-			TweenExtensions.Play<Sequence>(this.KAttackClockSeq);
+			}, 0f, num2).SetEase(Ease.Linear));
+			this.KAttackClockSeq.Play<Sequence>();
 		}
 	}
 
@@ -448,8 +448,8 @@ public class KAttack : MonoBehaviour
 		}
 		this.KCodeLineInput.enabled = false;
 		this.kISHot = false;
-		TweenExtensions.Kill(this.KAttackClockSeq, false);
-		Object.Destroy(this.KClockObject);
+		this.KAttackClockSeq.Kill(false);
+		UnityEngine.Object.Destroy(this.KClockObject);
 		this.DidPlayerPass = false;
 		this.TriggerByeAni();
 	}
@@ -504,8 +504,8 @@ public class KAttack : MonoBehaviour
 		}
 		this.KCodeLineInput.enabled = false;
 		this.kISHot = false;
-		TweenExtensions.Kill(this.KAttackClockSeq, false);
-		Object.Destroy(this.KClockObject);
+		this.KAttackClockSeq.Kill(false);
+		UnityEngine.Object.Destroy(this.KClockObject);
 		this.DidPlayerPass = true;
 		this.TriggerByeAni();
 	}
@@ -514,70 +514,70 @@ public class KAttack : MonoBehaviour
 	{
 		float num = (float)this.codeLineCount * this.CodeLineHeight + this.TargetBorderWidth * 2f;
 		float num2;
-		float num4;
+		float y;
 		if (this.inHackerMode)
 		{
 			num2 = 0f;
 			float num3 = -((float)Screen.height / 2f) - num / 2f - this.KTermInput.GetComponent<RectTransform>().sizeDelta.y / 2f - 3f;
-			num4 = num3 + 50f;
+			y = num3 + 50f;
 		}
 		else
 		{
 			num2 = num / 2f + this.KTermTitle.GetComponent<RectTransform>().sizeDelta.y / 2f + 3f;
 			float num3 = -(num / 2f + this.KTermInput.GetComponent<RectTransform>().sizeDelta.y / 2f + 3f);
-			num4 = num3 - 50f;
+			y = num3 - 50f;
 		}
-		float num5 = num2 + 50f;
+		float y2 = num2 + 50f;
 		if (!this.inHackerMode)
 		{
 			GameManager.GetDOSTwitch().DismissTwitchHacker();
 		}
-		this.ByeSeq = TweenSettingsExtensions.OnComplete<Sequence>(DOTween.Sequence(), new TweenCallback(this.ByeAniDone));
-		TweenSettingsExtensions.Insert(this.ByeSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.KCodeLineHolder.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		this.ByeSeq = DOTween.Sequence().OnComplete(new TweenCallback(this.ByeAniDone));
+		this.ByeSeq.Insert(0f, DOTween.To(() => this.KCodeLineHolder.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.KCodeLineHolder.GetComponent<CanvasGroup>().alpha = x;
-		}, 0f, 0.5f), 3));
-		TweenSettingsExtensions.Insert(this.ByeSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.KBase.fillAmount, delegate(float x)
+		}, 0f, 0.5f).SetEase(Ease.OutSine));
+		this.ByeSeq.Insert(0f, DOTween.To(() => this.KBase.fillAmount, delegate(float x)
 		{
 			this.KBase.fillAmount = x;
-		}, 0f, 0.5f), 3));
-		TweenSettingsExtensions.Insert(this.ByeSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.KCodeNumberLine.fillAmount, delegate(float x)
+		}, 0f, 0.5f).SetEase(Ease.OutSine));
+		this.ByeSeq.Insert(0f, DOTween.To(() => this.KCodeNumberLine.fillAmount, delegate(float x)
 		{
 			this.KCodeNumberLine.fillAmount = x;
-		}, 0f, 0.5f), 3));
+		}, 0f, 0.5f).SetEase(Ease.OutSine));
 		if (this.inHackerMode)
 		{
-			TweenSettingsExtensions.Insert(this.ByeSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.KTermInput.GetComponent<RectTransform>().transform.localPosition, delegate(Vector3 x)
+			this.ByeSeq.Insert(0f, DOTween.To(() => this.KTermInput.GetComponent<RectTransform>().transform.localPosition, delegate(Vector3 x)
 			{
 				this.KTermInput.GetComponent<RectTransform>().transform.localPosition = x;
-			}, new Vector3((float)Screen.width / 2f, num4, 0f), 0.5f), 3));
+			}, new Vector3((float)Screen.width / 2f, y, 0f), 0.5f).SetEase(Ease.OutSine));
 		}
 		else
 		{
-			TweenSettingsExtensions.Insert(this.ByeSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.KTermTitle.GetComponent<RectTransform>().transform.localPosition, delegate(Vector3 x)
+			this.ByeSeq.Insert(0f, DOTween.To(() => this.KTermTitle.GetComponent<RectTransform>().transform.localPosition, delegate(Vector3 x)
 			{
 				this.KTermTitle.GetComponent<RectTransform>().transform.localPosition = x;
-			}, new Vector3(0f, num5, 0f), 0.5f), 3));
-			TweenSettingsExtensions.Insert(this.ByeSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.KTermTitle.GetComponent<CanvasGroup>().alpha, delegate(float x)
+			}, new Vector3(0f, y2, 0f), 0.5f).SetEase(Ease.OutSine));
+			this.ByeSeq.Insert(0f, DOTween.To(() => this.KTermTitle.GetComponent<CanvasGroup>().alpha, delegate(float x)
 			{
 				this.KTermTitle.GetComponent<CanvasGroup>().alpha = x;
-			}, 0f, 0.5f), 3));
-			TweenSettingsExtensions.Insert(this.ByeSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<Vector3, Vector3, VectorOptions>>(DOTween.To(() => this.KTermInput.GetComponent<RectTransform>().transform.localPosition, delegate(Vector3 x)
+			}, 0f, 0.5f).SetEase(Ease.OutSine));
+			this.ByeSeq.Insert(0f, DOTween.To(() => this.KTermInput.GetComponent<RectTransform>().transform.localPosition, delegate(Vector3 x)
 			{
 				this.KTermInput.GetComponent<RectTransform>().transform.localPosition = x;
-			}, new Vector3(0f, num4, 0f), 0.5f), 3));
+			}, new Vector3(0f, y, 0f), 0.5f).SetEase(Ease.OutSine));
 		}
-		TweenSettingsExtensions.Insert(this.ByeSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.KTermInput.GetComponent<CanvasGroup>().alpha, delegate(float x)
+		this.ByeSeq.Insert(0f, DOTween.To(() => this.KTermInput.GetComponent<CanvasGroup>().alpha, delegate(float x)
 		{
 			this.KTermInput.GetComponent<CanvasGroup>().alpha = x;
-		}, 0f, 0.5f), 3));
+		}, 0f, 0.5f).SetEase(Ease.OutSine));
 	}
 
 	private void ByeAniDone()
 	{
 		for (int i = 0; i < this.currentCodeObjects.Count; i++)
 		{
-			Object.Destroy(this.currentCodeObjects[i]);
+			UnityEngine.Object.Destroy(this.currentCodeObjects[i]);
 		}
 		this.currentCodeObjects.Clear();
 		this.currentCodeStack.Clear();
@@ -688,7 +688,7 @@ public class KAttack : MonoBehaviour
 			}
 			else if (this.kISHot)
 			{
-				if (this.inHackerMode && (Input.GetKeyDown(8) || Input.GetKeyDown(127)))
+				if (this.inHackerMode && (Input.GetKeyDown(KeyCode.Backspace) || Input.GetKeyDown(KeyCode.Delete)))
 				{
 					this.currentBackSpaceCount++;
 				}

@@ -35,7 +35,7 @@ public class SteamManager : MonoBehaviour
 	{
 		if (SteamManager.s_instance != null)
 		{
-			Object.Destroy(base.gameObject);
+			UnityEngine.Object.Destroy(base.gameObject);
 			return;
 		}
 		SteamManager.s_instance = this;
@@ -43,7 +43,7 @@ public class SteamManager : MonoBehaviour
 		{
 			throw new Exception("Tried to Initialize the SteamAPI twice in one session!");
 		}
-		Object.DontDestroyOnLoad(base.gameObject);
+		UnityEngine.Object.DontDestroyOnLoad(base.gameObject);
 		if (!Packsize.Test())
 		{
 			Debug.LogError("[Steamworks.NET] Packsize Test returned false, the wrong version of Steamworks.NET is being run in this platform.", this);

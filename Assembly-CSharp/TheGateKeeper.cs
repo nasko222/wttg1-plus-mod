@@ -21,7 +21,7 @@ public class TheGateKeeper : MonoBehaviour
 		bool flag = true;
 		while (flag)
 		{
-			int index = Random.Range(0, this.questions.Count);
+			int index = UnityEngine.Random.Range(0, this.questions.Count);
 			if (!this.pickedQuestions.Contains(this.questions[index]))
 			{
 				this.pickedQuestions.Add(this.questions[index]);
@@ -54,24 +54,24 @@ public class TheGateKeeper : MonoBehaviour
 			{
 				GameManager.AudioSlinger.DealSound(AudioHubs.COMPUTER, AudioLayer.SOFTWARESFX, this.correctAnswerClip, 1f, false);
 			}
-			this.aniSeq = TweenSettingsExtensions.OnComplete<Sequence>(DOTween.Sequence(), new TweenCallback(this.showNextQuestion));
-			TweenSettingsExtensions.Insert(this.aniSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.questionAnswerHolder.alpha, delegate(float x)
+			this.aniSeq = DOTween.Sequence().OnComplete(new TweenCallback(this.showNextQuestion));
+			this.aniSeq.Insert(0f, DOTween.To(() => this.questionAnswerHolder.alpha, delegate(float x)
 			{
 				this.questionAnswerHolder.alpha = x;
-			}, 0f, 0.5f), 1));
-			TweenExtensions.Play<Sequence>(this.aniSeq);
+			}, 0f, 0.5f).SetEase(Ease.Linear));
+			this.aniSeq.Play<Sequence>();
 		}
 	}
 
 	private void showNextQuestion()
 	{
-		int num = Random.Range(0, this.answerObjects.Count);
+		int num = UnityEngine.Random.Range(0, this.answerObjects.Count);
 		List<string> list = new List<string>(this.pickedQuestions[(int)this.questionIndex].wrongAnswers);
 		int num2 = 0;
 		for (int i = 0; i < list.Count; i++)
 		{
 			string value = list[i];
-			int index = Random.Range(i, list.Count);
+			int index = UnityEngine.Random.Range(i, list.Count);
 			list[i] = list[index];
 			list[index] = value;
 		}
@@ -89,11 +89,11 @@ public class TheGateKeeper : MonoBehaviour
 		this.answerObjects[num].theRightAnswer = true;
 		this.questionIndex += 1;
 		this.aniSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.aniSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.questionAnswerHolder.alpha, delegate(float x)
+		this.aniSeq.Insert(0f, DOTween.To(() => this.questionAnswerHolder.alpha, delegate(float x)
 		{
 			this.questionAnswerHolder.alpha = x;
-		}, 1f, 0.5f), 1));
-		TweenExtensions.Play<Sequence>(this.aniSeq);
+		}, 1f, 0.5f).SetEase(Ease.Linear));
+		this.aniSeq.Play<Sequence>();
 	}
 
 	private void wrongAnswerHit()
@@ -103,15 +103,15 @@ public class TheGateKeeper : MonoBehaviour
 		GameManager.GetTheHackerManager().launchHack();
 		this.questionAnswerHolder.gameObject.SetActive(false);
 		this.aniSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.aniSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.questionAnswerHolder.alpha, delegate(float x)
+		this.aniSeq.Insert(0f, DOTween.To(() => this.questionAnswerHolder.alpha, delegate(float x)
 		{
 			this.questionAnswerHolder.alpha = x;
-		}, 0f, 0.5f), 1));
-		TweenSettingsExtensions.Insert(this.aniSeq, 0.5f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.wrongPlace.alpha, delegate(float x)
+		}, 0f, 0.5f).SetEase(Ease.Linear));
+		this.aniSeq.Insert(0.5f, DOTween.To(() => this.wrongPlace.alpha, delegate(float x)
 		{
 			this.wrongPlace.alpha = x;
-		}, 1f, 0.5f), 1));
-		TweenExtensions.Play<Sequence>(this.aniSeq);
+		}, 1f, 0.5f).SetEase(Ease.Linear));
+		this.aniSeq.Play<Sequence>();
 	}
 
 	private void presentTheHash()
@@ -119,15 +119,15 @@ public class TheGateKeeper : MonoBehaviour
 		GameManager.AudioSlinger.DealSound(AudioHubs.COMPUTER, AudioLayer.SOFTWARESFX, this.hashFoundClip, 1f, false);
 		this.questionAnswerHolder.gameObject.SetActive(false);
 		this.aniSeq = DOTween.Sequence();
-		TweenSettingsExtensions.Insert(this.aniSeq, 0f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.questionAnswerHolder.alpha, delegate(float x)
+		this.aniSeq.Insert(0f, DOTween.To(() => this.questionAnswerHolder.alpha, delegate(float x)
 		{
 			this.questionAnswerHolder.alpha = x;
-		}, 0f, 0.5f), 1));
-		TweenSettingsExtensions.Insert(this.aniSeq, 0.5f, TweenSettingsExtensions.SetEase<TweenerCore<float, float, FloatOptions>>(DOTween.To(() => this.hashHolder.alpha, delegate(float x)
+		}, 0f, 0.5f).SetEase(Ease.Linear));
+		this.aniSeq.Insert(0.5f, DOTween.To(() => this.hashHolder.alpha, delegate(float x)
 		{
 			this.hashHolder.alpha = x;
-		}, 1f, 0.5f), 1));
-		TweenExtensions.Play<Sequence>(this.aniSeq);
+		}, 1f, 0.5f).SetEase(Ease.Linear));
+		this.aniSeq.Play<Sequence>();
 	}
 
 	private void OnEnable()

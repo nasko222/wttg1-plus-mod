@@ -26,7 +26,7 @@ namespace Colorful
 				if (this.m_Material == null)
 				{
 					this.m_Material = new Material(this.ShaderSafe);
-					this.m_Material.hideFlags = 61;
+					this.m_Material.hideFlags = HideFlags.HideAndDontSave;
 				}
 				return this.m_Material;
 			}
@@ -51,7 +51,7 @@ namespace Colorful
 		{
 			if (this.m_Material)
 			{
-				Object.DestroyImmediate(this.m_Material);
+				UnityEngine.Object.DestroyImmediate(this.m_Material);
 			}
 			this.m_Material = null;
 		}
